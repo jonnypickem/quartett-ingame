@@ -102,20 +102,20 @@ const cardsP2: CardView[] = [
   }
 ];
 
-export const initialMockState: SessionState = {
-  sessionId: "demo-session-01",
+export const createMockSessionState = (sessionId = "demo-session-01"): SessionState => ({
+  sessionId,
   players: [
     {
       id: "p1",
       name: "You",
       color: "#01ADFF",
-      hand: cardsP1
+      hand: structuredClone(cardsP1)
     },
     {
       id: "p2",
       name: "Opponent",
       color: "#C669FF",
-      hand: cardsP2
+      hand: structuredClone(cardsP2)
     }
   ],
   selectedSpecKey: null,
@@ -130,7 +130,9 @@ export const initialMockState: SessionState = {
   },
   version: 1,
   updatedAt: new Date().toISOString()
-};
+});
+
+export const initialMockState: SessionState = createMockSessionState();
 
 export const cloneSessionState = (state: SessionState): SessionState => {
   return structuredClone(state);

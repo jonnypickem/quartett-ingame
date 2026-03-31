@@ -364,6 +364,8 @@ export const applyGameAction = (
 
   return {
     state,
-    events
+    events,
+    appliedVersion: state.version,
+    latestEventId: 0
   };
 };

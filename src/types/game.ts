@@ -177,11 +177,62 @@ export type GameEvent =
 export interface ActionResponse {
   state: SessionState;
   events: GameEvent[];
+  appliedVersion: number;
+  latestEventId: number;
+}
+
+export interface SessionBootstrapResponse {
+  state: SessionState;
+  latestEventId: number;
+}
+
+export interface RealtimeEventRow {
+  id: number;
+  payload: GameEvent;
+}
+
+export type RuntimeMode = "realtime" | "local-mock";
+
+export type ConnectionStatus = "bootstrapping" | "connected" | "degraded" | "error";
+
+export interface SessionRouteContext {
+  sessionId: string;
+  playerId: string;
+}
+
+export type SessionRouteValidationResult =
+  | {
+      ok: true;
+      context: SessionRouteContext;
+    }
+  | {
+      ok: false;
+      code: "missing_session" | "unknown_player";
+      message: string;
+    };
+
+export type SessionPlayerValidationResult =
+  | {
+      ok: true;
+    }
+  | {
+      ok: false;
+      code: "player_not_in_session";
+      message: string;
+    };
+
+export interface SessionContextError {
+  code: "missing_session" | "unknown_player" | "player_not_in_session";
+  message: string;
 }
 
 export interface GameUiState {
   session: SessionState;
-  eventQueue: GameEvent[];
+  eventQueue: RealtimeEventRow[];
   busy: boolean;
   lastError: string | null;
+  lastSeenEventId: number;
+  connectionStatus: ConnectionStatus;
+  runtimeMode: RuntimeMode;
+  contextError: SessionContextError | null;
 }

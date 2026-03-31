@@ -154,6 +154,13 @@ type GameEvent =
 interface ActionResponse {
   state: SessionState;
   events: GameEvent[];
+  appliedVersion: number;
+  latestEventId: number;
+}
+
+interface SessionBootstrapResponse {
+  state: SessionState;
+  latestEventId: number;
 }
 
 class GameActionError extends Error {}
@@ -387,16 +394,36 @@ const applyAction = (inputState: SessionState, request: GameActionRequest): Acti
   state.updatedAt = at;
   appendStateUpdate(events, state, at);
 
-  return { state, events };
+  return {
+    state,
+    events,
+    appliedVersion: state.version,
+    latestEventId: 0
+  };
+};
+
+const fetchLatestEventId = async (
+  client: ReturnType<typeof createClient>,
+  sessionId: string
+): Promise<number> => {
+  const { data: latestRow, error } = await client
+    .from("game_events")
+    .select("id")
+    .eq("session_id", sessionId)
+    .order("id", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (error) {
+    throw new GameActionError(error.message);
+  }
+
+  return latestRow?.id ?? 0;
 };
 
 Deno.serve(async (request) => {
   if (request.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
-  }
-
-  if (request.method !== "POST") {
-    return json(405, { error: "Method not allowed." });
   }
 
   try {
@@ -409,6 +436,40 @@ Deno.serve(async (request) => {
     const client = createClient(supabaseUrl, serviceRoleKey, {
       auth: { persistSession: false }
     });
+
+    if (request.method === "GET") {
+      const url = new URL(request.url);
+      const sessionId = url.searchParams.get("session")?.trim() ?? "";
+      if (!sessionId) {
+        return json(400, { error: "Missing session query parameter." });
+      }
+
+      const { data: row, error: fetchError } = await client
+        .from("game_sessions")
+        .select("id, state, version")
+        .eq("id", sessionId)
+        .single();
+
+      if (fetchError || !row) {
+        return json(404, { error: "Session not found." });
+      }
+
+      const state = row.state as SessionState;
+      state.version = row.version;
+
+      const latestEventId = await fetchLatestEventId(client, sessionId);
+
+      const response: SessionBootstrapResponse = {
+        state,
+        latestEventId
+      };
+
+      return json(200, response);
+    }
+
+    if (request.method !== "POST") {
+      return json(405, { error: "Method not allowed." });
+    }
 
     const payload = (await request.json()) as GameActionRequest;
     const { data: row, error: fetchError } = await client
@@ -458,7 +519,12 @@ Deno.serve(async (request) => {
       }
     }
 
-    return json(200, response);
+    const latestEventId = await fetchLatestEventId(client, payload.sessionId);
+    return json(200, {
+      ...response,
+      appliedVersion: response.state.version,
+      latestEventId
+    } as ActionResponse);
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unexpected error.";
     return json(400, { error: message });

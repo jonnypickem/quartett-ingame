@@ -1,13 +1,55 @@
-import type { ActionResponse, GameActionRequest, GameEvent, SessionState } from "../types/game";
+import { createMockSessionState } from "../state/mockState";
+import type {
+  ActionResponse,
+  GameActionRequest,
+  RealtimeEventRow,
+  RuntimeMode,
+  SessionBootstrapResponse,
+  SessionState
+} from "../types/game";
 import { applyGameAction } from "./gameEngine";
 import { getSupabaseClient } from "./supabase";
+
+const getEndpoint = (): string => import.meta.env.VITE_GAME_ACTION_ENDPOINT?.trim() ?? "";
+
+const hasSupabaseConfig = (): boolean => {
+  return Boolean(import.meta.env.VITE_SUPABASE_URL && import.meta.env.VITE_SUPABASE_ANON_KEY);
+};
+
+export const resolveRuntimeMode = (): RuntimeMode => {
+  return getEndpoint() && hasSupabaseConfig() ? "realtime" : "local-mock";
+};
+
+export const fetchSessionBootstrap = async (sessionId: string): Promise<SessionBootstrapResponse> => {
+  if (resolveRuntimeMode() !== "realtime") {
+    return {
+      state: createMockSessionState(sessionId),
+      latestEventId: 0
+    };
+  }
+
+  const endpoint = getEndpoint();
+  const url = new URL(endpoint);
+  url.searchParams.set("session", sessionId);
+
+  const response = await fetch(url.toString(), {
+    method: "GET"
+  });
+
+  if (!response.ok) {
+    const message = await response.text();
+    throw new Error(message || "Bootstrap request failed.");
+  }
+
+  return (await response.json()) as SessionBootstrapResponse;
+};
 
 export const submitAction = async (
   request: GameActionRequest,
   currentState: SessionState
 ): Promise<ActionResponse> => {
-  const endpoint = import.meta.env.VITE_GAME_ACTION_ENDPOINT;
-  if (endpoint) {
+  if (resolveRuntimeMode() === "realtime") {
+    const endpoint = getEndpoint();
     const response = await fetch(endpoint, {
       method: "POST",
       headers: {
@@ -29,8 +71,12 @@ export const submitAction = async (
 
 export const subscribeToSessionEvents = (
   sessionId: string,
-  onEvent: (event: GameEvent) => void
+  onRow: (row: RealtimeEventRow) => void
 ): (() => void) => {
+  if (resolveRuntimeMode() !== "realtime") {
+    return () => undefined;
+  }
+
   const client = getSupabaseClient();
   if (!client) {
     return () => undefined;
@@ -48,9 +94,12 @@ export const subscribeToSessionEvents = (
         filter: `session_id=eq.${sessionId}`
       },
       (payload) => {
-        const row = payload.new as { payload?: GameEvent };
-        if (row.payload) {
-          onEvent(row.payload);
+        const row = payload.new as { id?: number; payload?: RealtimeEventRow["payload"] };
+        if (typeof row.id === "number" && row.payload) {
+          onRow({
+            id: row.id,
+            payload: row.payload
+          });
         }
       }
     )
@@ -59,11 +108,4 @@ export const subscribeToSessionEvents = (
   return () => {
     channel.unsubscribe();
   };
-};
-
-export const publishLocalEvents = (
-  events: GameEvent[],
-  enqueue: (events: GameEvent[]) => void
-): void => {
-  enqueue(events);
 };

@@ -1,17 +1,39 @@
+import { useMemo } from "react";
 import { ActionBar } from "./components/ActionBar";
 import { CardPanel } from "./components/CardPanel";
 import { StatusBar } from "./components/StatusBar";
+import { buildPerspectiveUrl, parseSessionRouteContext } from "./lib/routeContext";
 import { useGameSession } from "./hooks/useGameSession";
-
-const CURRENT_PLAYER_ID = "p1";
 
 const findSpecValue = (specKey: string, cardSpecs: { key: string; value: number }[]) => {
   return cardSpecs.find((spec) => spec.key === specKey)?.value ?? null;
 };
 
+const InvalidContext = ({ title, message }: { title: string; message: string }) => {
+  return (
+    <main className="fallback">
+      <section className="context-error-card">
+        <h2>{title}</h2>
+        <p>{message}</p>
+        <p className="context-error-card__hint">
+          Example: <code>?session=demo-session-01&player=p1</code>
+        </p>
+      </section>
+    </main>
+  );
+};
+
 function App() {
+  const routeContext = useMemo(() => parseSessionRouteContext(window.location.search), []);
+  if (!routeContext.ok) {
+    return <InvalidContext title="Invalid URL Context" message={routeContext.message} />;
+  }
+
+  const { sessionId, playerId } = routeContext.context;
+
   const {
     state,
+    runtimeMode,
     view,
     yourPlayer,
     opponent,
@@ -21,8 +43,14 @@ function App() {
     startTie,
     loseTie,
     respondTie,
+    connectionStatus,
+    contextError,
     clearError
-  } = useGameSession(CURRENT_PLAYER_ID);
+  } = useGameSession(sessionId, playerId);
+
+  if (contextError) {
+    return <InvalidContext title="Player Context Error" message={contextError.message} />;
+  }
 
   if (!yourPlayer || !opponent) {
     return <main className="fallback">Unable to load players.</main>;
@@ -56,7 +84,13 @@ function App() {
           </div>
         ) : null}
 
-        <StatusBar yourCount={view.yourCount} opponentCount={view.opponentCount} busy={state.busy} />
+        <StatusBar
+          yourCount={view.yourCount}
+          opponentCount={view.opponentCount}
+          busy={state.busy}
+          connectionStatus={connectionStatus}
+          runtimeMode={runtimeMode}
+        />
 
         <div className="cards-layout">
           <CardPanel
@@ -83,7 +117,7 @@ function App() {
         </div>
 
         <ActionBar
-          currentPlayerId={CURRENT_PLAYER_ID}
+          currentPlayerId={playerId}
           opponentName={opponent.name}
           hasYourTopCard={Boolean(view.yourTopCard)}
           canStartTie={selectedSpecEqual}
@@ -97,6 +131,15 @@ function App() {
           onRespondTransfer={respondTransfer}
           onRespondTie={respondTie}
         />
+
+        <div className="qa-links">
+          <a href={buildPerspectiveUrl(state.session.sessionId, yourPlayer.id)} target="_blank" rel="noreferrer">
+            Open {yourPlayer.name} View
+          </a>
+          <a href={buildPerspectiveUrl(state.session.sessionId, opponent.id)} target="_blank" rel="noreferrer">
+            Open {opponent.name} View
+          </a>
+        </div>
       </section>
     </main>
   );

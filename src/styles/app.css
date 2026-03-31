@@ -366,6 +366,47 @@ body {
   font-family: "Sigmar", system-ui, sans-serif;
 }
 
+.context-error-card {
+  background: var(--q-white);
+  border-radius: var(--radius-xl);
+  border: 3px solid rgba(49, 51, 55, 0.2);
+  padding: 16px;
+  width: min(100%, 560px);
+}
+
+.context-error-card h2 {
+  margin: 0 0 10px;
+  font-size: 1.35rem;
+}
+
+.context-error-card p {
+  margin: 0;
+  font-family: "Nunito", system-ui, sans-serif;
+  font-weight: 800;
+}
+
+.context-error-card__hint {
+  margin-top: 10px !important;
+  font-size: 0.9rem;
+}
+
+.qa-links {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.qa-links a {
+  text-decoration: none;
+  border-radius: 999px;
+  background: var(--q-ink);
+  color: var(--q-white);
+  padding: 8px 12px;
+  font-family: "Sigmar", system-ui, sans-serif;
+  font-size: 0.8rem;
+}
+
 @media (min-width: 920px) {
   .app-shell {
     padding: 26px;

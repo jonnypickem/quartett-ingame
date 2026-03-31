@@ -1,17 +1,51 @@
-import type { GameEvent, GameUiState, SessionState } from "../types/game";
+import type {
+  ConnectionStatus,
+  GameEvent,
+  GameUiState,
+  RealtimeEventRow,
+  RuntimeMode,
+  SessionContextError,
+  SessionState
+} from "../types/game";
 
 export type UiAction =
-  | { type: "ENQUEUE_EVENTS"; events: GameEvent[] }
+  | { type: "ENQUEUE_EVENTS"; events: RealtimeEventRow[] }
   | { type: "PROCESS_NEXT_EVENT" }
   | { type: "SET_BUSY"; value: boolean }
   | { type: "SET_ERROR"; message: string | null }
-  | { type: "SET_SESSION"; session: SessionState };
+  | {
+      type: "SET_BOOTSTRAP";
+      session: SessionState;
+      lastSeenEventId: number;
+      runtimeMode: RuntimeMode;
+      connectionStatus: ConnectionStatus;
+    }
+  | {
+      type: "APPLY_ACTION_RESPONSE";
+      session: SessionState;
+      lastSeenEventId: number;
+    }
+  | {
+      type: "SET_CONNECTION_STATUS";
+      status: ConnectionStatus;
+    }
+  | {
+      type: "SET_CONTEXT_ERROR";
+      error: SessionContextError | null;
+    };
 
-export const createInitialUiState = (session: SessionState): GameUiState => ({
+export const createInitialUiState = (
+  session: SessionState,
+  runtimeMode: RuntimeMode = "local-mock"
+): GameUiState => ({
   session,
   eventQueue: [],
   busy: false,
-  lastError: null
+  lastError: null,
+  lastSeenEventId: 0,
+  connectionStatus: runtimeMode === "realtime" ? "bootstrapping" : "degraded",
+  runtimeMode,
+  contextError: null
 });
 
 const applySingleEvent = (session: SessionState, event: GameEvent): SessionState => {
@@ -79,10 +113,24 @@ export const gameReducer = (state: GameUiState, action: UiAction): GameUiState =
         return state;
       }
 
+      if (next.id <= state.lastSeenEventId) {
+        return {
+          ...state,
+          eventQueue: rest
+        };
+      }
+
+      const event = next.payload;
+      const nextSession =
+        event.type === "state_updated" && event.payload.state.version <= state.session.version
+          ? state.session
+          : applySingleEvent(state.session, event);
+
       return {
         ...state,
-        session: applySingleEvent(state.session, next),
-        eventQueue: rest
+        session: nextSession,
+        eventQueue: rest,
+        lastSeenEventId: Math.max(state.lastSeenEventId, next.id)
       };
     }
     case "SET_BUSY":
@@ -95,10 +143,30 @@ export const gameReducer = (state: GameUiState, action: UiAction): GameUiState =
         ...state,
         lastError: action.message
       };
-    case "SET_SESSION":
+    case "SET_BOOTSTRAP":
       return {
         ...state,
-        session: action.session
+        session: action.session,
+        lastSeenEventId: action.lastSeenEventId,
+        runtimeMode: action.runtimeMode,
+        connectionStatus: action.connectionStatus,
+        contextError: null
+      };
+    case "APPLY_ACTION_RESPONSE":
+      return {
+        ...state,
+        session: action.session,
+        lastSeenEventId: Math.max(state.lastSeenEventId, action.lastSeenEventId)
+      };
+    case "SET_CONNECTION_STATUS":
+      return {
+        ...state,
+        connectionStatus: action.status
+      };
+    case "SET_CONTEXT_ERROR":
+      return {
+        ...state,
+        contextError: action.error
       };
     default:
       return state;

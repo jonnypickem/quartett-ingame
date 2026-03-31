@@ -25,9 +25,29 @@ Mobile-first React + Vite + TypeScript implementation of the Quartett 1v1 game s
   - Lost Tie accepted gives winner pot + loser current top card.
   - Lost Tie declined keeps tie active and pot frozen.
 - Reducer + event queue to process server events deterministically.
+- URL-based dual perspective:
+  - `/?session=<session-id>&player=<player-id>`
+  - Invalid-context handling for missing session/player and player-not-in-session.
 - Supabase backend scaffolding:
   - SQL schema migration
-  - Edge Function endpoint `game-action` (server-authoritative action handling)
+  - Edge Function endpoint `game-action` with:
+    - `GET` bootstrap (`state + latestEventId`)
+    - `POST` action handling (`state + appliedVersion + latestEventId`)
+
+## URL usage
+
+Open the app with query params:
+
+```text
+/?session=<session-id>&player=<player-id>
+```
+
+Examples:
+
+- `/?session=demo-session-01&player=p1`
+- `/?session=demo-session-01&player=p2`
+
+The UI includes helper links to open both player perspectives in separate tabs for QA.
 
 ## Project structure
 
@@ -71,7 +91,7 @@ npm test
 - `VITE_SUPABASE_ANON_KEY`
 - `VITE_GAME_ACTION_ENDPOINT`
 
-When `VITE_GAME_ACTION_ENDPOINT` is missing, the app runs with local in-memory action simulation for fast UI testing.
+When any realtime env dependency is missing (`VITE_GAME_ACTION_ENDPOINT`, `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`), the app explicitly falls back to local mock runtime mode.
 
 ## Create GitHub repo
 

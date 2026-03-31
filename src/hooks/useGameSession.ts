@@ -1,25 +1,104 @@
 import { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
-import { submitAction, subscribeToSessionEvents } from "../lib/gameApi";
+import {
+  fetchSessionBootstrap,
+  resolveRuntimeMode,
+  submitAction,
+  subscribeToSessionEvents
+} from "../lib/gameApi";
+import { validatePlayerInSession } from "../lib/routeContext";
 import { createSessionView } from "../lib/gameEngine";
+import { createMockSessionState } from "../state/mockState";
 import { createInitialUiState, gameReducer } from "../state/gameReducer";
-import { initialMockState } from "../state/mockState";
 import type { GameActionRequest, RequestStatus } from "../types/game";
 
-export const useGameSession = (currentPlayerId: string) => {
-  const [uiState, dispatch] = useReducer(gameReducer, initialMockState, createInitialUiState);
+export const useGameSession = (sessionId: string, currentPlayerId: string) => {
+  const runtimeMode = resolveRuntimeMode();
+
+  const [uiState, dispatch] = useReducer(
+    gameReducer,
+    createMockSessionState(sessionId),
+    (initialSession) => createInitialUiState(initialSession, runtimeMode)
+  );
   const sessionRef = useRef(uiState.session);
+  const lastSeenEventIdRef = useRef(uiState.lastSeenEventId);
 
   useEffect(() => {
     sessionRef.current = uiState.session;
   }, [uiState.session]);
 
   useEffect(() => {
-    const unsubscribe = subscribeToSessionEvents(uiState.session.sessionId, (event) => {
-      dispatch({ type: "ENQUEUE_EVENTS", events: [event] });
+    lastSeenEventIdRef.current = uiState.lastSeenEventId;
+  }, [uiState.lastSeenEventId]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const bootstrap = async () => {
+      dispatch({ type: "SET_BUSY", value: true });
+      dispatch({
+        type: "SET_CONNECTION_STATUS",
+        status: runtimeMode === "realtime" ? "bootstrapping" : "degraded"
+      });
+      dispatch({ type: "SET_CONTEXT_ERROR", error: null });
+      dispatch({ type: "SET_ERROR", message: null });
+
+      try {
+        const response = await fetchSessionBootstrap(sessionId);
+        if (cancelled) {
+          return;
+        }
+
+        const playerValidation = validatePlayerInSession(response.state, currentPlayerId);
+        if (!playerValidation.ok) {
+          dispatch({
+            type: "SET_CONTEXT_ERROR",
+            error: {
+              code: playerValidation.code,
+              message: playerValidation.message
+            }
+          });
+          dispatch({ type: "SET_CONNECTION_STATUS", status: "error" });
+          return;
+        }
+
+        dispatch({
+          type: "SET_BOOTSTRAP",
+          session: response.state,
+          lastSeenEventId: response.latestEventId,
+          runtimeMode,
+          connectionStatus: runtimeMode === "realtime" ? "connected" : "degraded"
+        });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : "Failed to bootstrap session.";
+        dispatch({ type: "SET_ERROR", message });
+        dispatch({ type: "SET_CONNECTION_STATUS", status: "error" });
+      } finally {
+        dispatch({ type: "SET_BUSY", value: false });
+      }
+    };
+
+    void bootstrap();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [currentPlayerId, runtimeMode, sessionId]);
+
+  useEffect(() => {
+    if (runtimeMode !== "realtime" || uiState.contextError) {
+      return;
+    }
+
+    const unsubscribe = subscribeToSessionEvents(sessionId, (row) => {
+      if (row.id <= lastSeenEventIdRef.current) {
+        return;
+      }
+
+      dispatch({ type: "ENQUEUE_EVENTS", events: [row] });
     });
 
     return unsubscribe;
-  }, [uiState.session.sessionId]);
+  }, [runtimeMode, sessionId, uiState.contextError]);
 
   useEffect(() => {
     if (uiState.eventQueue.length === 0) {
@@ -37,6 +116,10 @@ export const useGameSession = (currentPlayerId: string) => {
 
   const callAction = useCallback(
     async (request: Omit<GameActionRequest, "sessionId" | "expectedVersion">) => {
+      if (uiState.contextError) {
+        return;
+      }
+
       dispatch({ type: "SET_BUSY", value: true });
       dispatch({ type: "SET_ERROR", message: null });
 
@@ -51,7 +134,11 @@ export const useGameSession = (currentPlayerId: string) => {
           session
         );
 
-        dispatch({ type: "ENQUEUE_EVENTS", events: response.events });
+        dispatch({
+          type: "APPLY_ACTION_RESPONSE",
+          session: response.state,
+          lastSeenEventId: response.latestEventId
+        });
       } catch (error) {
         const message = error instanceof Error ? error.message : "Unknown action error.";
         dispatch({ type: "SET_ERROR", message });
@@ -59,7 +146,7 @@ export const useGameSession = (currentPlayerId: string) => {
         dispatch({ type: "SET_BUSY", value: false });
       }
     },
-    []
+    [uiState.contextError]
   );
 
   const yourPlayer = useMemo(
@@ -163,6 +250,7 @@ export const useGameSession = (currentPlayerId: string) => {
 
   return {
     state: uiState,
+    runtimeMode,
     view,
     yourPlayer,
     opponent,
@@ -172,6 +260,8 @@ export const useGameSession = (currentPlayerId: string) => {
     startTie,
     loseTie,
     respondTie,
+    connectionStatus: uiState.connectionStatus,
+    contextError: uiState.contextError,
     clearError: () => dispatch({ type: "SET_ERROR", message: null })
   };
 };
