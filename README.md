@@ -115,6 +115,7 @@ This workflow performs:
 2. Deterministic seed (`supabase/seed.sql`)
 3. Function deploy (`supabase/functions/game-action`)
 4. GET/POST contract verification (`npm run test:contract`)
+5. Deterministic seed restore (`supabase/seed.sql`)
 
 If you want to run steps manually:
 
@@ -123,6 +124,7 @@ supabase db push --db-url "$SUPABASE_DB_URL" --include-all
 supabase db push --db-url "$SUPABASE_DB_URL" --include-seed
 supabase functions deploy game-action --project-ref "$SUPABASE_PROJECT_REF" --no-verify-jwt --use-api
 npm run test:contract
+supabase db push --db-url "$SUPABASE_DB_URL" --include-seed
 ```
 
 Edge function contract (frozen for this phase):
