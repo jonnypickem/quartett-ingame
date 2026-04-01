@@ -34,9 +34,22 @@ const routeToJoinCode = (sessionCode: string) => {
   window.location.search = `?join=${encodeURIComponent(sessionCode)}`;
 };
 
-const routeToSession = (sessionId: string, playerId: string) => {
+const routeToSession = (
+  sessionId: string,
+  playerId: string,
+  options?: {
+    forceDeckSelection?: boolean;
+  }
+) => {
   persistPlayer(sessionId, playerId);
-  window.location.search = `?session=${encodeURIComponent(sessionId)}&player=${encodeURIComponent(playerId)}`;
+  const params = new URLSearchParams({
+    session: sessionId,
+    player: playerId
+  });
+  if (options?.forceDeckSelection) {
+    params.set("deck", "select");
+  }
+  window.location.search = `?${params.toString()}`;
 };
 
 const recentSessionCards = [
@@ -84,7 +97,7 @@ const EntryScreen = ({ prefilledCode, joinOnly }: { prefilledCode: string; joinO
     setError(null);
     try {
       const response = await createSession();
-      routeToSession(response.state.sessionId, response.playerId);
+      routeToSession(response.state.sessionId, response.playerId, { forceDeckSelection: true });
     } catch (cause) {
       const message = cause instanceof Error ? cause.message : "Failed to create game.";
       setError(message);
@@ -245,7 +258,15 @@ const EntryScreen = ({ prefilledCode, joinOnly }: { prefilledCode: string; joinO
   );
 };
 
-const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: string }) => {
+const SessionScreen = ({
+  sessionId,
+  playerId,
+  forceDeckSelection
+}: {
+  sessionId: string;
+  playerId: string;
+  forceDeckSelection: boolean;
+}) => {
   const {
     state,
     runtimeMode,
@@ -273,6 +294,7 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
   const [deckCatalog, setDeckCatalog] = useState<DeckCatalogItem[]>([]);
   const [selectedDeck, setSelectedDeck] = useState<DeckCatalogItem | null>(null);
   const [showDeckSelector, setShowDeckSelector] = useState(false);
+  const [forceDeckGateOpen, setForceDeckGateOpen] = useState(forceDeckSelection);
   const [receiveFlightKey, setReceiveFlightKey] = useState(0);
   const previousRef = useRef<{
     pendingTransferId: string | null;
@@ -386,6 +408,18 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
     }
   }, [isHost, session.deckId, session.status]);
 
+  useEffect(() => {
+    if (!forceDeckSelection) {
+      return;
+    }
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("deck") === "select") {
+      params.delete("deck");
+      const query = params.toString();
+      window.history.replaceState({}, "", query ? `${window.location.pathname}?${query}` : window.location.pathname);
+    }
+  }, [forceDeckSelection]);
+
   const shareJoinLink = async () => {
     const message = await shareOrCopyInvite(session.sessionCode, joinUrl);
     setInviteMessage(message);
@@ -447,8 +481,9 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
   if (session.status === "lobby") {
     const canStart = isHost && session.players.length === 2 && Boolean(session.deckId) && !state.busy;
     const mustSelectDeck = isHost && !session.deckId;
+    const shouldForceDeckSelection = isHost && forceDeckGateOpen;
 
-    if ((showDeckSelector || mustSelectDeck) && isHost) {
+    if (showDeckSelector || mustSelectDeck || shouldForceDeckSelection) {
       return (
         <DeckSelector
           decks={deckCatalog}
@@ -456,7 +491,10 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
           busy={state.busy}
           onSelectDeck={selectDeck}
           onResolveDeckById={fetchDeckById}
-          onSelectionConfirmed={() => setShowDeckSelector(false)}
+          onSelectionConfirmed={() => {
+            setShowDeckSelector(false);
+            setForceDeckGateOpen(false);
+          }}
         />
       );
     }
@@ -747,6 +785,7 @@ function App() {
   const sessionId = params.get("session")?.trim() ?? "";
   const playerId = params.get("player")?.trim() ?? "";
   const joinCode = params.get("join")?.trim().toUpperCase() ?? "";
+  const forceDeckSelection = params.get("deck")?.trim().toLowerCase() === "select";
   const joinMode = params.get("mode")?.trim().toLowerCase() === "join";
   const code = params.get("code")?.trim().toUpperCase() ?? "";
   const prefilledCode = joinCode || code;
@@ -769,7 +808,7 @@ function App() {
     );
   }
 
-  return <SessionScreen sessionId={sessionId} playerId={playerId} />;
+  return <SessionScreen sessionId={sessionId} playerId={playerId} forceDeckSelection={forceDeckSelection} />;
 }
 
 export default App;

@@ -45,6 +45,8 @@ import App from "./App";
 describe("App in-game structure", () => {
   beforeEach(() => {
     window.history.replaceState({}, "", "/?session=session-layout&player=p1");
+    session.status = "running";
+    session.deckId = null;
   });
 
   it("renders running view with one visible card shell and no extra info blocks under action row", () => {
@@ -58,5 +60,16 @@ describe("App in-game structure", () => {
     expect(container.querySelector(".tie-info")).toBeNull();
     expect(container.querySelector(".action-panel__buttons--duel")).not.toBeNull();
     expect(screen.queryByText("Swipe up to send")).not.toBeInTheDocument();
+  });
+
+  it("forces deck selector before lobby details when create flow has deck=select", () => {
+    session.status = "lobby";
+    session.deckId = "supercars-v1";
+    window.history.replaceState({}, "", "/?session=session-layout&player=p1&deck=select");
+
+    render(<App />);
+
+    expect(screen.getByText("Choose your deck")).toBeInTheDocument();
+    expect(screen.queryByText("Invite Your Opponent")).not.toBeInTheDocument();
   });
 });
