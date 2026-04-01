@@ -52,8 +52,58 @@ export const CardPanel = ({
     return "Swipe Up To Send";
   }, [swipeState]);
 
+  const canSwipeSurface = variant === "you" && swipeEnabled && Boolean(onSwipeUp);
+
   return (
-    <section className={`player-surface ${surfaceClass}`}>
+    <motion.section
+      className={`player-surface ${surfaceClass} ${canSwipeSurface ? "player-surface--swipeable" : ""}`}
+      drag={canSwipeSurface && !inFlight ? "y" : false}
+      dragElastic={0.12}
+      dragConstraints={{ top: -320, bottom: 0 }}
+      animate={controls}
+      onDragEnd={async (_event, info) => {
+        if (!canSwipeSurface || !onSwipeUp || inFlight) {
+          return;
+        }
+        if (!shouldTriggerSwipe(info.offset.y, info.velocity.y)) {
+          await controls.start({
+            y: 0,
+            rotate: 0,
+            opacity: 1,
+            transition: { type: "spring", stiffness: 300, damping: 26 }
+          });
+          return;
+        }
+
+        setInFlight(true);
+        setSwipeState("flying");
+        await controls.start({
+          y: -window.innerHeight,
+          rotate: -8,
+          opacity: 0.08,
+          transition: { duration: 0.28, ease: "easeIn" }
+        });
+
+        const succeeded = await onSwipeUp();
+
+        if (!succeeded) {
+          setSwipeState("rollback");
+          await controls.start({
+            y: 0,
+            rotate: 0,
+            opacity: 1,
+            transition: { type: "spring", stiffness: 260, damping: 24 }
+          });
+        }
+
+        if (succeeded) {
+          controls.set({ y: 0, rotate: 0, opacity: 1 });
+          setSwipeState("idle");
+        }
+
+        setInFlight(false);
+      }}
+    >
       <div className="player-surface__header">
         <span className="player-tag">{variant === "you" ? "YOU" : "OPPONENT"}</span>
         <span className="player-name">{playerName}</span>
@@ -61,54 +111,13 @@ export const CardPanel = ({
 
       {topCard ? (
         <article className="card-shell card-shell--stack">
-          <motion.div
+          <div className={`stack-peek ${canSwipeSurface ? "stack-peek--swipeable" : ""}`} aria-hidden="true">
+            <div className="stack-peek__card stack-peek__card--one" />
+            <div className="stack-peek__card stack-peek__card--two" />
+          </div>
+
+          <div
             className={`card-stack-zone ${swipeEnabled ? "card-stack-zone--swipeable" : ""}`}
-            drag={swipeEnabled && !inFlight ? "y" : false}
-            dragElastic={0.12}
-            dragConstraints={{ top: -260, bottom: 0 }}
-            animate={controls}
-            onDragEnd={async (_event, info) => {
-              if (!swipeEnabled || !onSwipeUp || inFlight) {
-                return;
-              }
-              if (!shouldTriggerSwipe(info.offset.y, info.velocity.y)) {
-                await controls.start({
-                  y: 0,
-                  rotate: 0,
-                  opacity: 1,
-                  transition: { type: "spring", stiffness: 300, damping: 26 }
-                });
-                return;
-              }
-
-              setInFlight(true);
-              setSwipeState("flying");
-              await controls.start({
-                y: -window.innerHeight,
-                rotate: -8,
-                opacity: 0.08,
-                transition: { duration: 0.28, ease: "easeIn" }
-              });
-
-              const succeeded = await onSwipeUp();
-
-              if (!succeeded) {
-                setSwipeState("rollback");
-                await controls.start({
-                  y: 0,
-                  rotate: 0,
-                  opacity: 1,
-                  transition: { type: "spring", stiffness: 260, damping: 24 }
-                });
-              }
-
-              if (succeeded) {
-                controls.set({ y: 0, rotate: 0, opacity: 1 });
-                setSwipeState("idle");
-              }
-
-              setInFlight(false);
-            }}
           >
             <div className="card-meta-row">
               <span className="card-id">{topCard.code}</span>
@@ -118,7 +127,7 @@ export const CardPanel = ({
             <img className="card-image" src={topCard.imageUrl} alt={`${topCard.code} card art`} />
 
             {swipeEnabled ? <div className="swipe-hint">{swipeLabel}</div> : null}
-          </motion.div>
+          </div>
 
           {receiveFlightKey ? (
             <motion.div
@@ -162,6 +171,6 @@ export const CardPanel = ({
           <p>No card available</p>
         </article>
       )}
-    </section>
+    </motion.section>
   );
 };

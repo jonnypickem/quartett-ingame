@@ -222,6 +222,15 @@ body {
   padding: 12px;
 }
 
+.player-surface--swipeable {
+  touch-action: none;
+  cursor: grab;
+}
+
+.player-surface--swipeable:active {
+  cursor: grabbing;
+}
+
 .player-surface--you {
   background: linear-gradient(180deg, #31bbff 0%, var(--q-blue) 100%);
 }
@@ -260,6 +269,7 @@ body {
 
 .card-shell--stack {
   position: relative;
+  overflow: visible;
 }
 
 .card-shell--stack::before,
@@ -298,6 +308,35 @@ body {
 
 .card-stack-zone {
   position: relative;
+  z-index: 2;
+}
+
+.stack-peek {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.stack-peek__card {
+  position: absolute;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid rgba(49, 51, 55, 0.18);
+}
+
+.stack-peek__card--one {
+  left: 8px;
+  right: 8px;
+  top: 10px;
+  bottom: -7px;
+}
+
+.stack-peek__card--two {
+  left: 16px;
+  right: 16px;
+  top: 18px;
+  bottom: -14px;
 }
 
 .swipe-hint {
