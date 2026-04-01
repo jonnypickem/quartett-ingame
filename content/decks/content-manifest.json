@@ -1,0 +1,3203 @@
+{
+  "generatedAt": "2026-04-01T16:55:49.663Z",
+  "source": "Wikimedia/Wikipedia",
+  "notes": [
+    "All card images are stored as local JPG files in public/decks/<deck-id>/<code>.jpg.",
+    "Deck/categorization data comes from src/data/decks.ts.",
+    "Raw stat modeling remains deterministic and normalized in app/backend deck generation."
+  ],
+  "decks": [
+    {
+      "id": "military-jets-v1",
+      "name": "Military Jets",
+      "cards": [
+        {
+          "code": "01",
+          "name": "F-22 Raptor",
+          "tier": 5,
+          "localImageUrl": "/decks/military-jets-v1/01.jpg",
+          "source": {
+            "queryChain": [
+              "F-22 Raptor fighter aircraft",
+              "F-22 Raptor",
+              "F-22 Raptor jet"
+            ],
+            "wikipediaTitle": "Lockheed Martin F-22 Raptor",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Lockheed_Martin_F-22_Raptor",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/F-22_Raptor_edit1_%28cropped%29.jpg/330px-F-22_Raptor_edit1_%28cropped%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/F-22_Raptor_edit1_%28cropped%29.jpg/330px-F-22_Raptor_edit1_%28cropped%29.jpg"
+          },
+          "specsNormalized": {
+            "speed": 91,
+            "range": 91,
+            "payload": 83,
+            "ceiling": 92,
+            "agility": 87,
+            "stealth": 78
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.35,
+            "combat_range_km": 4155,
+            "payload_kg": 12319,
+            "service_ceiling_m": 21192,
+            "turn_rate_deg_per_s": 29.37,
+            "radar_signature_index": 0.36
+          }
+        },
+        {
+          "code": "02",
+          "name": "F-35 Lightning II",
+          "tier": 5,
+          "localImageUrl": "/decks/military-jets-v1/02.jpg",
+          "source": {
+            "queryChain": [
+              "F-35 Lightning II fighter aircraft",
+              "F-35 Lightning II",
+              "F-35 Lightning II jet"
+            ],
+            "wikipediaTitle": "Lockheed Martin F-35 Lightning II",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Lockheed_Martin_F-35_Lightning_II",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/F-35A_flight_%28cropped%29.jpg/330px-F-35A_flight_%28cropped%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/F-35A_flight_%28cropped%29.jpg/330px-F-35A_flight_%28cropped%29.jpg"
+          },
+          "specsNormalized": {
+            "speed": 97,
+            "range": 80,
+            "payload": 87,
+            "ceiling": 95,
+            "agility": 86,
+            "stealth": 92
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.45,
+            "combat_range_km": 3732,
+            "payload_kg": 12832,
+            "service_ceiling_m": 21495,
+            "turn_rate_deg_per_s": 29.17,
+            "radar_signature_index": 0.21
+          }
+        },
+        {
+          "code": "03",
+          "name": "Eurofighter Typhoon",
+          "tier": 5,
+          "localImageUrl": "/decks/military-jets-v1/03.jpg",
+          "source": {
+            "queryChain": [
+              "Eurofighter Typhoon fighter aircraft",
+              "Eurofighter Typhoon",
+              "Eurofighter Typhoon jet"
+            ],
+            "wikipediaTitle": "Eurofighter Typhoon",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Eurofighter_Typhoon",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/RAF_Eurofighter_EF-2000_Typhoon_F2_Lofting-1.jpg/330px-RAF_Eurofighter_EF-2000_Typhoon_F2_Lofting-1.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/RAF_Eurofighter_EF-2000_Typhoon_F2_Lofting-1.jpg/330px-RAF_Eurofighter_EF-2000_Typhoon_F2_Lofting-1.jpg"
+          },
+          "specsNormalized": {
+            "speed": 94,
+            "range": 80,
+            "payload": 91,
+            "ceiling": 92,
+            "agility": 92,
+            "stealth": 97
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.4,
+            "combat_range_km": 3732,
+            "payload_kg": 13345,
+            "service_ceiling_m": 21192,
+            "turn_rate_deg_per_s": 30.38,
+            "radar_signature_index": 0.15
+          }
+        },
+        {
+          "code": "04",
+          "name": "Dassault Rafale",
+          "tier": 5,
+          "localImageUrl": "/decks/military-jets-v1/04.jpg",
+          "source": {
+            "queryChain": [
+              "Dassault Rafale fighter aircraft",
+              "Dassault Rafale",
+              "Dassault Rafale jet"
+            ],
+            "wikipediaTitle": "Dassault Rafale",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Dassault_Rafale",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Rafale_-_RIAT_2009_%283751416421%29.jpg/330px-Rafale_-_RIAT_2009_%283751416421%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Rafale_-_RIAT_2009_%283751416421%29.jpg/330px-Rafale_-_RIAT_2009_%283751416421%29.jpg"
+          },
+          "specsNormalized": {
+            "speed": 99,
+            "range": 92,
+            "payload": 80,
+            "ceiling": 91,
+            "agility": 83,
+            "stealth": 100
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.48,
+            "combat_range_km": 4193,
+            "payload_kg": 11934,
+            "service_ceiling_m": 21091,
+            "turn_rate_deg_per_s": 28.57,
+            "radar_signature_index": 0.12
+          }
+        },
+        {
+          "code": "05",
+          "name": "Gripen E",
+          "tier": 4,
+          "localImageUrl": "/decks/military-jets-v1/05.jpg",
+          "source": {
+            "queryChain": [
+              "Gripen E fighter aircraft",
+              "Gripen E",
+              "Gripen E jet"
+            ],
+            "wikipediaTitle": "Saab JAS 39 Gripen",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Saab_JAS_39_Gripen",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Saab_JAS_39_Gripen_at_Kaivopuisto_Air_Show%2C_June_2017_%28altered%29_copy.jpg/330px-Saab_JAS_39_Gripen_at_Kaivopuisto_Air_Show%2C_June_2017_%28altered%29_copy.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Saab_JAS_39_Gripen_at_Kaivopuisto_Air_Show%2C_June_2017_%28altered%29_copy.jpg/330px-Saab_JAS_39_Gripen_at_Kaivopuisto_Air_Show%2C_June_2017_%28altered%29_copy.jpg"
+          },
+          "specsNormalized": {
+            "speed": 90,
+            "range": 80,
+            "payload": 83,
+            "ceiling": 86,
+            "agility": 77,
+            "stealth": 73
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.33,
+            "combat_range_km": 3732,
+            "payload_kg": 12319,
+            "service_ceiling_m": 20586,
+            "turn_rate_deg_per_s": 27.35,
+            "radar_signature_index": 0.41
+          }
+        },
+        {
+          "code": "06",
+          "name": "F-15 Eagle",
+          "tier": 4,
+          "localImageUrl": "/decks/military-jets-v1/06.jpg",
+          "source": {
+            "queryChain": [
+              "F-15 Eagle fighter aircraft",
+              "F-15 Eagle",
+              "F-15 Eagle jet"
+            ],
+            "wikipediaTitle": "McDonnell Douglas F-15 Eagle",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/McDonnell_Douglas_F-15_Eagle",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/F-15C_Eagle_from_the_44th_Fighter_Squadron_flies_during_a_routine_training_exercise_April_15%2C_2019.jpg/330px-F-15C_Eagle_from_the_44th_Fighter_Squadron_flies_during_a_routine_training_exercise_April_15%2C_2019.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/F-15C_Eagle_from_the_44th_Fighter_Squadron_flies_during_a_routine_training_exercise_April_15%2C_2019.jpg/330px-F-15C_Eagle_from_the_44th_Fighter_Squadron_flies_during_a_routine_training_exercise_April_15%2C_2019.jpg"
+          },
+          "specsNormalized": {
+            "speed": 85,
+            "range": 77,
+            "payload": 80,
+            "ceiling": 85,
+            "agility": 79,
+            "stealth": 72
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.24,
+            "combat_range_km": 3617,
+            "payload_kg": 11934,
+            "service_ceiling_m": 20485,
+            "turn_rate_deg_per_s": 27.76,
+            "radar_signature_index": 0.43
+          }
+        },
+        {
+          "code": "07",
+          "name": "F-16 Fighting Falcon",
+          "tier": 4,
+          "localImageUrl": "/decks/military-jets-v1/07.jpg",
+          "source": {
+            "queryChain": [
+              "F-16 Fighting Falcon fighter aircraft",
+              "F-16 Fighting Falcon",
+              "F-16 Fighting Falcon jet"
+            ],
+            "wikipediaTitle": "General Dynamics F-16 Fighting Falcon",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/General_Dynamics_F-16_Fighting_Falcon",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/F-16_June_2008.jpg/330px-F-16_June_2008.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/F-16_June_2008.jpg/960px-F-16_June_2008.jpg"
+          },
+          "specsNormalized": {
+            "speed": 88,
+            "range": 82,
+            "payload": 76,
+            "ceiling": 89,
+            "agility": 78,
+            "stealth": 69
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.29,
+            "combat_range_km": 3809,
+            "payload_kg": 11421,
+            "service_ceiling_m": 20889,
+            "turn_rate_deg_per_s": 27.56,
+            "radar_signature_index": 0.46
+          }
+        },
+        {
+          "code": "08",
+          "name": "F/A-18 Super Hornet",
+          "tier": 4,
+          "localImageUrl": "/decks/military-jets-v1/08.jpg",
+          "source": {
+            "queryChain": [
+              "F/A-18 Super Hornet fighter aircraft",
+              "F/A-18 Super Hornet",
+              "F/A-18 Super Hornet jet"
+            ],
+            "wikipediaTitle": "Boeing F/A-18E/F Super Hornet",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Boeing_F%2FA-18E%2FF_Super_Hornet",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/US_Navy_071203-N-8923M-074_An_F-A-18F_Super_Hornet%2C_from_the_Red_Rippers_of_Strike_Fighter_Squadron_%28VFA%29_11%2C_makes_a_sharp_turn_above_the_flight_deck_aboard_the_Nimitz-class_nuclear-powered_aircraft_carrier_USS_Harry_S._Truman.jpg/330px-thumbnail.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/US_Navy_071203-N-8923M-074_An_F-A-18F_Super_Hornet%2C_from_the_Red_Rippers_of_Strike_Fighter_Squadron_%28VFA%29_11%2C_makes_a_sharp_turn_above_the_flight_deck_aboard_the_Nimitz-class_nuclear-powered_aircraft_carrier_USS_Harry_S._Truman.jpg/330px-thumbnail.jpg"
+          },
+          "specsNormalized": {
+            "speed": 85,
+            "range": 74,
+            "payload": 81,
+            "ceiling": 86,
+            "agility": 85,
+            "stealth": 80
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.24,
+            "combat_range_km": 3502,
+            "payload_kg": 12063,
+            "service_ceiling_m": 20586,
+            "turn_rate_deg_per_s": 28.97,
+            "radar_signature_index": 0.34
+          }
+        },
+        {
+          "code": "09",
+          "name": "F/A-18 Hornet",
+          "tier": 4,
+          "localImageUrl": "/decks/military-jets-v1/09.jpg",
+          "source": {
+            "queryChain": [
+              "F/A-18 Hornet fighter aircraft",
+              "F/A-18 Hornet",
+              "F/A-18 Hornet jet"
+            ],
+            "wikipediaTitle": "McDonnell Douglas F/A-18 Hornet in Australian service",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/McDonnell_Douglas_F%2FA-18_Hornet_in_Australian_service",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Three_RAAF_FA-18_Hornets_in_flight_at_Red_Flag_2012_%28wide_crop%29.jpg/330px-Three_RAAF_FA-18_Hornets_in_flight_at_Red_Flag_2012_%28wide_crop%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Three_RAAF_FA-18_Hornets_in_flight_at_Red_Flag_2012_%28wide_crop%29.jpg/330px-Three_RAAF_FA-18_Hornets_in_flight_at_Red_Flag_2012_%28wide_crop%29.jpg"
+          },
+          "specsNormalized": {
+            "speed": 87,
+            "range": 79,
+            "payload": 85,
+            "ceiling": 87,
+            "agility": 73,
+            "stealth": 72
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.28,
+            "combat_range_km": 3694,
+            "payload_kg": 12576,
+            "service_ceiling_m": 20687,
+            "turn_rate_deg_per_s": 26.55,
+            "radar_signature_index": 0.43
+          }
+        },
+        {
+          "code": "10",
+          "name": "Su-57 Felon",
+          "tier": 5,
+          "localImageUrl": "/decks/military-jets-v1/10.jpg",
+          "source": {
+            "queryChain": [
+              "Su-57 Felon fighter aircraft",
+              "Su-57 Felon",
+              "Su-57 Felon jet"
+            ],
+            "wikipediaTitle": "Sukhoi Su-57",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Sukhoi_Su-57",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Sukhoi_Design_Bureau%2C_054%2C_Sukhoi_T-50_%28Su-57_prototype%29_%2849581303977%29.jpg/330px-Sukhoi_Design_Bureau%2C_054%2C_Sukhoi_T-50_%28Su-57_prototype%29_%2849581303977%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Sukhoi_Design_Bureau%2C_054%2C_Sukhoi_T-50_%28Su-57_prototype%29_%2849581303977%29.jpg/330px-Sukhoi_Design_Bureau%2C_054%2C_Sukhoi_T-50_%28Su-57_prototype%29_%2849581303977%29.jpg"
+          },
+          "specsNormalized": {
+            "speed": 100,
+            "range": 84,
+            "payload": 82,
+            "ceiling": 89,
+            "agility": 86,
+            "stealth": 86
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.5,
+            "combat_range_km": 3886,
+            "payload_kg": 12191,
+            "service_ceiling_m": 20889,
+            "turn_rate_deg_per_s": 29.17,
+            "radar_signature_index": 0.27
+          }
+        },
+        {
+          "code": "11",
+          "name": "Su-35S",
+          "tier": 4,
+          "localImageUrl": "/decks/military-jets-v1/11.jpg",
+          "source": {
+            "queryChain": [
+              "Su-35S fighter aircraft",
+              "Su-35S",
+              "Su-35S jet"
+            ],
+            "wikipediaTitle": "Sukhoi Su-35",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Sukhoi_Su-35",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Russian_Air_Force%2C_RF-81719%2C_Sukhoi_Su-35S_%2849581740157%29.jpg/330px-Russian_Air_Force%2C_RF-81719%2C_Sukhoi_Su-35S_%2849581740157%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Russian_Air_Force%2C_RF-81719%2C_Sukhoi_Su-35S_%2849581740157%29.jpg/330px-Russian_Air_Force%2C_RF-81719%2C_Sukhoi_Su-35S_%2849581740157%29.jpg"
+          },
+          "specsNormalized": {
+            "speed": 89,
+            "range": 77,
+            "payload": 70,
+            "ceiling": 92,
+            "agility": 84,
+            "stealth": 79
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.31,
+            "combat_range_km": 3617,
+            "payload_kg": 10652,
+            "service_ceiling_m": 21192,
+            "turn_rate_deg_per_s": 28.77,
+            "radar_signature_index": 0.35
+          }
+        },
+        {
+          "code": "12",
+          "name": "Su-30SM",
+          "tier": 4,
+          "localImageUrl": "/decks/military-jets-v1/12.jpg",
+          "source": {
+            "queryChain": [
+              "Su-30SM fighter aircraft",
+              "Su-30SM",
+              "Su-30SM jet"
+            ],
+            "wikipediaTitle": "Sukhoi Su-33",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Sukhoi_Su-33",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Sukhoi_Su-33_77_RED_%2830268117476%29.jpg/330px-Sukhoi_Su-33_77_RED_%2830268117476%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Sukhoi_Su-33_77_RED_%2830268117476%29.jpg/330px-Sukhoi_Su-33_77_RED_%2830268117476%29.jpg"
+          },
+          "specsNormalized": {
+            "speed": 94,
+            "range": 74,
+            "payload": 74,
+            "ceiling": 88,
+            "agility": 86,
+            "stealth": 87
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.4,
+            "combat_range_km": 3502,
+            "payload_kg": 11165,
+            "service_ceiling_m": 20788,
+            "turn_rate_deg_per_s": 29.17,
+            "radar_signature_index": 0.26
+          }
+        },
+        {
+          "code": "13",
+          "name": "Su-27 Flanker",
+          "tier": 4,
+          "localImageUrl": "/decks/military-jets-v1/13.jpg",
+          "source": {
+            "queryChain": [
+              "Su-27 Flanker fighter aircraft",
+              "Su-27 Flanker",
+              "Su-27 Flanker jet"
+            ],
+            "wikipediaTitle": "Sukhoi Su-27",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Sukhoi_Su-27",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Sukhoi_Su-27SKM_at_MAKS-2005_airshow.jpg/330px-Sukhoi_Su-27SKM_at_MAKS-2005_airshow.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Sukhoi_Su-27SKM_at_MAKS-2005_airshow.jpg/330px-Sukhoi_Su-27SKM_at_MAKS-2005_airshow.jpg"
+          },
+          "specsNormalized": {
+            "speed": 92,
+            "range": 72,
+            "payload": 76,
+            "ceiling": 90,
+            "agility": 81,
+            "stealth": 80
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.36,
+            "combat_range_km": 3425,
+            "payload_kg": 11421,
+            "service_ceiling_m": 20990,
+            "turn_rate_deg_per_s": 28.16,
+            "radar_signature_index": 0.34
+          }
+        },
+        {
+          "code": "14",
+          "name": "MiG-29 Fulcrum",
+          "tier": 4,
+          "localImageUrl": "/decks/military-jets-v1/14.jpg",
+          "source": {
+            "queryChain": [
+              "MiG-29 Fulcrum fighter aircraft",
+              "MiG-29 Fulcrum",
+              "MiG-29 Fulcrum jet"
+            ],
+            "wikipediaTitle": "Mikoyan MiG-29",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Mikoyan_MiG-29",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/VVS_100th_IMG_0691_%287727464290%29_%28cropped%29.jpg/330px-VVS_100th_IMG_0691_%287727464290%29_%28cropped%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/VVS_100th_IMG_0691_%287727464290%29_%28cropped%29.jpg/330px-VVS_100th_IMG_0691_%287727464290%29_%28cropped%29.jpg"
+          },
+          "specsNormalized": {
+            "speed": 83,
+            "range": 78,
+            "payload": 81,
+            "ceiling": 85,
+            "agility": 88,
+            "stealth": 79
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.21,
+            "combat_range_km": 3656,
+            "payload_kg": 12063,
+            "service_ceiling_m": 20485,
+            "turn_rate_deg_per_s": 29.58,
+            "radar_signature_index": 0.35
+          }
+        },
+        {
+          "code": "15",
+          "name": "MiG-31 Foxhound",
+          "tier": 4,
+          "localImageUrl": "/decks/military-jets-v1/15.jpg",
+          "source": {
+            "queryChain": [
+              "MiG-31 Foxhound fighter aircraft",
+              "MiG-31 Foxhound",
+              "MiG-31 Foxhound jet"
+            ],
+            "wikipediaTitle": "Mikoyan MiG-31",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Mikoyan_MiG-31",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Russian_Air_Force_Mikoyan-Gurevich_MiG-31P.jpg/330px-Russian_Air_Force_Mikoyan-Gurevich_MiG-31P.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Russian_Air_Force_Mikoyan-Gurevich_MiG-31P.jpg/330px-Russian_Air_Force_Mikoyan-Gurevich_MiG-31P.jpg"
+          },
+          "specsNormalized": {
+            "speed": 89,
+            "range": 77,
+            "payload": 78,
+            "ceiling": 83,
+            "agility": 74,
+            "stealth": 89
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.31,
+            "combat_range_km": 3617,
+            "payload_kg": 11678,
+            "service_ceiling_m": 20283,
+            "turn_rate_deg_per_s": 26.75,
+            "radar_signature_index": 0.24
+          }
+        },
+        {
+          "code": "16",
+          "name": "Mirage 2000",
+          "tier": 3,
+          "localImageUrl": "/decks/military-jets-v1/16.jpg",
+          "source": {
+            "queryChain": [
+              "Mirage 2000 fighter aircraft",
+              "Mirage 2000",
+              "Mirage 2000 jet"
+            ],
+            "wikipediaTitle": "Dassault Mirage 2000",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Dassault_Mirage_2000",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Mirage_2000C_in-flight_2_%28cropped%29.jpg/330px-Mirage_2000C_in-flight_2_%28cropped%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Mirage_2000C_in-flight_2_%28cropped%29.jpg/330px-Mirage_2000C_in-flight_2_%28cropped%29.jpg"
+          },
+          "specsNormalized": {
+            "speed": 78,
+            "range": 66,
+            "payload": 77,
+            "ceiling": 80,
+            "agility": 69,
+            "stealth": 58
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.12,
+            "combat_range_km": 3195,
+            "payload_kg": 11549,
+            "service_ceiling_m": 19980,
+            "turn_rate_deg_per_s": 25.74,
+            "radar_signature_index": 0.58
+          }
+        },
+        {
+          "code": "17",
+          "name": "Tornado ADV",
+          "tier": 3,
+          "localImageUrl": "/decks/military-jets-v1/17.jpg",
+          "source": {
+            "queryChain": [
+              "Tornado ADV fighter aircraft",
+              "Tornado ADV",
+              "Tornado ADV jet"
+            ],
+            "wikipediaTitle": "Panavia Tornado ADV",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Panavia_Tornado_ADV",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Royal_Air_Force_Panavia_Tornado_F3_Lofting-3.jpg/330px-Royal_Air_Force_Panavia_Tornado_F3_Lofting-3.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Royal_Air_Force_Panavia_Tornado_F3_Lofting-3.jpg/960px-Royal_Air_Force_Panavia_Tornado_F3_Lofting-3.jpg"
+          },
+          "specsNormalized": {
+            "speed": 83,
+            "range": 72,
+            "payload": 66,
+            "ceiling": 75,
+            "agility": 72,
+            "stealth": 63
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.21,
+            "combat_range_km": 3425,
+            "payload_kg": 10138,
+            "service_ceiling_m": 19475,
+            "turn_rate_deg_per_s": 26.34,
+            "radar_signature_index": 0.52
+          }
+        },
+        {
+          "code": "18",
+          "name": "F-14 Tomcat",
+          "tier": 4,
+          "localImageUrl": "/decks/military-jets-v1/18.jpg",
+          "source": {
+            "queryChain": [
+              "F-14 Tomcat fighter aircraft",
+              "F-14 Tomcat",
+              "F-14 Tomcat jet"
+            ],
+            "wikipediaTitle": "Grumman F-14 Tomcat",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Grumman_F-14_Tomcat",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/US_Navy_051105-F-5480T-005_An_F-14D_Tomcat_conducts_a_mission_over_the_Persian_Gulf-region.jpg/330px-US_Navy_051105-F-5480T-005_An_F-14D_Tomcat_conducts_a_mission_over_the_Persian_Gulf-region.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/US_Navy_051105-F-5480T-005_An_F-14D_Tomcat_conducts_a_mission_over_the_Persian_Gulf-region.jpg/330px-US_Navy_051105-F-5480T-005_An_F-14D_Tomcat_conducts_a_mission_over_the_Persian_Gulf-region.jpg"
+          },
+          "specsNormalized": {
+            "speed": 90,
+            "range": 79,
+            "payload": 78,
+            "ceiling": 84,
+            "agility": 83,
+            "stealth": 77
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.33,
+            "combat_range_km": 3694,
+            "payload_kg": 11678,
+            "service_ceiling_m": 20384,
+            "turn_rate_deg_per_s": 28.57,
+            "radar_signature_index": 0.37
+          }
+        },
+        {
+          "code": "19",
+          "name": "F-117 Nighthawk",
+          "tier": 4,
+          "localImageUrl": "/decks/military-jets-v1/19.jpg",
+          "source": {
+            "queryChain": [
+              "F-117 Nighthawk fighter aircraft",
+              "F-117 Nighthawk",
+              "F-117 Nighthawk jet"
+            ],
+            "wikipediaTitle": "Lockheed F-117 Nighthawk",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Lockheed_F-117_Nighthawk",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/F-117_Nighthawk_Front.jpg/330px-F-117_Nighthawk_Front.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/F-117_Nighthawk_Front.jpg/960px-F-117_Nighthawk_Front.jpg"
+          },
+          "specsNormalized": {
+            "speed": 84,
+            "range": 84,
+            "payload": 73,
+            "ceiling": 90,
+            "agility": 87,
+            "stealth": 91
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.23,
+            "combat_range_km": 3886,
+            "payload_kg": 11036,
+            "service_ceiling_m": 20990,
+            "turn_rate_deg_per_s": 29.37,
+            "radar_signature_index": 0.22
+          }
+        },
+        {
+          "code": "20",
+          "name": "A-10 Thunderbolt II",
+          "tier": 3,
+          "localImageUrl": "/decks/military-jets-v1/20.jpg",
+          "source": {
+            "queryChain": [
+              "A-10 Thunderbolt II fighter aircraft",
+              "A-10 Thunderbolt II",
+              "A-10 Thunderbolt II jet"
+            ],
+            "wikipediaTitle": "Fairchild Republic A-10 Thunderbolt II",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Fairchild_Republic_A-10_Thunderbolt_II",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Fairchild_Republic_A-10_Thunderbolt_II_-_32156159151.jpg/330px-Fairchild_Republic_A-10_Thunderbolt_II_-_32156159151.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Fairchild_Republic_A-10_Thunderbolt_II_-_32156159151.jpg/330px-Fairchild_Republic_A-10_Thunderbolt_II_-_32156159151.jpg"
+          },
+          "specsNormalized": {
+            "speed": 84,
+            "range": 71,
+            "payload": 76,
+            "ceiling": 82,
+            "agility": 77,
+            "stealth": 67
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.23,
+            "combat_range_km": 3387,
+            "payload_kg": 11421,
+            "service_ceiling_m": 20182,
+            "turn_rate_deg_per_s": 27.35,
+            "radar_signature_index": 0.48
+          }
+        },
+        {
+          "code": "21",
+          "name": "MiG-21",
+          "tier": 2,
+          "localImageUrl": "/decks/military-jets-v1/21.jpg",
+          "source": {
+            "queryChain": [
+              "MiG-21 fighter aircraft",
+              "MiG-21",
+              "MiG-21 jet"
+            ],
+            "wikipediaTitle": "Mikoyan-Gurevich MiG-21",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Mikoyan-Gurevich_MiG-21",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Croatian_MiG-21_%28cropped%29.jpg/330px-Croatian_MiG-21_%28cropped%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Croatian_MiG-21_%28cropped%29.jpg/960px-Croatian_MiG-21_%28cropped%29.jpg"
+          },
+          "specsNormalized": {
+            "speed": 67,
+            "range": 71,
+            "payload": 60,
+            "ceiling": 70,
+            "agility": 59,
+            "stealth": 69
+          },
+          "rawMetrics": {
+            "max_speed_mach": 1.93,
+            "combat_range_km": 3387,
+            "payload_kg": 9369,
+            "service_ceiling_m": 18970,
+            "turn_rate_deg_per_s": 23.72,
+            "radar_signature_index": 0.46
+          }
+        },
+        {
+          "code": "22",
+          "name": "MiG-25 Foxbat",
+          "tier": 3,
+          "localImageUrl": "/decks/military-jets-v1/22.jpg",
+          "source": {
+            "queryChain": [
+              "MiG-25 Foxbat fighter aircraft",
+              "MiG-25 Foxbat",
+              "MiG-25 Foxbat jet"
+            ],
+            "wikipediaTitle": "Mikoyan-Gurevich MiG-25",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Mikoyan-Gurevich_MiG-25",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Russian_Air_Force_MiG-25.jpg/330px-Russian_Air_Force_MiG-25.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Russian_Air_Force_MiG-25.jpg/330px-Russian_Air_Force_MiG-25.jpg"
+          },
+          "specsNormalized": {
+            "speed": 74,
+            "range": 70,
+            "payload": 76,
+            "ceiling": 79,
+            "agility": 65,
+            "stealth": 80
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.05,
+            "combat_range_km": 3348,
+            "payload_kg": 11421,
+            "service_ceiling_m": 19879,
+            "turn_rate_deg_per_s": 24.93,
+            "radar_signature_index": 0.34
+          }
+        },
+        {
+          "code": "23",
+          "name": "J-20 Mighty Dragon",
+          "tier": 5,
+          "localImageUrl": "/decks/military-jets-v1/23.jpg",
+          "source": {
+            "queryChain": [
+              "J-20 Mighty Dragon fighter aircraft",
+              "J-20 Mighty Dragon",
+              "J-20 Mighty Dragon jet"
+            ],
+            "wikipediaTitle": "Shenyang J-16",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Shenyang_J-16",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/PLAAF_J-16_-_2.jpg/330px-PLAAF_J-16_-_2.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/PLAAF_J-16_-_2.jpg/960px-PLAAF_J-16_-_2.jpg"
+          },
+          "specsNormalized": {
+            "speed": 100,
+            "range": 86,
+            "payload": 77,
+            "ceiling": 100,
+            "agility": 87,
+            "stealth": 89
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.5,
+            "combat_range_km": 3963,
+            "payload_kg": 11549,
+            "service_ceiling_m": 22000,
+            "turn_rate_deg_per_s": 29.37,
+            "radar_signature_index": 0.24
+          }
+        },
+        {
+          "code": "24",
+          "name": "J-10C",
+          "tier": 4,
+          "localImageUrl": "/decks/military-jets-v1/24.jpg",
+          "source": {
+            "queryChain": [
+              "J-10C fighter aircraft",
+              "J-10C",
+              "J-10C jet"
+            ],
+            "wikipediaTitle": "Chengdu J-20",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Chengdu_J-20",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/J-20_at_CCAS2022_%2820220827103424%29.jpg/330px-J-20_at_CCAS2022_%2820220827103424%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/J-20_at_CCAS2022_%2820220827103424%29.jpg/330px-J-20_at_CCAS2022_%2820220827103424%29.jpg"
+          },
+          "specsNormalized": {
+            "speed": 90,
+            "range": 75,
+            "payload": 69,
+            "ceiling": 85,
+            "agility": 80,
+            "stealth": 92
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.33,
+            "combat_range_km": 3540,
+            "payload_kg": 10523,
+            "service_ceiling_m": 20485,
+            "turn_rate_deg_per_s": 27.96,
+            "radar_signature_index": 0.21
+          }
+        },
+        {
+          "code": "25",
+          "name": "FC-31 Gyrfalcon",
+          "tier": 4,
+          "localImageUrl": "/decks/military-jets-v1/25.jpg",
+          "source": {
+            "queryChain": [
+              "FC-31 Gyrfalcon fighter aircraft",
+              "FC-31 Gyrfalcon",
+              "FC-31 Gyrfalcon jet"
+            ],
+            "wikipediaTitle": "Shenyang J-35",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Shenyang_J-35",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/J-35A.jpg/330px-J-35A.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/J-35A.jpg/960px-J-35A.jpg"
+          },
+          "specsNormalized": {
+            "speed": 91,
+            "range": 84,
+            "payload": 74,
+            "ceiling": 88,
+            "agility": 88,
+            "stealth": 91
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.35,
+            "combat_range_km": 3886,
+            "payload_kg": 11165,
+            "service_ceiling_m": 20788,
+            "turn_rate_deg_per_s": 29.58,
+            "radar_signature_index": 0.22
+          }
+        },
+        {
+          "code": "26",
+          "name": "HAL Tejas Mk1A",
+          "tier": 3,
+          "localImageUrl": "/decks/military-jets-v1/26.jpg",
+          "source": {
+            "queryChain": [
+              "HAL Tejas Mk1A fighter aircraft",
+              "HAL Tejas Mk1A",
+              "HAL Tejas Mk1A jet"
+            ],
+            "wikipediaTitle": "HAL Tejas",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/HAL_Tejas",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/HAL_Tejas_%28LA-5018%29_of_Squadron_18_Flying_Bullets.jpg/330px-HAL_Tejas_%28LA-5018%29_of_Squadron_18_Flying_Bullets.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/HAL_Tejas_%28LA-5018%29_of_Squadron_18_Flying_Bullets.jpg/960px-HAL_Tejas_%28LA-5018%29_of_Squadron_18_Flying_Bullets.jpg"
+          },
+          "specsNormalized": {
+            "speed": 84,
+            "range": 64,
+            "payload": 72,
+            "ceiling": 78,
+            "agility": 76,
+            "stealth": 66
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.23,
+            "combat_range_km": 3118,
+            "payload_kg": 10908,
+            "service_ceiling_m": 19778,
+            "turn_rate_deg_per_s": 27.15,
+            "radar_signature_index": 0.49
+          }
+        },
+        {
+          "code": "27",
+          "name": "KAI KF-21",
+          "tier": 4,
+          "localImageUrl": "/decks/military-jets-v1/27.jpg",
+          "source": {
+            "queryChain": [
+              "KAI KF-21 fighter aircraft",
+              "KAI KF-21",
+              "KAI KF-21 jet"
+            ],
+            "wikipediaTitle": "KAI KF-21 Boramae",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/KAI_KF-21_Boramae",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/KF-21_Boramae_First_Production.jpg/330px-KF-21_Boramae_First_Production.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/KF-21_Boramae_First_Production.jpg/330px-KF-21_Boramae_First_Production.jpg"
+          },
+          "specsNormalized": {
+            "speed": 90,
+            "range": 80,
+            "payload": 73,
+            "ceiling": 91,
+            "agility": 86,
+            "stealth": 77
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.33,
+            "combat_range_km": 3732,
+            "payload_kg": 11036,
+            "service_ceiling_m": 21091,
+            "turn_rate_deg_per_s": 29.17,
+            "radar_signature_index": 0.37
+          }
+        },
+        {
+          "code": "28",
+          "name": "F-5 Tiger II",
+          "tier": 2,
+          "localImageUrl": "/decks/military-jets-v1/28.jpg",
+          "source": {
+            "queryChain": [
+              "F-5 Tiger II fighter aircraft",
+              "F-5 Tiger II",
+              "F-5 Tiger II jet"
+            ],
+            "wikipediaTitle": "Grumman F-11 Tiger",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Grumman_F-11_Tiger",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/F11f_grumman_tiger.jpg/330px-F11f_grumman_tiger.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/F11f_grumman_tiger.jpg/960px-F11f_grumman_tiger.jpg"
+          },
+          "specsNormalized": {
+            "speed": 74,
+            "range": 65,
+            "payload": 60,
+            "ceiling": 70,
+            "agility": 67,
+            "stealth": 70
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.05,
+            "combat_range_km": 3157,
+            "payload_kg": 9369,
+            "service_ceiling_m": 18970,
+            "turn_rate_deg_per_s": 25.33,
+            "radar_signature_index": 0.45
+          }
+        },
+        {
+          "code": "29",
+          "name": "Su-34 Fullback",
+          "tier": 4,
+          "localImageUrl": "/decks/military-jets-v1/29.jpg",
+          "source": {
+            "queryChain": [
+              "Su-34 Fullback fighter aircraft",
+              "Su-34 Fullback",
+              "Su-34 Fullback jet"
+            ],
+            "wikipediaTitle": "Sukhoi Su-34",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Sukhoi_Su-34",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/MAKS2015part1-10_%28cropped%29.jpg/330px-MAKS2015part1-10_%28cropped%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/MAKS2015part1-10_%28cropped%29.jpg/960px-MAKS2015part1-10_%28cropped%29.jpg"
+          },
+          "specsNormalized": {
+            "speed": 91,
+            "range": 75,
+            "payload": 81,
+            "ceiling": 83,
+            "agility": 80,
+            "stealth": 82
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.35,
+            "combat_range_km": 3540,
+            "payload_kg": 12063,
+            "service_ceiling_m": 20283,
+            "turn_rate_deg_per_s": 27.96,
+            "radar_signature_index": 0.32
+          }
+        },
+        {
+          "code": "30",
+          "name": "SEPECAT Jaguar",
+          "tier": 2,
+          "localImageUrl": "/decks/military-jets-v1/30.jpg",
+          "source": {
+            "queryChain": [
+              "SEPECAT Jaguar fighter aircraft",
+              "SEPECAT Jaguar",
+              "SEPECAT Jaguar jet"
+            ],
+            "wikipediaTitle": "SEPECAT Jaguar",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/SEPECAT_Jaguar",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/French_Jaguar_A_of_EC_1-7_Provence_in_flight_over_the_Adriatic_Sea%2C_8_April_2003_%28DF-SD-05-05511%29.jpg/330px-French_Jaguar_A_of_EC_1-7_Provence_in_flight_over_the_Adriatic_Sea%2C_8_April_2003_%28DF-SD-05-05511%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/French_Jaguar_A_of_EC_1-7_Provence_in_flight_over_the_Adriatic_Sea%2C_8_April_2003_%28DF-SD-05-05511%29.jpg/330px-French_Jaguar_A_of_EC_1-7_Provence_in_flight_over_the_Adriatic_Sea%2C_8_April_2003_%28DF-SD-05-05511%29.jpg"
+          },
+          "specsNormalized": {
+            "speed": 71,
+            "range": 71,
+            "payload": 62,
+            "ceiling": 65,
+            "agility": 63,
+            "stealth": 62
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2,
+            "combat_range_km": 3387,
+            "payload_kg": 9625,
+            "service_ceiling_m": 18465,
+            "turn_rate_deg_per_s": 24.53,
+            "radar_signature_index": 0.53
+          }
+        },
+        {
+          "code": "31",
+          "name": "Yak-141",
+          "tier": 3,
+          "localImageUrl": "/decks/military-jets-v1/31.jpg",
+          "source": {
+            "queryChain": [
+              "Yak-141 fighter aircraft",
+              "Yak-141",
+              "Yak-141 jet"
+            ],
+            "wikipediaTitle": "Yakovlev Yak-141",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Yakovlev_Yak-141",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Yakovlev_Yak-141_at_1992_Farnborough_Airshow_%282%29.jpg/330px-Yakovlev_Yak-141_at_1992_Farnborough_Airshow_%282%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Yakovlev_Yak-141_at_1992_Farnborough_Airshow_%282%29.jpg/960px-Yakovlev_Yak-141_at_1992_Farnborough_Airshow_%282%29.jpg"
+          },
+          "specsNormalized": {
+            "speed": 74,
+            "range": 65,
+            "payload": 67,
+            "ceiling": 81,
+            "agility": 69,
+            "stealth": 62
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.05,
+            "combat_range_km": 3157,
+            "payload_kg": 10267,
+            "service_ceiling_m": 20081,
+            "turn_rate_deg_per_s": 25.74,
+            "radar_signature_index": 0.53
+          }
+        },
+        {
+          "code": "32",
+          "name": "Harrier II",
+          "tier": 3,
+          "localImageUrl": "/decks/military-jets-v1/32.jpg",
+          "source": {
+            "queryChain": [
+              "Harrier II fighter aircraft",
+              "Harrier II",
+              "Harrier II jet"
+            ],
+            "wikipediaTitle": "British Aerospace Harrier II",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/British_Aerospace_Harrier_II",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/RAF_Harrier_GR9.JPG/330px-RAF_Harrier_GR9.JPG",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/RAF_Harrier_GR9.JPG/330px-RAF_Harrier_GR9.JPG"
+          },
+          "specsNormalized": {
+            "speed": 77,
+            "range": 68,
+            "payload": 66,
+            "ceiling": 83,
+            "agility": 74,
+            "stealth": 79
+          },
+          "rawMetrics": {
+            "max_speed_mach": 2.11,
+            "combat_range_km": 3272,
+            "payload_kg": 10138,
+            "service_ceiling_m": 20283,
+            "turn_rate_deg_per_s": 26.75,
+            "radar_signature_index": 0.35
+          }
+        }
+      ]
+    },
+    {
+      "id": "supercars-v1",
+      "name": "Supercars",
+      "cards": [
+        {
+          "code": "01",
+          "name": "Bugatti Chiron Super Sport",
+          "tier": 5,
+          "localImageUrl": "/decks/supercars-v1/01.jpg",
+          "source": {
+            "queryChain": [
+              "Bugatti Chiron Super Sport supercar",
+              "Bugatti Chiron Super Sport",
+              "Bugatti Chiron Super Sport sports car"
+            ],
+            "wikipediaTitle": "Bugatti Chiron",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Bugatti_Chiron",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Bugatti_Chiron_1.jpg/330px-Bugatti_Chiron_1.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Bugatti_Chiron_1.jpg/330px-Bugatti_Chiron_1.jpg"
+          },
+          "specsNormalized": {
+            "top_speed": 97,
+            "acceleration": 89,
+            "power": 95,
+            "handling": 86,
+            "braking": 98,
+            "rarity": 99
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 492,
+            "zero_to_100_kmh_s": 2.13,
+            "power_hp": 1822,
+            "lateral_g": 1.67,
+            "braking_100_to_0_m": 26.26,
+            "production_units_est": 525
+          }
+        },
+        {
+          "code": "02",
+          "name": "Bugatti Veyron Super Sport",
+          "tier": 5,
+          "localImageUrl": "/decks/supercars-v1/02.jpg",
+          "source": {
+            "queryChain": [
+              "Bugatti Veyron Super Sport supercar",
+              "Bugatti Veyron Super Sport",
+              "Bugatti Veyron Super Sport sports car"
+            ],
+            "wikipediaTitle": "Bugatti Veyron",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Bugatti_Veyron",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Bugatti_Veyron_16.4_%E2%80%93_Frontansicht_%281%29%2C_5._April_2012%2C_D%C3%BCsseldorf.jpg/330px-Bugatti_Veyron_16.4_%E2%80%93_Frontansicht_%281%29%2C_5._April_2012%2C_D%C3%BCsseldorf.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Bugatti_Veyron_16.4_%E2%80%93_Frontansicht_%281%29%2C_5._April_2012%2C_D%C3%BCsseldorf.jpg/330px-Bugatti_Veyron_16.4_%E2%80%93_Frontansicht_%281%29%2C_5._April_2012%2C_D%C3%BCsseldorf.jpg"
+          },
+          "specsNormalized": {
+            "top_speed": 93,
+            "acceleration": 98,
+            "power": 96,
+            "handling": 93,
+            "braking": 91,
+            "rarity": 85
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 480,
+            "zero_to_100_kmh_s": 1.86,
+            "power_hp": 1837,
+            "lateral_g": 1.74,
+            "braking_100_to_0_m": 27.18,
+            "production_units_est": 7593
+          }
+        },
+        {
+          "code": "03",
+          "name": "Koenigsegg Jesko",
+          "tier": 5,
+          "localImageUrl": "/decks/supercars-v1/03.jpg",
+          "source": {
+            "queryChain": [
+              "Koenigsegg Jesko supercar",
+              "Koenigsegg Jesko",
+              "Koenigsegg Jesko sports car"
+            ],
+            "wikipediaTitle": "Koenigsegg Jesko",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Koenigsegg_Jesko",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/GIMS_2019%2C_Le_Grand-Saconnex_%28GIMS0833%29.jpg/330px-GIMS_2019%2C_Le_Grand-Saconnex_%28GIMS0833%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/GIMS_2019%2C_Le_Grand-Saconnex_%28GIMS0833%29.jpg/330px-GIMS_2019%2C_Le_Grand-Saconnex_%28GIMS0833%29.jpg"
+          },
+          "specsNormalized": {
+            "top_speed": 98,
+            "acceleration": 100,
+            "power": 100,
+            "handling": 87,
+            "braking": 87,
+            "rarity": 92
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 494,
+            "zero_to_100_kmh_s": 1.8,
+            "power_hp": 1900,
+            "lateral_g": 1.68,
+            "braking_100_to_0_m": 27.71,
+            "production_units_est": 4059
+          }
+        },
+        {
+          "code": "04",
+          "name": "Koenigsegg Regera",
+          "tier": 5,
+          "localImageUrl": "/decks/supercars-v1/04.jpg",
+          "source": {
+            "queryChain": [
+              "Koenigsegg Regera supercar",
+              "Koenigsegg Regera",
+              "Koenigsegg Regera sports car"
+            ],
+            "wikipediaTitle": "Koenigsegg Regera",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Koenigsegg_Regera",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Regera_%28light_gradient%29.png/330px-Regera_%28light_gradient%29.png",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Regera_%28light_gradient%29.png/330px-Regera_%28light_gradient%29.png"
+          },
+          "specsNormalized": {
+            "top_speed": 97,
+            "acceleration": 90,
+            "power": 95,
+            "handling": 85,
+            "braking": 98,
+            "rarity": 96
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 492,
+            "zero_to_100_kmh_s": 2.1,
+            "power_hp": 1822,
+            "lateral_g": 1.66,
+            "braking_100_to_0_m": 26.26,
+            "production_units_est": 2039
+          }
+        },
+        {
+          "code": "05",
+          "name": "Koenigsegg Agera RS",
+          "tier": 5,
+          "localImageUrl": "/decks/supercars-v1/05.jpg",
+          "source": {
+            "queryChain": [
+              "Koenigsegg Agera RS supercar",
+              "Koenigsegg Agera RS",
+              "Koenigsegg Agera RS sports car"
+            ],
+            "wikipediaTitle": "Koenigsegg Agera",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Koenigsegg_Agera",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/2015_Koenigsegg_Agera_N_%2819886243212%29.jpg/330px-2015_Koenigsegg_Agera_N_%2819886243212%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/2015_Koenigsegg_Agera_N_%2819886243212%29.jpg/960px-2015_Koenigsegg_Agera_N_%2819886243212%29.jpg"
+          },
+          "specsNormalized": {
+            "top_speed": 93,
+            "acceleration": 90,
+            "power": 100,
+            "handling": 92,
+            "braking": 94,
+            "rarity": 100
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 480,
+            "zero_to_100_kmh_s": 2.1,
+            "power_hp": 1900,
+            "lateral_g": 1.73,
+            "braking_100_to_0_m": 26.79,
+            "production_units_est": 20
+          }
+        },
+        {
+          "code": "06",
+          "name": "Rimac Nevera",
+          "tier": 5,
+          "localImageUrl": "/decks/supercars-v1/06.jpg",
+          "source": {
+            "queryChain": [
+              "Rimac Nevera supercar",
+              "Rimac Nevera",
+              "Rimac Nevera sports car"
+            ],
+            "wikipediaTitle": "Rimac Nevera",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Rimac_Nevera",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Rimac_Nevera.jpg/330px-Rimac_Nevera.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Rimac_Nevera.jpg/330px-Rimac_Nevera.jpg"
+          },
+          "specsNormalized": {
+            "top_speed": 96,
+            "acceleration": 89,
+            "power": 100,
+            "handling": 85,
+            "braking": 95,
+            "rarity": 98
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 489,
+            "zero_to_100_kmh_s": 2.13,
+            "power_hp": 1900,
+            "lateral_g": 1.66,
+            "braking_100_to_0_m": 26.66,
+            "production_units_est": 1030
+          }
+        },
+        {
+          "code": "07",
+          "name": "Ferrari LaFerrari",
+          "tier": 5,
+          "localImageUrl": "/decks/supercars-v1/07.jpg",
+          "source": {
+            "queryChain": [
+              "Ferrari LaFerrari supercar",
+              "Ferrari LaFerrari",
+              "Ferrari LaFerrari sports car"
+            ],
+            "wikipediaTitle": "LaFerrari",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/LaFerrari",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/LaFerrari_in_Beverly_Hills_%2814563979888%29.jpg/330px-LaFerrari_in_Beverly_Hills_%2814563979888%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/LaFerrari_in_Beverly_Hills_%2814563979888%29.jpg/330px-LaFerrari_in_Beverly_Hills_%2814563979888%29.jpg"
+          },
+          "specsNormalized": {
+            "top_speed": 95,
+            "acceleration": 91,
+            "power": 98,
+            "handling": 95,
+            "braking": 97,
+            "rarity": 98
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 486,
+            "zero_to_100_kmh_s": 2.07,
+            "power_hp": 1869,
+            "lateral_g": 1.75,
+            "braking_100_to_0_m": 26.39,
+            "production_units_est": 1030
+          }
+        },
+        {
+          "code": "08",
+          "name": "Ferrari SF90 Stradale",
+          "tier": 5,
+          "localImageUrl": "/decks/supercars-v1/08.jpg",
+          "source": {
+            "queryChain": [
+              "Ferrari SF90 Stradale supercar",
+              "Ferrari SF90 Stradale",
+              "Ferrari SF90 Stradale sports car"
+            ],
+            "wikipediaTitle": "Ferrari SF90 Stradale",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Ferrari_SF90_Stradale",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Red_2019_Ferrari_SF90_Stradale_%2848264238897%29_%28cropped%29.jpg/330px-Red_2019_Ferrari_SF90_Stradale_%2848264238897%29_%28cropped%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Red_2019_Ferrari_SF90_Stradale_%2848264238897%29_%28cropped%29.jpg/330px-Red_2019_Ferrari_SF90_Stradale_%2848264238897%29_%28cropped%29.jpg"
+          },
+          "specsNormalized": {
+            "top_speed": 98,
+            "acceleration": 97,
+            "power": 98,
+            "handling": 96,
+            "braking": 88,
+            "rarity": 99
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 494,
+            "zero_to_100_kmh_s": 1.89,
+            "power_hp": 1869,
+            "lateral_g": 1.76,
+            "braking_100_to_0_m": 27.58,
+            "production_units_est": 525
+          }
+        },
+        {
+          "code": "09",
+          "name": "Ferrari 812 Superfast",
+          "tier": 4,
+          "localImageUrl": "/decks/supercars-v1/09.jpg",
+          "source": {
+            "queryChain": [
+              "Ferrari 812 Superfast supercar",
+              "Ferrari 812 Superfast",
+              "Ferrari 812 Superfast sports car"
+            ],
+            "wikipediaTitle": "Ferrari 812 Superfast",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Ferrari_812_Superfast",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/2019_Ferrari_812_Superfast_S-A_6.5.jpg/330px-2019_Ferrari_812_Superfast_S-A_6.5.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/2019_Ferrari_812_Superfast_S-A_6.5.jpg/330px-2019_Ferrari_812_Superfast_S-A_6.5.jpg"
+          },
+          "specsNormalized": {
+            "top_speed": 97,
+            "acceleration": 81,
+            "power": 86,
+            "handling": 89,
+            "braking": 77,
+            "rarity": 93
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 492,
+            "zero_to_100_kmh_s": 2.38,
+            "power_hp": 1681,
+            "lateral_g": 1.7,
+            "braking_100_to_0_m": 29.02,
+            "production_units_est": 3554
+          }
+        },
+        {
+          "code": "10",
+          "name": "Ferrari Enzo",
+          "tier": 4,
+          "localImageUrl": "/decks/supercars-v1/10.jpg",
+          "source": {
+            "queryChain": [
+              "Ferrari Enzo supercar",
+              "Ferrari Enzo",
+              "Ferrari Enzo sports car"
+            ],
+            "wikipediaTitle": "Ferrari Enzo",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Ferrari_Enzo",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Orange_Enzo_Ferrari_%287191948164%29.jpg/330px-Orange_Enzo_Ferrari_%287191948164%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Orange_Enzo_Ferrari_%287191948164%29.jpg/330px-Orange_Enzo_Ferrari_%287191948164%29.jpg"
+          },
+          "specsNormalized": {
+            "top_speed": 90,
+            "acceleration": 91,
+            "power": 94,
+            "handling": 81,
+            "braking": 80,
+            "rarity": 87
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 472,
+            "zero_to_100_kmh_s": 2.07,
+            "power_hp": 1806,
+            "lateral_g": 1.63,
+            "braking_100_to_0_m": 28.63,
+            "production_units_est": 6583
+          }
+        },
+        {
+          "code": "11",
+          "name": "Lamborghini Revuelto",
+          "tier": 5,
+          "localImageUrl": "/decks/supercars-v1/11.jpg",
+          "source": {
+            "queryChain": [
+              "Lamborghini Revuelto supercar",
+              "Lamborghini Revuelto",
+              "Lamborghini Revuelto sports car"
+            ],
+            "wikipediaTitle": "Lamborghini",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Lamborghini",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/en/thumb/d/df/Lamborghini_Logo.svg/330px-Lamborghini_Logo.svg.png",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/en/thumb/d/df/Lamborghini_Logo.svg/330px-Lamborghini_Logo.svg.png"
+          },
+          "specsNormalized": {
+            "top_speed": 100,
+            "acceleration": 100,
+            "power": 94,
+            "handling": 96,
+            "braking": 83,
+            "rarity": 99
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 500,
+            "zero_to_100_kmh_s": 1.8,
+            "power_hp": 1806,
+            "lateral_g": 1.76,
+            "braking_100_to_0_m": 28.23,
+            "production_units_est": 525
+          }
+        },
+        {
+          "code": "12",
+          "name": "Lamborghini Aventador SVJ",
+          "tier": 4,
+          "localImageUrl": "/decks/supercars-v1/12.jpg",
+          "source": {
+            "queryChain": [
+              "Lamborghini Aventador SVJ supercar",
+              "Lamborghini Aventador SVJ",
+              "Lamborghini Aventador SVJ sports car"
+            ],
+            "wikipediaTitle": "Lamborghini Miura",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Lamborghini_Miura",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/1971_Lamborghini_Miura_P400_SV.jpg/330px-1971_Lamborghini_Miura_P400_SV.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/1971_Lamborghini_Miura_P400_SV.jpg/330px-1971_Lamborghini_Miura_P400_SV.jpg"
+          },
+          "specsNormalized": {
+            "top_speed": 86,
+            "acceleration": 84,
+            "power": 86,
+            "handling": 88,
+            "braking": 86,
+            "rarity": 93
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 460,
+            "zero_to_100_kmh_s": 2.28,
+            "power_hp": 1681,
+            "lateral_g": 1.69,
+            "braking_100_to_0_m": 27.84,
+            "production_units_est": 3554
+          }
+        },
+        {
+          "code": "13",
+          "name": "Lamborghini Huracan STO",
+          "tier": 4,
+          "localImageUrl": "/decks/supercars-v1/13.jpg",
+          "source": {
+            "queryChain": [
+              "Lamborghini Huracan STO supercar",
+              "Lamborghini Huracan STO",
+              "Lamborghini Huracan STO sports car"
+            ],
+            "wikipediaTitle": "Lamborghini Huracán",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Lamborghini_Hurac%C3%A1n",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/2017_Lamborghini_Huracan_LP610.jpg/330px-2017_Lamborghini_Huracan_LP610.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/2017_Lamborghini_Huracan_LP610.jpg/330px-2017_Lamborghini_Huracan_LP610.jpg"
+          },
+          "specsNormalized": {
+            "top_speed": 96,
+            "acceleration": 85,
+            "power": 96,
+            "handling": 90,
+            "braking": 76,
+            "rarity": 75
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 489,
+            "zero_to_100_kmh_s": 2.25,
+            "power_hp": 1837,
+            "lateral_g": 1.71,
+            "braking_100_to_0_m": 29.15,
+            "production_units_est": 12641
+          }
+        },
+        {
+          "code": "14",
+          "name": "McLaren P1",
+          "tier": 5,
+          "localImageUrl": "/decks/supercars-v1/14.jpg",
+          "source": {
+            "queryChain": [
+              "McLaren P1 supercar",
+              "McLaren P1",
+              "McLaren P1 sports car"
+            ],
+            "wikipediaTitle": "McLaren P1",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/McLaren_P1",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/McLaren_P1.jpg/330px-McLaren_P1.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/McLaren_P1.jpg/330px-McLaren_P1.jpg"
+          },
+          "specsNormalized": {
+            "top_speed": 95,
+            "acceleration": 91,
+            "power": 100,
+            "handling": 95,
+            "braking": 93,
+            "rarity": 87
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 486,
+            "zero_to_100_kmh_s": 2.07,
+            "power_hp": 1900,
+            "lateral_g": 1.75,
+            "braking_100_to_0_m": 26.92,
+            "production_units_est": 6583
+          }
+        },
+        {
+          "code": "15",
+          "name": "McLaren 720S",
+          "tier": 4,
+          "localImageUrl": "/decks/supercars-v1/15.jpg",
+          "source": {
+            "queryChain": [
+              "McLaren 720S supercar",
+              "McLaren 720S",
+              "McLaren 720S sports car"
+            ],
+            "wikipediaTitle": "McLaren 720S",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/McLaren_720S",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/2018_McLaren_720S_V8_S-A_4.0.jpg/330px-2018_McLaren_720S_V8_S-A_4.0.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/2018_McLaren_720S_V8_S-A_4.0.jpg/330px-2018_McLaren_720S_V8_S-A_4.0.jpg"
+          },
+          "specsNormalized": {
+            "top_speed": 91,
+            "acceleration": 81,
+            "power": 87,
+            "handling": 90,
+            "braking": 81,
+            "rarity": 80
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 475,
+            "zero_to_100_kmh_s": 2.38,
+            "power_hp": 1696,
+            "lateral_g": 1.71,
+            "braking_100_to_0_m": 28.49,
+            "production_units_est": 10117
+          }
+        },
+        {
+          "code": "16",
+          "name": "McLaren Senna",
+          "tier": 5,
+          "localImageUrl": "/decks/supercars-v1/16.jpg",
+          "source": {
+            "queryChain": [
+              "McLaren Senna supercar",
+              "McLaren Senna",
+              "McLaren Senna sports car"
+            ],
+            "wikipediaTitle": "McLaren F1",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/McLaren_F1",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/1996_McLaren_F1_Chassis_No_63_6.1_Front.jpg/330px-1996_McLaren_F1_Chassis_No_63_6.1_Front.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/1996_McLaren_F1_Chassis_No_63_6.1_Front.jpg/330px-1996_McLaren_F1_Chassis_No_63_6.1_Front.jpg"
+          },
+          "specsNormalized": {
+            "top_speed": 100,
+            "acceleration": 97,
+            "power": 100,
+            "handling": 95,
+            "braking": 91,
+            "rarity": 87
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 500,
+            "zero_to_100_kmh_s": 1.89,
+            "power_hp": 1900,
+            "lateral_g": 1.75,
+            "braking_100_to_0_m": 27.18,
+            "production_units_est": 6583
+          }
+        },
+        {
+          "code": "17",
+          "name": "Porsche 918 Spyder",
+          "tier": 5,
+          "localImageUrl": "/decks/supercars-v1/17.jpg",
+          "source": {
+            "queryChain": [
+              "Porsche 918 Spyder supercar",
+              "Porsche 918 Spyder",
+              "Porsche 918 Spyder sports car"
+            ],
+            "wikipediaTitle": "Porsche Boxster and Cayman",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Porsche_Boxster_and_Cayman",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Porsche_718_Boxster_Spyder_IMG_2961.jpg/330px-Porsche_718_Boxster_Spyder_IMG_2961.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Porsche_718_Boxster_Spyder_IMG_2961.jpg/330px-Porsche_718_Boxster_Spyder_IMG_2961.jpg"
+          },
+          "specsNormalized": {
+            "top_speed": 95,
+            "acceleration": 86,
+            "power": 100,
+            "handling": 91,
+            "braking": 91,
+            "rarity": 97
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 486,
+            "zero_to_100_kmh_s": 2.22,
+            "power_hp": 1900,
+            "lateral_g": 1.72,
+            "braking_100_to_0_m": 27.18,
+            "production_units_est": 1535
+          }
+        },
+        {
+          "code": "18",
+          "name": "Porsche Carrera GT",
+          "tier": 4,
+          "localImageUrl": "/decks/supercars-v1/18.jpg",
+          "source": {
+            "queryChain": [
+              "Porsche Carrera GT supercar",
+              "Porsche Carrera GT",
+              "Porsche Carrera GT sports car"
+            ],
+            "wikipediaTitle": "Porsche 3512",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Porsche_3512",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Porsche_3512_engine_rear-left_2019_Prototyp_Museum.jpg/330px-Porsche_3512_engine_rear-left_2019_Prototyp_Museum.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Porsche_3512_engine_rear-left_2019_Prototyp_Museum.jpg/330px-Porsche_3512_engine_rear-left_2019_Prototyp_Museum.jpg"
+          },
+          "specsNormalized": {
+            "top_speed": 88,
+            "acceleration": 94,
+            "power": 97,
+            "handling": 82,
+            "braking": 82,
+            "rarity": 92
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 466,
+            "zero_to_100_kmh_s": 1.98,
+            "power_hp": 1853,
+            "lateral_g": 1.64,
+            "braking_100_to_0_m": 28.36,
+            "production_units_est": 4059
+          }
+        },
+        {
+          "code": "19",
+          "name": "Pagani Huayra",
+          "tier": 4,
+          "localImageUrl": "/decks/supercars-v1/19.jpg",
+          "source": {
+            "queryChain": [
+              "Pagani Huayra supercar",
+              "Pagani Huayra",
+              "Pagani Huayra sports car"
+            ],
+            "wikipediaTitle": "Pagani Huayra",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Pagani_Huayra",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Pagani%2C_GIMS_2019%2C_Le_Grand-Saconnex_%28GIMS0023%29.jpg/330px-Pagani%2C_GIMS_2019%2C_Le_Grand-Saconnex_%28GIMS0023%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Pagani%2C_GIMS_2019%2C_Le_Grand-Saconnex_%28GIMS0023%29.jpg/330px-Pagani%2C_GIMS_2019%2C_Le_Grand-Saconnex_%28GIMS0023%29.jpg"
+          },
+          "specsNormalized": {
+            "top_speed": 97,
+            "acceleration": 94,
+            "power": 92,
+            "handling": 86,
+            "braking": 88,
+            "rarity": 88
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 492,
+            "zero_to_100_kmh_s": 1.98,
+            "power_hp": 1775,
+            "lateral_g": 1.67,
+            "braking_100_to_0_m": 27.58,
+            "production_units_est": 6078
+          }
+        },
+        {
+          "code": "20",
+          "name": "Pagani Zonda R",
+          "tier": 4,
+          "localImageUrl": "/decks/supercars-v1/20.jpg",
+          "source": {
+            "queryChain": [
+              "Pagani Zonda R supercar",
+              "Pagani Zonda R",
+              "Pagani Zonda R sports car"
+            ],
+            "wikipediaTitle": "Pagani Zonda",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Pagani_Zonda",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Pagani_Zonda_C12_%27chassis_001%27_Genf_2019_1Y7A5539.jpg/330px-Pagani_Zonda_C12_%27chassis_001%27_Genf_2019_1Y7A5539.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Pagani_Zonda_C12_%27chassis_001%27_Genf_2019_1Y7A5539.jpg/330px-Pagani_Zonda_C12_%27chassis_001%27_Genf_2019_1Y7A5539.jpg"
+          },
+          "specsNormalized": {
+            "top_speed": 84,
+            "acceleration": 89,
+            "power": 86,
+            "handling": 83,
+            "braking": 75,
+            "rarity": 90
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 455,
+            "zero_to_100_kmh_s": 2.13,
+            "power_hp": 1681,
+            "lateral_g": 1.65,
+            "braking_100_to_0_m": 29.28,
+            "production_units_est": 5068
+          }
+        },
+        {
+          "code": "21",
+          "name": "Aston Martin Valkyrie",
+          "tier": 5,
+          "localImageUrl": "/decks/supercars-v1/21.jpg",
+          "source": {
+            "queryChain": [
+              "Aston Martin Valkyrie supercar",
+              "Aston Martin Valkyrie",
+              "Aston Martin Valkyrie sports car"
+            ],
+            "wikipediaTitle": "Aston Martin Valkyrie",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Aston_Martin_Valkyrie",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Aston_Martin_Valkyrie_Verification_Prototype_001_Genf_2019_1Y7A5569.jpg/330px-Aston_Martin_Valkyrie_Verification_Prototype_001_Genf_2019_1Y7A5569.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Aston_Martin_Valkyrie_Verification_Prototype_001_Genf_2019_1Y7A5569.jpg/330px-Aston_Martin_Valkyrie_Verification_Prototype_001_Genf_2019_1Y7A5569.jpg"
+          },
+          "specsNormalized": {
+            "top_speed": 100,
+            "acceleration": 97,
+            "power": 100,
+            "handling": 91,
+            "braking": 89,
+            "rarity": 92
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 500,
+            "zero_to_100_kmh_s": 1.89,
+            "power_hp": 1900,
+            "lateral_g": 1.72,
+            "braking_100_to_0_m": 27.44,
+            "production_units_est": 4059
+          }
+        },
+        {
+          "code": "22",
+          "name": "Mercedes-AMG One",
+          "tier": 5,
+          "localImageUrl": "/decks/supercars-v1/22.jpg",
+          "source": {
+            "queryChain": [
+              "Mercedes-AMG One supercar",
+              "Mercedes-AMG One",
+              "Mercedes-AMG One sports car"
+            ],
+            "wikipediaTitle": "Mercedes-AMG One",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Mercedes-AMG_One",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Mercedes-AMG_One_at_the_2022_Goodwood_Festival_of_Speed.jpg/330px-Mercedes-AMG_One_at_the_2022_Goodwood_Festival_of_Speed.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Mercedes-AMG_One_at_the_2022_Goodwood_Festival_of_Speed.jpg/330px-Mercedes-AMG_One_at_the_2022_Goodwood_Festival_of_Speed.jpg"
+          },
+          "specsNormalized": {
+            "top_speed": 100,
+            "acceleration": 100,
+            "power": 100,
+            "handling": 97,
+            "braking": 95,
+            "rarity": 97
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 500,
+            "zero_to_100_kmh_s": 1.8,
+            "power_hp": 1900,
+            "lateral_g": 1.77,
+            "braking_100_to_0_m": 26.66,
+            "production_units_est": 1535
+          }
+        },
+        {
+          "code": "23",
+          "name": "Ford GT",
+          "tier": 4,
+          "localImageUrl": "/decks/supercars-v1/23.jpg",
+          "source": {
+            "queryChain": [
+              "Ford GT supercar",
+              "Ford GT",
+              "Ford GT sports car"
+            ],
+            "wikipediaTitle": "Ford GT",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Ford_GT",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Ford_GT_2018_and_Ford_GT_1968_at_Legendy_2019_in_Prague_%28cropped%29.jpg/330px-Ford_GT_2018_and_Ford_GT_1968_at_Legendy_2019_in_Prague_%28cropped%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Ford_GT_2018_and_Ford_GT_1968_at_Legendy_2019_in_Prague_%28cropped%29.jpg/330px-Ford_GT_2018_and_Ford_GT_1968_at_Legendy_2019_in_Prague_%28cropped%29.jpg"
+          },
+          "specsNormalized": {
+            "top_speed": 94,
+            "acceleration": 86,
+            "power": 96,
+            "handling": 89,
+            "braking": 82,
+            "rarity": 91
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 483,
+            "zero_to_100_kmh_s": 2.22,
+            "power_hp": 1837,
+            "lateral_g": 1.7,
+            "braking_100_to_0_m": 28.36,
+            "production_units_est": 4564
+          }
+        },
+        {
+          "code": "24",
+          "name": "Chevrolet Corvette Z06",
+          "tier": 3,
+          "localImageUrl": "/decks/supercars-v1/24.jpg",
+          "source": {
+            "queryChain": [
+              "Chevrolet Corvette Z06 supercar",
+              "Chevrolet Corvette Z06",
+              "Chevrolet Corvette Z06 sports car"
+            ],
+            "wikipediaTitle": "Chevrolet Corvette (C6)",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Chevrolet_Corvette_(C6)",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Chevrolet_Corvette_Z06_-_Flickr_-_Alexandre_Pr%C3%A9vot_%287%29_%28cropped%29.jpg/330px-Chevrolet_Corvette_Z06_-_Flickr_-_Alexandre_Pr%C3%A9vot_%287%29_%28cropped%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Chevrolet_Corvette_Z06_-_Flickr_-_Alexandre_Pr%C3%A9vot_%287%29_%28cropped%29.jpg/330px-Chevrolet_Corvette_Z06_-_Flickr_-_Alexandre_Pr%C3%A9vot_%287%29_%28cropped%29.jpg"
+          },
+          "specsNormalized": {
+            "top_speed": 76,
+            "acceleration": 83,
+            "power": 80,
+            "handling": 80,
+            "braking": 67,
+            "rarity": 70
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 432,
+            "zero_to_100_kmh_s": 2.32,
+            "power_hp": 1587,
+            "lateral_g": 1.62,
+            "braking_100_to_0_m": 30.33,
+            "production_units_est": 15165
+          }
+        },
+        {
+          "code": "25",
+          "name": "Nissan GT-R Nismo",
+          "tier": 3,
+          "localImageUrl": "/decks/supercars-v1/25.jpg",
+          "source": {
+            "queryChain": [
+              "Nissan GT-R Nismo supercar",
+              "Nissan GT-R Nismo",
+              "Nissan GT-R Nismo sports car"
+            ],
+            "wikipediaTitle": "Nissan VK engine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Nissan_VK_engine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Nissan_VK56DE_001.JPG/330px-Nissan_VK56DE_001.JPG",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Nissan_VK56DE_001.JPG/330px-Nissan_VK56DE_001.JPG"
+          },
+          "specsNormalized": {
+            "top_speed": 89,
+            "acceleration": 80,
+            "power": 80,
+            "handling": 77,
+            "braking": 71,
+            "rarity": 79
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 469,
+            "zero_to_100_kmh_s": 2.41,
+            "power_hp": 1587,
+            "lateral_g": 1.59,
+            "braking_100_to_0_m": 29.81,
+            "production_units_est": 10622
+          }
+        },
+        {
+          "code": "26",
+          "name": "Lexus LFA",
+          "tier": 3,
+          "localImageUrl": "/decks/supercars-v1/26.jpg",
+          "source": {
+            "queryChain": [
+              "Lexus LFA supercar",
+              "Lexus LFA",
+              "Lexus LFA sports car"
+            ],
+            "wikipediaTitle": "Lexus LFA",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Lexus_LFA",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Lexus_LFA_001.JPG/330px-Lexus_LFA_001.JPG",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Lexus_LFA_001.JPG/330px-Lexus_LFA_001.JPG"
+          },
+          "specsNormalized": {
+            "top_speed": 86,
+            "acceleration": 83,
+            "power": 79,
+            "handling": 73,
+            "braking": 75,
+            "rarity": 79
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 460,
+            "zero_to_100_kmh_s": 2.32,
+            "power_hp": 1571,
+            "lateral_g": 1.55,
+            "braking_100_to_0_m": 29.28,
+            "production_units_est": 10622
+          }
+        },
+        {
+          "code": "27",
+          "name": "Audi R8 V10",
+          "tier": 3,
+          "localImageUrl": "/decks/supercars-v1/27.jpg",
+          "source": {
+            "queryChain": [
+              "Audi R8 V10 supercar",
+              "Audi R8 V10",
+              "Audi R8 V10 sports car"
+            ],
+            "wikipediaTitle": "Audi R8 (Type 42)",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Audi_R8_(Type_42)",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/2010_Audi_R8_Spyder_Quattro_V10_5.2.jpg/330px-2010_Audi_R8_Spyder_Quattro_V10_5.2.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/2010_Audi_R8_Spyder_Quattro_V10_5.2.jpg/330px-2010_Audi_R8_Spyder_Quattro_V10_5.2.jpg"
+          },
+          "specsNormalized": {
+            "top_speed": 83,
+            "acceleration": 72,
+            "power": 76,
+            "handling": 74,
+            "braking": 69,
+            "rarity": 76
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 452,
+            "zero_to_100_kmh_s": 2.65,
+            "power_hp": 1524,
+            "lateral_g": 1.56,
+            "braking_100_to_0_m": 30.07,
+            "production_units_est": 12136
+          }
+        },
+        {
+          "code": "28",
+          "name": "Honda NSX",
+          "tier": 3,
+          "localImageUrl": "/decks/supercars-v1/28.jpg",
+          "source": {
+            "queryChain": [
+              "Honda NSX supercar",
+              "Honda NSX",
+              "Honda NSX sports car"
+            ],
+            "wikipediaTitle": "Honda HSV-010 GT",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Honda_HSV-010_GT",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Ralph_Firman_2010_Super_GT_Fuji_400km_qualify_Super_Lap.jpg/330px-Ralph_Firman_2010_Super_GT_Fuji_400km_qualify_Super_Lap.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Ralph_Firman_2010_Super_GT_Fuji_400km_qualify_Super_Lap.jpg/330px-Ralph_Firman_2010_Super_GT_Fuji_400km_qualify_Super_Lap.jpg"
+          },
+          "specsNormalized": {
+            "top_speed": 83,
+            "acceleration": 85,
+            "power": 85,
+            "handling": 77,
+            "braking": 81,
+            "rarity": 65
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 452,
+            "zero_to_100_kmh_s": 2.25,
+            "power_hp": 1665,
+            "lateral_g": 1.59,
+            "braking_100_to_0_m": 28.49,
+            "production_units_est": 17690
+          }
+        },
+        {
+          "code": "29",
+          "name": "Maserati MC20",
+          "tier": 3,
+          "localImageUrl": "/decks/supercars-v1/29.jpg",
+          "source": {
+            "queryChain": [
+              "Maserati MC20 supercar",
+              "Maserati MC20",
+              "Maserati MC20 sports car"
+            ],
+            "wikipediaTitle": "Maserati MC20",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Maserati_MC20",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Maserati_MC20_IAA_2021_1X7A0087.jpg/330px-Maserati_MC20_IAA_2021_1X7A0087.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Maserati_MC20_IAA_2021_1X7A0087.jpg/330px-Maserati_MC20_IAA_2021_1X7A0087.jpg"
+          },
+          "specsNormalized": {
+            "top_speed": 75,
+            "acceleration": 81,
+            "power": 80,
+            "handling": 80,
+            "braking": 79,
+            "rarity": 80
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 429,
+            "zero_to_100_kmh_s": 2.38,
+            "power_hp": 1587,
+            "lateral_g": 1.62,
+            "braking_100_to_0_m": 28.76,
+            "production_units_est": 10117
+          }
+        },
+        {
+          "code": "30",
+          "name": "Dodge Viper ACR",
+          "tier": 3,
+          "localImageUrl": "/decks/supercars-v1/30.jpg",
+          "source": {
+            "queryChain": [
+              "Dodge Viper ACR supercar",
+              "Dodge Viper ACR",
+              "Dodge Viper ACR sports car"
+            ],
+            "wikipediaTitle": "Dodge Viper (ZB II)",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Dodge_Viper_(ZB_II)",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/2008_ZB_Viper_SRT-10_blue_%28cropped%29.jpg/330px-2008_ZB_Viper_SRT-10_blue_%28cropped%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/2008_ZB_Viper_SRT-10_blue_%28cropped%29.jpg/330px-2008_ZB_Viper_SRT-10_blue_%28cropped%29.jpg"
+          },
+          "specsNormalized": {
+            "top_speed": 88,
+            "acceleration": 72,
+            "power": 78,
+            "handling": 71,
+            "braking": 66,
+            "rarity": 78
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 466,
+            "zero_to_100_kmh_s": 2.65,
+            "power_hp": 1556,
+            "lateral_g": 1.54,
+            "braking_100_to_0_m": 30.46,
+            "production_units_est": 11127
+          }
+        },
+        {
+          "code": "31",
+          "name": "Lotus Evija",
+          "tier": 4,
+          "localImageUrl": "/decks/supercars-v1/31.jpg",
+          "source": {
+            "queryChain": [
+              "Lotus Evija supercar",
+              "Lotus Evija",
+              "Lotus Evija sports car"
+            ],
+            "wikipediaTitle": "Lotus Evija",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Lotus_Evija",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/2020_Lotus_Evija.jpg/330px-2020_Lotus_Evija.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/2020_Lotus_Evija.jpg/330px-2020_Lotus_Evija.jpg"
+          },
+          "specsNormalized": {
+            "top_speed": 95,
+            "acceleration": 82,
+            "power": 93,
+            "handling": 78,
+            "braking": 83,
+            "rarity": 89
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 486,
+            "zero_to_100_kmh_s": 2.35,
+            "power_hp": 1790,
+            "lateral_g": 1.6,
+            "braking_100_to_0_m": 28.23,
+            "production_units_est": 5573
+          }
+        },
+        {
+          "code": "32",
+          "name": "SSC Tuatara",
+          "tier": 5,
+          "localImageUrl": "/decks/supercars-v1/32.jpg",
+          "source": {
+            "queryChain": [
+              "SSC Tuatara supercar",
+              "SSC Tuatara",
+              "SSC Tuatara sports car"
+            ],
+            "wikipediaTitle": "SSC Tuatara",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/SSC_Tuatara",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/2019_SSC_Tuatara_at_Pebble_Beach_Press_Conference.jpg/330px-2019_SSC_Tuatara_at_Pebble_Beach_Press_Conference.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/2019_SSC_Tuatara_at_Pebble_Beach_Press_Conference.jpg/330px-2019_SSC_Tuatara_at_Pebble_Beach_Press_Conference.jpg"
+          },
+          "specsNormalized": {
+            "top_speed": 100,
+            "acceleration": 97,
+            "power": 100,
+            "handling": 90,
+            "braking": 88,
+            "rarity": 87
+          },
+          "rawMetrics": {
+            "top_speed_kmh": 500,
+            "zero_to_100_kmh_s": 1.89,
+            "power_hp": 1900,
+            "lateral_g": 1.71,
+            "braking_100_to_0_m": 27.58,
+            "production_units_est": 6583
+          }
+        }
+      ]
+    },
+    {
+      "id": "military-submarines-v1",
+      "name": "Military Submarines",
+      "cards": [
+        {
+          "code": "01",
+          "name": "Virginia-class",
+          "tier": 5,
+          "localImageUrl": "/decks/military-submarines-v1/01.jpg",
+          "source": {
+            "queryChain": [
+              "Virginia-class submarine",
+              "Virginia-class",
+              "Virginia-class submarine class"
+            ],
+            "wikipediaTitle": "Virginia-class submarine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Virginia-class_submarine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/US_Navy_040730-N-1234E-002_PCU_Virginia_%28SSN_774%29_returns_to_the_General_Dynamics_Electric_Boat_shipyard.jpg/330px-US_Navy_040730-N-1234E-002_PCU_Virginia_%28SSN_774%29_returns_to_the_General_Dynamics_Electric_Boat_shipyard.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/US_Navy_040730-N-1234E-002_PCU_Virginia_%28SSN_774%29_returns_to_the_General_Dynamics_Electric_Boat_shipyard.jpg/330px-US_Navy_040730-N-1234E-002_PCU_Virginia_%28SSN_774%29_returns_to_the_General_Dynamics_Electric_Boat_shipyard.jpg"
+          },
+          "specsNormalized": {
+            "submerged_speed": 88,
+            "dive_depth": 93,
+            "endurance": 95,
+            "quietness": 100,
+            "firepower": 100,
+            "sensors": 85
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 35.21,
+            "max_operating_depth_m": 617,
+            "endurance_days": 172,
+            "acoustic_signature_db": 85,
+            "torpedo_firepower_index": 20,
+            "sensors_range_km": 192
+          }
+        },
+        {
+          "code": "02",
+          "name": "Seawolf-class",
+          "tier": 5,
+          "localImageUrl": "/decks/military-submarines-v1/02.jpg",
+          "source": {
+            "queryChain": [
+              "Seawolf-class submarine",
+              "Seawolf-class",
+              "Seawolf-class submarine class"
+            ],
+            "wikipediaTitle": "USS Seawolf (SSN-575)",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/USS_Seawolf_(SSN-575)",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/USS_Seawolf_%28SSN-575%29.jpg/330px-USS_Seawolf_%28SSN-575%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/USS_Seawolf_%28SSN-575%29.jpg/330px-USS_Seawolf_%28SSN-575%29.jpg"
+          },
+          "specsNormalized": {
+            "submerged_speed": 92,
+            "dive_depth": 98,
+            "endurance": 96,
+            "quietness": 97,
+            "firepower": 92,
+            "sensors": 97
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 36.14,
+            "max_operating_depth_m": 641,
+            "endurance_days": 174,
+            "acoustic_signature_db": 86.36,
+            "torpedo_firepower_index": 18.71,
+            "sensors_range_km": 214
+          }
+        },
+        {
+          "code": "03",
+          "name": "Los Angeles-class",
+          "tier": 4,
+          "localImageUrl": "/decks/military-submarines-v1/03.jpg",
+          "source": {
+            "queryChain": [
+              "Los Angeles-class submarine",
+              "Los Angeles-class",
+              "Los Angeles-class submarine class"
+            ],
+            "wikipediaTitle": "Los Angeles-class submarine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Los_Angeles-class_submarine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/USS_Los_Angeles%3B0868802.jpg/330px-USS_Los_Angeles%3B0868802.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/USS_Los_Angeles%3B0868802.jpg/330px-USS_Los_Angeles%3B0868802.jpg"
+          },
+          "specsNormalized": {
+            "submerged_speed": 85,
+            "dive_depth": 78,
+            "endurance": 83,
+            "quietness": 87,
+            "firepower": 85,
+            "sensors": 82
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 34.52,
+            "max_operating_depth_m": 546,
+            "endurance_days": 154,
+            "acoustic_signature_db": 90.91,
+            "torpedo_firepower_index": 17.58,
+            "sensors_range_km": 186
+          }
+        },
+        {
+          "code": "04",
+          "name": "Columbia-class",
+          "tier": 5,
+          "localImageUrl": "/decks/military-submarines-v1/04.jpg",
+          "source": {
+            "queryChain": [
+              "Columbia-class submarine",
+              "Columbia-class",
+              "Columbia-class submarine class"
+            ],
+            "wikipediaTitle": "Columbia-class submarine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Columbia-class_submarine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Artist_rendering_of_a_Columbia-class_ballistic_missile_submarine%2C_2019_%28190306-N-N0101-125%29.jpg/330px-Artist_rendering_of_a_Columbia-class_ballistic_missile_submarine%2C_2019_%28190306-N-N0101-125%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Artist_rendering_of_a_Columbia-class_ballistic_missile_submarine%2C_2019_%28190306-N-N0101-125%29.jpg/960px-Artist_rendering_of_a_Columbia-class_ballistic_missile_submarine%2C_2019_%28190306-N-N0101-125%29.jpg"
+          },
+          "specsNormalized": {
+            "submerged_speed": 91,
+            "dive_depth": 97,
+            "endurance": 84,
+            "quietness": 95,
+            "firepower": 93,
+            "sensors": 88
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 35.91,
+            "max_operating_depth_m": 636,
+            "endurance_days": 156,
+            "acoustic_signature_db": 87.27,
+            "torpedo_firepower_index": 18.87,
+            "sensors_range_km": 198
+          }
+        },
+        {
+          "code": "05",
+          "name": "Ohio-class",
+          "tier": 5,
+          "localImageUrl": "/decks/military-submarines-v1/05.jpg",
+          "source": {
+            "queryChain": [
+              "Ohio-class submarine",
+              "Ohio-class",
+              "Ohio-class submarine class"
+            ],
+            "wikipediaTitle": "Ohio-class submarine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Ohio-class_submarine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Good_Luck_Ohio.JPEG/330px-Good_Luck_Ohio.JPEG",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Good_Luck_Ohio.JPEG/330px-Good_Luck_Ohio.JPEG"
+          },
+          "specsNormalized": {
+            "submerged_speed": 85,
+            "dive_depth": 99,
+            "endurance": 86,
+            "quietness": 97,
+            "firepower": 100,
+            "sensors": 92
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 34.52,
+            "max_operating_depth_m": 645,
+            "endurance_days": 159,
+            "acoustic_signature_db": 86.36,
+            "torpedo_firepower_index": 20,
+            "sensors_range_km": 205
+          }
+        },
+        {
+          "code": "06",
+          "name": "Astute-class",
+          "tier": 5,
+          "localImageUrl": "/decks/military-submarines-v1/06.jpg",
+          "source": {
+            "queryChain": [
+              "Astute-class submarine",
+              "Astute-class",
+              "Astute-class submarine class"
+            ],
+            "wikipediaTitle": "HMS Astute (S119)",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/HMS_Astute_(S119)",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Royal_Navy_Submarine_HMS_Astute_Returns_to_HMNB_Clyde_MOD_45153733.jpg/330px-Royal_Navy_Submarine_HMS_Astute_Returns_to_HMNB_Clyde_MOD_45153733.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Royal_Navy_Submarine_HMS_Astute_Returns_to_HMNB_Clyde_MOD_45153733.jpg/330px-Royal_Navy_Submarine_HMS_Astute_Returns_to_HMNB_Clyde_MOD_45153733.jpg"
+          },
+          "specsNormalized": {
+            "submerged_speed": 91,
+            "dive_depth": 96,
+            "endurance": 87,
+            "quietness": 99,
+            "firepower": 95,
+            "sensors": 93
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 35.91,
+            "max_operating_depth_m": 631,
+            "endurance_days": 160,
+            "acoustic_signature_db": 85.45,
+            "torpedo_firepower_index": 19.19,
+            "sensors_range_km": 207
+          }
+        },
+        {
+          "code": "07",
+          "name": "Vanguard-class",
+          "tier": 4,
+          "localImageUrl": "/decks/military-submarines-v1/07.jpg",
+          "source": {
+            "queryChain": [
+              "Vanguard-class submarine",
+              "Vanguard-class",
+              "Vanguard-class submarine class"
+            ],
+            "wikipediaTitle": "Dreadnought-class submarine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Dreadnought-class_submarine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Rendering_of_Dreadnought-class_submarine.webp/330px-Rendering_of_Dreadnought-class_submarine.webp.png",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Rendering_of_Dreadnought-class_submarine.webp/330px-Rendering_of_Dreadnought-class_submarine.webp.png"
+          },
+          "specsNormalized": {
+            "submerged_speed": 87,
+            "dive_depth": 77,
+            "endurance": 87,
+            "quietness": 91,
+            "firepower": 88,
+            "sensors": 84
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 34.98,
+            "max_operating_depth_m": 541,
+            "endurance_days": 160,
+            "acoustic_signature_db": 89.09,
+            "torpedo_firepower_index": 18.06,
+            "sensors_range_km": 190
+          }
+        },
+        {
+          "code": "08",
+          "name": "Trafalgar-class",
+          "tier": 4,
+          "localImageUrl": "/decks/military-submarines-v1/08.jpg",
+          "source": {
+            "queryChain": [
+              "Trafalgar-class submarine",
+              "Trafalgar-class",
+              "Trafalgar-class submarine class"
+            ],
+            "wikipediaTitle": "Vanguard-class submarine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Vanguard-class_submarine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Vanguard_at_Faslane_03.jpg/330px-Vanguard_at_Faslane_03.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Vanguard_at_Faslane_03.jpg/330px-Vanguard_at_Faslane_03.jpg"
+          },
+          "specsNormalized": {
+            "submerged_speed": 83,
+            "dive_depth": 79,
+            "endurance": 86,
+            "quietness": 82,
+            "firepower": 84,
+            "sensors": 81
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 34.05,
+            "max_operating_depth_m": 550,
+            "endurance_days": 159,
+            "acoustic_signature_db": 93.18,
+            "torpedo_firepower_index": 17.41,
+            "sensors_range_km": 184
+          }
+        },
+        {
+          "code": "09",
+          "name": "Triomphant-class",
+          "tier": 5,
+          "localImageUrl": "/decks/military-submarines-v1/09.jpg",
+          "source": {
+            "queryChain": [
+              "Triomphant-class submarine",
+              "Triomphant-class",
+              "Triomphant-class submarine class"
+            ],
+            "wikipediaTitle": "Triomphant-class submarine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Triomphant-class_submarine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Temeraire1048.jpg/330px-Temeraire1048.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Temeraire1048.jpg/330px-Temeraire1048.jpg"
+          },
+          "specsNormalized": {
+            "submerged_speed": 89,
+            "dive_depth": 92,
+            "endurance": 93,
+            "quietness": 99,
+            "firepower": 89,
+            "sensors": 86
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 35.44,
+            "max_operating_depth_m": 612,
+            "endurance_days": 169,
+            "acoustic_signature_db": 85.45,
+            "torpedo_firepower_index": 18.22,
+            "sensors_range_km": 194
+          }
+        },
+        {
+          "code": "10",
+          "name": "Rubis-class",
+          "tier": 3,
+          "localImageUrl": "/decks/military-submarines-v1/10.jpg",
+          "source": {
+            "queryChain": [
+              "Rubis-class submarine",
+              "Rubis-class",
+              "Rubis-class submarine class"
+            ],
+            "wikipediaTitle": "Rubis-class submarine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Rubis-class_submarine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/FS_Saphir_01.jpg/330px-FS_Saphir_01.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/FS_Saphir_01.jpg/330px-FS_Saphir_01.jpg"
+          },
+          "specsNormalized": {
+            "submerged_speed": 76,
+            "dive_depth": 80,
+            "endurance": 73,
+            "quietness": 71,
+            "firepower": 79,
+            "sensors": 81
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 32.42,
+            "max_operating_depth_m": 555,
+            "endurance_days": 139,
+            "acoustic_signature_db": 98.18,
+            "torpedo_firepower_index": 16.61,
+            "sensors_range_km": 184
+          }
+        },
+        {
+          "code": "11",
+          "name": "Barracuda-class",
+          "tier": 4,
+          "localImageUrl": "/decks/military-submarines-v1/11.jpg",
+          "source": {
+            "queryChain": [
+              "Barracuda-class submarine",
+              "Barracuda-class",
+              "Barracuda-class submarine class"
+            ],
+            "wikipediaTitle": "V-boat",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/V-boat",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/USS_Holland_%28AS-3%29_with_seven_submarines_alongside_at_San_Diego%2C_California_%28USA%29%2C_on_24_December_1934_%2880-G-63334%29.jpg/330px-USS_Holland_%28AS-3%29_with_seven_submarines_alongside_at_San_Diego%2C_California_%28USA%29%2C_on_24_December_1934_%2880-G-63334%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/USS_Holland_%28AS-3%29_with_seven_submarines_alongside_at_San_Diego%2C_California_%28USA%29%2C_on_24_December_1934_%2880-G-63334%29.jpg/330px-USS_Holland_%28AS-3%29_with_seven_submarines_alongside_at_San_Diego%2C_California_%28USA%29%2C_on_24_December_1934_%2880-G-63334%29.jpg"
+          },
+          "specsNormalized": {
+            "submerged_speed": 82,
+            "dive_depth": 92,
+            "endurance": 85,
+            "quietness": 86,
+            "firepower": 90,
+            "sensors": 84
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 33.82,
+            "max_operating_depth_m": 612,
+            "endurance_days": 157,
+            "acoustic_signature_db": 91.36,
+            "torpedo_firepower_index": 18.38,
+            "sensors_range_km": 190
+          }
+        },
+        {
+          "code": "12",
+          "name": "Type 212A",
+          "tier": 4,
+          "localImageUrl": "/decks/military-submarines-v1/12.jpg",
+          "source": {
+            "queryChain": [
+              "Type 212A submarine",
+              "Type 212A"
+            ],
+            "wikipediaTitle": "Type 212A submarine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Type_212A_submarine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/U_34_in_Fahrt.jpg/330px-U_34_in_Fahrt.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/U_34_in_Fahrt.jpg/330px-U_34_in_Fahrt.jpg"
+          },
+          "specsNormalized": {
+            "submerged_speed": 79,
+            "dive_depth": 82,
+            "endurance": 84,
+            "quietness": 81,
+            "firepower": 92,
+            "sensors": 78
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 33.12,
+            "max_operating_depth_m": 565,
+            "endurance_days": 156,
+            "acoustic_signature_db": 93.64,
+            "torpedo_firepower_index": 18.71,
+            "sensors_range_km": 179
+          }
+        },
+        {
+          "code": "13",
+          "name": "Type 214",
+          "tier": 4,
+          "localImageUrl": "/decks/military-submarines-v1/13.jpg",
+          "source": {
+            "queryChain": [
+              "Type 214 submarine",
+              "Type 214"
+            ],
+            "wikipediaTitle": "Invincible-class submarine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Invincible-class_submarine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Naval_Ships_in_Kiel_07.jpg/330px-Naval_Ships_in_Kiel_07.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Naval_Ships_in_Kiel_07.jpg/330px-Naval_Ships_in_Kiel_07.jpg"
+          },
+          "specsNormalized": {
+            "submerged_speed": 87,
+            "dive_depth": 93,
+            "endurance": 86,
+            "quietness": 88,
+            "firepower": 88,
+            "sensors": 76
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 34.98,
+            "max_operating_depth_m": 617,
+            "endurance_days": 159,
+            "acoustic_signature_db": 90.45,
+            "torpedo_firepower_index": 18.06,
+            "sensors_range_km": 175
+          }
+        },
+        {
+          "code": "14",
+          "name": "Type 209",
+          "tier": 3,
+          "localImageUrl": "/decks/military-submarines-v1/14.jpg",
+          "source": {
+            "queryChain": [
+              "Type 209 submarine",
+              "Type 209"
+            ],
+            "wikipediaTitle": "Type 209 submarine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Type_209_submarine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Chilean_submarine_Simpson_%28SS-21%29_at_Pearl_Harbor_on_21_June_2004_%28040621-N-5539C-001%29.jpg/330px-Chilean_submarine_Simpson_%28SS-21%29_at_Pearl_Harbor_on_21_June_2004_%28040621-N-5539C-001%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Chilean_submarine_Simpson_%28SS-21%29_at_Pearl_Harbor_on_21_June_2004_%28040621-N-5539C-001%29.jpg/330px-Chilean_submarine_Simpson_%28SS-21%29_at_Pearl_Harbor_on_21_June_2004_%28040621-N-5539C-001%29.jpg"
+          },
+          "specsNormalized": {
+            "submerged_speed": 75,
+            "dive_depth": 77,
+            "endurance": 79,
+            "quietness": 71,
+            "firepower": 83,
+            "sensors": 72
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 32.19,
+            "max_operating_depth_m": 541,
+            "endurance_days": 148,
+            "acoustic_signature_db": 98.18,
+            "torpedo_firepower_index": 17.25,
+            "sensors_range_km": 168
+          }
+        },
+        {
+          "code": "15",
+          "name": "Yuan-class",
+          "tier": 4,
+          "localImageUrl": "/decks/military-submarines-v1/15.jpg",
+          "source": {
+            "queryChain": [
+              "Yuan-class submarine",
+              "Yuan-class",
+              "Yuan-class submarine class"
+            ],
+            "wikipediaTitle": "Type 039A/B/C submarine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Type_039A%2FB%2FC_submarine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Chinese_Type_039A_submarine.jpg/330px-Chinese_Type_039A_submarine.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Chinese_Type_039A_submarine.jpg/330px-Chinese_Type_039A_submarine.jpg"
+          },
+          "specsNormalized": {
+            "submerged_speed": 84,
+            "dive_depth": 86,
+            "endurance": 79,
+            "quietness": 84,
+            "firepower": 88,
+            "sensors": 77
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 34.28,
+            "max_operating_depth_m": 584,
+            "endurance_days": 148,
+            "acoustic_signature_db": 92.27,
+            "torpedo_firepower_index": 18.06,
+            "sensors_range_km": 177
+          }
+        },
+        {
+          "code": "16",
+          "name": "Shang-class",
+          "tier": 4,
+          "localImageUrl": "/decks/military-submarines-v1/16.jpg",
+          "source": {
+            "queryChain": [
+              "Shang-class submarine",
+              "Shang-class",
+              "Shang-class submarine class"
+            ],
+            "wikipediaTitle": "Han-class submarine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Type_091_submarine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Han_class.jpg/330px-Han_class.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Han_class.jpg/330px-Han_class.jpg"
+          },
+          "specsNormalized": {
+            "submerged_speed": 85,
+            "dive_depth": 83,
+            "endurance": 89,
+            "quietness": 85,
+            "firepower": 82,
+            "sensors": 86
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 34.52,
+            "max_operating_depth_m": 569,
+            "endurance_days": 163,
+            "acoustic_signature_db": 91.82,
+            "torpedo_firepower_index": 17.09,
+            "sensors_range_km": 194
+          }
+        },
+        {
+          "code": "17",
+          "name": "Jin-class",
+          "tier": 4,
+          "localImageUrl": "/decks/military-submarines-v1/17.jpg",
+          "source": {
+            "queryChain": [
+              "Jin-class submarine",
+              "Jin-class",
+              "Jin-class submarine class"
+            ],
+            "wikipediaTitle": "Type 094 submarine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Type_094_submarine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Jin_%28Type_094%29_Class_Ballistic_Missile_Submarine.JPG/330px-Jin_%28Type_094%29_Class_Ballistic_Missile_Submarine.JPG",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Jin_%28Type_094%29_Class_Ballistic_Missile_Submarine.JPG/330px-Jin_%28Type_094%29_Class_Ballistic_Missile_Submarine.JPG"
+          },
+          "specsNormalized": {
+            "submerged_speed": 81,
+            "dive_depth": 91,
+            "endurance": 87,
+            "quietness": 90,
+            "firepower": 79,
+            "sensors": 86
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 33.59,
+            "max_operating_depth_m": 607,
+            "endurance_days": 160,
+            "acoustic_signature_db": 89.55,
+            "torpedo_firepower_index": 16.61,
+            "sensors_range_km": 194
+          }
+        },
+        {
+          "code": "18",
+          "name": "Kilo-class",
+          "tier": 4,
+          "localImageUrl": "/decks/military-submarines-v1/18.jpg",
+          "source": {
+            "queryChain": [
+              "Kilo-class submarine",
+              "Kilo-class",
+              "Kilo-class submarine class"
+            ],
+            "wikipediaTitle": "Kilo-class submarine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Kilo-class_submarine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/%C2%AB%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D0%BE%D0%B4%D0%B0%D1%80%C2%BB.jpg/330px-%C2%AB%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D0%BE%D0%B4%D0%B0%D1%80%C2%BB.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/%C2%AB%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D0%BE%D0%B4%D0%B0%D1%80%C2%BB.jpg/330px-%C2%AB%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D0%BE%D0%B4%D0%B0%D1%80%C2%BB.jpg"
+          },
+          "specsNormalized": {
+            "submerged_speed": 78,
+            "dive_depth": 92,
+            "endurance": 77,
+            "quietness": 87,
+            "firepower": 91,
+            "sensors": 85
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 32.89,
+            "max_operating_depth_m": 612,
+            "endurance_days": 145,
+            "acoustic_signature_db": 90.91,
+            "torpedo_firepower_index": 18.55,
+            "sensors_range_km": 192
+          }
+        },
+        {
+          "code": "19",
+          "name": "Lada-class",
+          "tier": 3,
+          "localImageUrl": "/decks/military-submarines-v1/19.jpg",
+          "source": {
+            "queryChain": [
+              "Lada-class submarine",
+              "Lada-class",
+              "Lada-class submarine class"
+            ],
+            "wikipediaTitle": "Lada-class submarine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Lada-class_submarine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/International_Maritime_Defence_Show_2011_%28375-27%29.jpg/330px-International_Maritime_Defence_Show_2011_%28375-27%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/International_Maritime_Defence_Show_2011_%28375-27%29.jpg/330px-International_Maritime_Defence_Show_2011_%28375-27%29.jpg"
+          },
+          "specsNormalized": {
+            "submerged_speed": 73,
+            "dive_depth": 84,
+            "endurance": 72,
+            "quietness": 78,
+            "firepower": 76,
+            "sensors": 70
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 31.73,
+            "max_operating_depth_m": 574,
+            "endurance_days": 138,
+            "acoustic_signature_db": 95,
+            "torpedo_firepower_index": 16.12,
+            "sensors_range_km": 164
+          }
+        },
+        {
+          "code": "20",
+          "name": "Yasen-class",
+          "tier": 5,
+          "localImageUrl": "/decks/military-submarines-v1/20.jpg",
+          "source": {
+            "queryChain": [
+              "Yasen-class submarine",
+              "Yasen-class",
+              "Yasen-class submarine class"
+            ],
+            "wikipediaTitle": "Yasen-class submarine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Yasen-class_submarine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/%D0%9A-560_%C2%AB%D0%A1%D0%B5%D0%B2%D0%B5%D1%80%D0%BE%D0%B4%D0%B2%D0%B8%D0%BD%D1%81%D0%BA%C2%BB.jpg/330px-%D0%9A-560_%C2%AB%D0%A1%D0%B5%D0%B2%D0%B5%D1%80%D0%BE%D0%B4%D0%B2%D0%B8%D0%BD%D1%81%D0%BA%C2%BB.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/%D0%9A-560_%C2%AB%D0%A1%D0%B5%D0%B2%D0%B5%D1%80%D0%BE%D0%B4%D0%B2%D0%B8%D0%BD%D1%81%D0%BA%C2%BB.jpg/330px-%D0%9A-560_%C2%AB%D0%A1%D0%B5%D0%B2%D0%B5%D1%80%D0%BE%D0%B4%D0%B2%D0%B8%D0%BD%D1%81%D0%BA%C2%BB.jpg"
+          },
+          "specsNormalized": {
+            "submerged_speed": 87,
+            "dive_depth": 91,
+            "endurance": 87,
+            "quietness": 94,
+            "firepower": 97,
+            "sensors": 85
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 34.98,
+            "max_operating_depth_m": 607,
+            "endurance_days": 160,
+            "acoustic_signature_db": 87.73,
+            "torpedo_firepower_index": 19.52,
+            "sensors_range_km": 192
+          }
+        },
+        {
+          "code": "21",
+          "name": "Borei-class",
+          "tier": 5,
+          "localImageUrl": "/decks/military-submarines-v1/21.jpg",
+          "source": {
+            "queryChain": [
+              "Borei-class submarine",
+              "Borei-class",
+              "Borei-class submarine class"
+            ],
+            "wikipediaTitle": "RSM-56 Bulava",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/RSM-56_Bulava",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Bulava_SLBM_launched_by_Yuri_Dolgoruky_submarine_%28cropped%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Bulava_SLBM_launched_by_Yuri_Dolgoruky_submarine_%28cropped%29.jpg"
+          },
+          "specsNormalized": {
+            "submerged_speed": 91,
+            "dive_depth": 86,
+            "endurance": 84,
+            "quietness": 95,
+            "firepower": 94,
+            "sensors": 85
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 35.91,
+            "max_operating_depth_m": 584,
+            "endurance_days": 156,
+            "acoustic_signature_db": 87.27,
+            "torpedo_firepower_index": 19.03,
+            "sensors_range_km": 192
+          }
+        },
+        {
+          "code": "22",
+          "name": "Akula-class",
+          "tier": 4,
+          "localImageUrl": "/decks/military-submarines-v1/22.jpg",
+          "source": {
+            "queryChain": [
+              "Akula-class submarine",
+              "Akula-class",
+              "Akula-class submarine class"
+            ],
+            "wikipediaTitle": "Akula-class submarine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Akula-class_submarine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/%D0%90%D0%9F%D0%9B_%22%D0%9A%D1%83%D0%B7%D0%B1%D0%B0%D1%81%D1%81%22.jpg/330px-%D0%90%D0%9F%D0%9B_%22%D0%9A%D1%83%D0%B7%D0%B1%D0%B0%D1%81%D1%81%22.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/%D0%90%D0%9F%D0%9B_%22%D0%9A%D1%83%D0%B7%D0%B1%D0%B0%D1%81%D1%81%22.jpg/330px-%D0%90%D0%9F%D0%9B_%22%D0%9A%D1%83%D0%B7%D0%B1%D0%B0%D1%81%D1%81%22.jpg"
+          },
+          "specsNormalized": {
+            "submerged_speed": 81,
+            "dive_depth": 85,
+            "endurance": 83,
+            "quietness": 83,
+            "firepower": 86,
+            "sensors": 75
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 33.59,
+            "max_operating_depth_m": 579,
+            "endurance_days": 154,
+            "acoustic_signature_db": 92.73,
+            "torpedo_firepower_index": 17.74,
+            "sensors_range_km": 173
+          }
+        },
+        {
+          "code": "23",
+          "name": "Typhoon-class",
+          "tier": 4,
+          "localImageUrl": "/decks/military-submarines-v1/23.jpg",
+          "source": {
+            "queryChain": [
+              "Typhoon-class submarine",
+              "Typhoon-class",
+              "Typhoon-class submarine class"
+            ],
+            "wikipediaTitle": "Typhoon-class submarine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Typhoon-class_submarine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Typhoon3.jpg/330px-Typhoon3.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Typhoon3.jpg/330px-Typhoon3.jpg"
+          },
+          "specsNormalized": {
+            "submerged_speed": 87,
+            "dive_depth": 82,
+            "endurance": 79,
+            "quietness": 96,
+            "firepower": 86,
+            "sensors": 86
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 34.98,
+            "max_operating_depth_m": 565,
+            "endurance_days": 148,
+            "acoustic_signature_db": 86.82,
+            "torpedo_firepower_index": 17.74,
+            "sensors_range_km": 194
+          }
+        },
+        {
+          "code": "24",
+          "name": "Sierra-class",
+          "tier": 3,
+          "localImageUrl": "/decks/military-submarines-v1/24.jpg",
+          "source": {
+            "queryChain": [
+              "Sierra-class submarine",
+              "Sierra-class",
+              "Sierra-class submarine class"
+            ],
+            "wikipediaTitle": "Sierra-class submarine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Sierra-class_submarine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Sierra_class_SSN.jpg/330px-Sierra_class_SSN.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Sierra_class_SSN.jpg/330px-Sierra_class_SSN.jpg"
+          },
+          "specsNormalized": {
+            "submerged_speed": 77,
+            "dive_depth": 78,
+            "endurance": 77,
+            "quietness": 83,
+            "firepower": 79,
+            "sensors": 79
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 32.66,
+            "max_operating_depth_m": 546,
+            "endurance_days": 145,
+            "acoustic_signature_db": 92.73,
+            "torpedo_firepower_index": 16.61,
+            "sensors_range_km": 181
+          }
+        },
+        {
+          "code": "25",
+          "name": "Delta IV-class",
+          "tier": 4,
+          "localImageUrl": "/decks/military-submarines-v1/25.jpg",
+          "source": {
+            "queryChain": [
+              "Delta IV-class submarine",
+              "Delta IV-class",
+              "Delta IV-class submarine class"
+            ],
+            "wikipediaTitle": "Delta-class submarine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Delta-class_submarine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Submarine_Delta_IV_class.jpg/330px-Submarine_Delta_IV_class.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Submarine_Delta_IV_class.jpg/330px-Submarine_Delta_IV_class.jpg"
+          },
+          "specsNormalized": {
+            "submerged_speed": 80,
+            "dive_depth": 92,
+            "endurance": 77,
+            "quietness": 89,
+            "firepower": 81,
+            "sensors": 77
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 33.35,
+            "max_operating_depth_m": 612,
+            "endurance_days": 145,
+            "acoustic_signature_db": 90,
+            "torpedo_firepower_index": 16.93,
+            "sensors_range_km": 177
+          }
+        },
+        {
+          "code": "26",
+          "name": "Romeo-class",
+          "tier": 2,
+          "localImageUrl": "/decks/military-submarines-v1/26.jpg",
+          "source": {
+            "queryChain": [
+              "Romeo-class submarine",
+              "Romeo-class",
+              "Romeo-class submarine class"
+            ],
+            "wikipediaTitle": "Romeo-class submarine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Romeo-class_submarine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Romeo_clsss_submarine.JPG/330px-Romeo_clsss_submarine.JPG",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Romeo_clsss_submarine.JPG/330px-Romeo_clsss_submarine.JPG"
+          },
+          "specsNormalized": {
+            "submerged_speed": 61,
+            "dive_depth": 70,
+            "endurance": 66,
+            "quietness": 64,
+            "firepower": 72,
+            "sensors": 63
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 28.94,
+            "max_operating_depth_m": 508,
+            "endurance_days": 128,
+            "acoustic_signature_db": 101.36,
+            "torpedo_firepower_index": 15.47,
+            "sensors_range_km": 151
+          }
+        },
+        {
+          "code": "27",
+          "name": "Scorpene-class",
+          "tier": 4,
+          "localImageUrl": "/decks/military-submarines-v1/27.jpg",
+          "source": {
+            "queryChain": [
+              "Scorpene-class submarine",
+              "Scorpene-class",
+              "Scorpene-class submarine class"
+            ],
+            "wikipediaTitle": "Scorpène-class submarine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Scorp%C3%A8ne-class_submarine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/INS_Kalvari_%28S21%29_at_sea.jpg/330px-INS_Kalvari_%28S21%29_at_sea.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/INS_Kalvari_%28S21%29_at_sea.jpg/330px-INS_Kalvari_%28S21%29_at_sea.jpg"
+          },
+          "specsNormalized": {
+            "submerged_speed": 86,
+            "dive_depth": 93,
+            "endurance": 81,
+            "quietness": 93,
+            "firepower": 80,
+            "sensors": 89
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 34.75,
+            "max_operating_depth_m": 617,
+            "endurance_days": 151,
+            "acoustic_signature_db": 88.18,
+            "torpedo_firepower_index": 16.77,
+            "sensors_range_km": 199
+          }
+        },
+        {
+          "code": "28",
+          "name": "Soryu-class",
+          "tier": 4,
+          "localImageUrl": "/decks/military-submarines-v1/28.jpg",
+          "source": {
+            "queryChain": [
+              "Soryu-class submarine",
+              "Soryu-class",
+              "Soryu-class submarine class"
+            ],
+            "wikipediaTitle": "Sōryū-class submarine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/S%C5%8Dry%C5%AB-class_submarine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/JS_Hakuryu_%28SS-503%29_arrives_at_Joint_Base_Pearl_Harbor-Hickam_for_a_scheduled_port_visit%2C_-6_Feb._2013_%28YP255-023%29.jpg/330px-JS_Hakuryu_%28SS-503%29_arrives_at_Joint_Base_Pearl_Harbor-Hickam_for_a_scheduled_port_visit%2C_-6_Feb._2013_%28YP255-023%29.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/JS_Hakuryu_%28SS-503%29_arrives_at_Joint_Base_Pearl_Harbor-Hickam_for_a_scheduled_port_visit%2C_-6_Feb._2013_%28YP255-023%29.jpg/330px-JS_Hakuryu_%28SS-503%29_arrives_at_Joint_Base_Pearl_Harbor-Hickam_for_a_scheduled_port_visit%2C_-6_Feb._2013_%28YP255-023%29.jpg"
+          },
+          "specsNormalized": {
+            "submerged_speed": 77,
+            "dive_depth": 87,
+            "endurance": 89,
+            "quietness": 81,
+            "firepower": 83,
+            "sensors": 79
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 32.66,
+            "max_operating_depth_m": 588,
+            "endurance_days": 163,
+            "acoustic_signature_db": 93.64,
+            "torpedo_firepower_index": 17.25,
+            "sensors_range_km": 181
+          }
+        },
+        {
+          "code": "29",
+          "name": "Taigei-class",
+          "tier": 4,
+          "localImageUrl": "/decks/military-submarines-v1/29.jpg",
+          "source": {
+            "queryChain": [
+              "Taigei-class submarine",
+              "Taigei-class",
+              "Taigei-class submarine class"
+            ],
+            "wikipediaTitle": "Taigei-class submarine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Taigei-class_submarine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Naming_and_Launch_Ceremony_of_SS_Taigei.jpg/330px-Naming_and_Launch_Ceremony_of_SS_Taigei.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Naming_and_Launch_Ceremony_of_SS_Taigei.jpg/330px-Naming_and_Launch_Ceremony_of_SS_Taigei.jpg"
+          },
+          "specsNormalized": {
+            "submerged_speed": 88,
+            "dive_depth": 77,
+            "endurance": 81,
+            "quietness": 83,
+            "firepower": 83,
+            "sensors": 75
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 35.21,
+            "max_operating_depth_m": 541,
+            "endurance_days": 151,
+            "acoustic_signature_db": 92.73,
+            "torpedo_firepower_index": 17.25,
+            "sensors_range_km": 173
+          }
+        },
+        {
+          "code": "30",
+          "name": "Collins-class",
+          "tier": 3,
+          "localImageUrl": "/decks/military-submarines-v1/30.jpg",
+          "source": {
+            "queryChain": [
+              "Collins-class submarine",
+              "Collins-class",
+              "Collins-class submarine class"
+            ],
+            "wikipediaTitle": "Collins-class submarine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Collins-class_submarine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/HMAS_Rankin_2006.jpg/330px-HMAS_Rankin_2006.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/HMAS_Rankin_2006.jpg/330px-HMAS_Rankin_2006.jpg"
+          },
+          "specsNormalized": {
+            "submerged_speed": 68,
+            "dive_depth": 85,
+            "endurance": 70,
+            "quietness": 86,
+            "firepower": 76,
+            "sensors": 74
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 30.57,
+            "max_operating_depth_m": 579,
+            "endurance_days": 135,
+            "acoustic_signature_db": 91.36,
+            "torpedo_firepower_index": 16.12,
+            "sensors_range_km": 171
+          }
+        },
+        {
+          "code": "31",
+          "name": "Gotland-class",
+          "tier": 4,
+          "localImageUrl": "/decks/military-submarines-v1/31.jpg",
+          "source": {
+            "queryChain": [
+              "Gotland-class submarine",
+              "Gotland-class",
+              "Gotland-class submarine class"
+            ],
+            "wikipediaTitle": "Gotland-class submarine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Gotland-class_submarine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Swedish_attack_submarine_HMS_Gotland.jpg/330px-Swedish_attack_submarine_HMS_Gotland.jpg",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Swedish_attack_submarine_HMS_Gotland.jpg/330px-Swedish_attack_submarine_HMS_Gotland.jpg"
+          },
+          "specsNormalized": {
+            "submerged_speed": 87,
+            "dive_depth": 87,
+            "endurance": 80,
+            "quietness": 91,
+            "firepower": 86,
+            "sensors": 86
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 34.98,
+            "max_operating_depth_m": 588,
+            "endurance_days": 150,
+            "acoustic_signature_db": 89.09,
+            "torpedo_firepower_index": 17.74,
+            "sensors_range_km": 194
+          }
+        },
+        {
+          "code": "32",
+          "name": "Dolphin-class",
+          "tier": 4,
+          "localImageUrl": "/decks/military-submarines-v1/32.jpg",
+          "source": {
+            "queryChain": [
+              "Dolphin-class submarine",
+              "Dolphin-class",
+              "Dolphin-class submarine class"
+            ],
+            "wikipediaTitle": "Dolphin-class submarine",
+            "wikipediaPageUrl": "https://en.wikipedia.org/wiki/Dolphin-class_submarine",
+            "thumbnailUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/RAHAV_7213.JPG/330px-RAHAV_7213.JPG",
+            "downloadedImageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/RAHAV_7213.JPG/330px-RAHAV_7213.JPG"
+          },
+          "specsNormalized": {
+            "submerged_speed": 77,
+            "dive_depth": 82,
+            "endurance": 78,
+            "quietness": 89,
+            "firepower": 86,
+            "sensors": 81
+          },
+          "rawMetrics": {
+            "submerged_speed_knots": 32.66,
+            "max_operating_depth_m": 565,
+            "endurance_days": 147,
+            "acoustic_signature_db": 90,
+            "torpedo_firepower_index": 17.74,
+            "sensors_range_km": 184
+          }
+        }
+      ]
+    }
+  ],
+  "statModel": {
+    "approach": "Deterministic per-card normalization to 1..100 with reproducible seeded offsets from card name and tier, then monotonic mapping to real-world proxy units.",
+    "note": "Proxy raw units are generated for gameplay consistency and comparability across decks.",
+    "scaling": {
+      "normalizedRange": "1..100",
+      "sourceSeed": "cardName + tier",
+      "monotonicMapping": true
+    }
+  }
+}

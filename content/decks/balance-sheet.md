@@ -2,11 +2,12 @@
 
 ## Strategy
 
-Specs are generated with a tiered, deterministic formula so decks stay playable while preserving real-world flavor:
+Specs are generated deterministically from each card's `(name, tier)` seed:
 
 - Tier baseline (2-5) per card
-- Deterministic stat jitter from `hashtext` (backend seed) / seeded hash (frontend mock)
+- Reproducible seeded offsets per metric
 - Clamped to `1..100`
+- Monotonic mapping from normalized values to raw-world proxy units in `content/decks/content-manifest.json`
 
 ## Jet Specs
 
@@ -40,4 +41,4 @@ Specs are generated with a tiered, deterministic formula so decks stay playable 
 - 3 visible decks
 - 32 cards per deck
 - Consistent spec keys per deck
-- Local asset path per card
+- Local `.jpg` asset path per card

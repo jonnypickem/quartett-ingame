@@ -215,7 +215,7 @@ const makeCards = (deck: DeckSeed): CardView[] => {
   return deck.cards.map((seed, index) => {
     const code = buildCardCode(index);
     const id = `${deck.id}-${toSlug(seed.name)}`;
-    const imageUrl = `/decks/${deck.id}/${code}.svg`;
+    const imageUrl = `/decks/${deck.id}/${code}.jpg`;
 
     const specs =
       deck.id === "military-jets-v1"
@@ -238,23 +238,12 @@ export const deckCatalog: DeckCatalogItem[] = deckSeeds.map((deck) => ({
   id: deck.id,
   name: deck.name,
   description: deck.description,
-  coverImageUrl: `/decks/${deck.id}/01.svg`,
+  coverImageUrl: `/decks/${deck.id}/01.jpg`,
   cardCount: deck.cards.length,
   isHidden: deck.isHidden
 }));
 
-const hiddenDeckCatalog: DeckCatalogItem[] = [
-  {
-    id: "pirate-ships-v1",
-    name: "Pirate Ships",
-    description: "Hidden legacy deck only accessible via exact deck ID.",
-    coverImageUrl: "/decks/military-jets-v1/01.svg",
-    cardCount: 6,
-    isHidden: true
-  }
-];
-
-export const allDeckCatalog: DeckCatalogItem[] = [...deckCatalog, ...hiddenDeckCatalog];
+export const allDeckCatalog: DeckCatalogItem[] = [...deckCatalog];
 
 export const cardsByDeckId: Record<string, CardView[]> = Object.fromEntries(
   deckSeeds.map((deck) => [deck.id, makeCards(deck)])

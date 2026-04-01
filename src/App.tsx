@@ -3,6 +3,7 @@ import { ActionBar } from "./components/ActionBar";
 import { CardPanel } from "./components/CardPanel";
 import { DeckSelector } from "./components/DeckSelector";
 import { StatusBar } from "./components/StatusBar";
+import { getVisibleDecks } from "./data/decks";
 import { createSession, fetchDeckById, fetchDeckCatalog, joinSession } from "./lib/gameApi";
 import { shareOrCopyInvite } from "./lib/share";
 import { useGameSession } from "./hooks/useGameSession";
@@ -291,12 +292,11 @@ const SessionScreen = ({
   const showRuntimeWarning = !import.meta.env.DEV && runtimeMode === "local-mock";
   const joinUrl = `${window.location.origin}/?join=${encodeURIComponent(session.sessionCode)}`;
   const [inviteMessage, setInviteMessage] = useState<string | null>(null);
-  const [deckCatalog, setDeckCatalog] = useState<DeckCatalogItem[]>([]);
+  const [deckCatalog, setDeckCatalog] = useState<DeckCatalogItem[]>(() => getVisibleDecks());
   const [selectedDeck, setSelectedDeck] = useState<DeckCatalogItem | null>(null);
   const [showDeckSelector, setShowDeckSelector] = useState(false);
   const [forceDeckGateOpen, setForceDeckGateOpen] = useState(forceDeckSelection);
   const [receiveFlightKey, setReceiveFlightKey] = useState(0);
-  const lastActionErrorRef = useRef<string | null>(state.lastError);
   const previousRef = useRef<{
     pendingTransferId: string | null;
     incomingTransferForMe: boolean;
@@ -317,10 +317,6 @@ const SessionScreen = ({
       document.body.classList.remove("no-viewport-scroll");
     };
   }, [session.status]);
-
-  useEffect(() => {
-    lastActionErrorRef.current = state.lastError;
-  }, [state.lastError]);
 
   useEffect(() => {
     const previous = previousRef.current;
@@ -368,11 +364,11 @@ const SessionScreen = ({
       try {
         const decks = await fetchDeckCatalog();
         if (!cancelled) {
-          setDeckCatalog(decks);
+          setDeckCatalog(decks.length > 0 ? decks : getVisibleDecks());
         }
       } catch {
         if (!cancelled) {
-          setDeckCatalog([]);
+          setDeckCatalog(getVisibleDecks());
         }
       }
     };
@@ -385,15 +381,12 @@ const SessionScreen = ({
   }, [session.status]);
 
   useEffect(() => {
-    if (session.status !== "lobby") {
+    if (!session.deckId) {
       setSelectedDeck(null);
       return;
     }
+
     const currentDeckId = session.deckId;
-    if (!currentDeckId) {
-      setSelectedDeck(null);
-      return;
-    }
     let cancelled = false;
     const loadCurrentDeck = async () => {
       const deck = await fetchDeckById(currentDeckId);
@@ -405,7 +398,7 @@ const SessionScreen = ({
     return () => {
       cancelled = true;
     };
-  }, [session.deckId, session.status]);
+  }, [session.deckId]);
 
   useEffect(() => {
     if (session.status === "lobby" && isHost && !session.deckId) {
@@ -428,24 +421,6 @@ const SessionScreen = ({
   const shareJoinLink = async () => {
     const message = await shareOrCopyInvite(session.sessionCode, joinUrl);
     setInviteMessage(message);
-  };
-
-  const selectDeckWithCompatibility = async (deckId: string) => {
-    const ok = await selectDeck(deckId);
-    if (ok) {
-      return true;
-    }
-
-    await new Promise<void>((resolve) => {
-      window.setTimeout(resolve, 0);
-    });
-
-    const latestError = lastActionErrorRef.current?.toLowerCase() ?? "";
-    const hasLegacySelectDeckError = latestError.includes("game is not running");
-    if (hasLegacySelectDeckError && Boolean(session.deckId)) {
-      return true;
-    }
-    return false;
   };
 
   if (contextError) {
@@ -513,7 +488,7 @@ const SessionScreen = ({
           selectedDeckId={session.deckId}
           busy={state.busy}
           errorMessage={state.lastError}
-          onSelectDeck={selectDeckWithCompatibility}
+          onSelectDeck={selectDeck}
           onResolveDeckById={fetchDeckById}
           onSelectionConfirmed={() => {
             setShowDeckSelector(false);
@@ -764,7 +739,10 @@ const SessionScreen = ({
     <main className="app-shell app-shell--gameplay">
       <section className="game-screen game-screen--gameplay">
         <div className="headline-row headline-row--gameplay">
-          <h1>Tactical Quartett</h1>
+          <div className="headline-row__title-wrap">
+            <h1>Tactical Quartett</h1>
+            <p className="headline-row__deck-name">{selectedDeck?.name ?? session.deckId ?? "No Deck Selected"}</p>
+          </div>
           <span className="energy-pill">{session.sessionCode}</span>
         </div>
 

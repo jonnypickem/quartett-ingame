@@ -89,9 +89,7 @@ export const createSession = async (): Promise<SessionAccessResponse> => {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      kind: "CREATE_SESSION",
-      // Backward-compat for older deployed edge functions that still expect playerName.
-      playerName: "Player 1"
+      kind: "CREATE_SESSION"
     })
   });
 
@@ -112,8 +110,6 @@ export const joinSession = async (sessionCode: string): Promise<SessionAccessRes
     },
     body: JSON.stringify({
       kind: "JOIN_SESSION",
-      // Backward-compat for older deployed edge functions that still expect playerName.
-      playerName: "Player 2",
       sessionCode
     })
   });

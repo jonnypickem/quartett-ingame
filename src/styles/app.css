@@ -378,6 +378,23 @@
   line-height: 1;
 }
 
+.headline-row__title-wrap {
+  min-width: 0;
+}
+
+.headline-row__deck-name {
+  margin: 6px 0 0;
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.35px;
+  text-transform: uppercase;
+  color: rgba(49, 51, 55, 0.72);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 260px;
+}
+
 .headline-row--gameplay {
   margin-bottom: var(--space-3);
 }

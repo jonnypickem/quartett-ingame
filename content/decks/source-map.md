@@ -12,13 +12,14 @@ Card records (names, IDs, and specs) are generated from the deck seed in:
 
 Local image paths are mapped as:
 
-- `/decks/<deck-id>/01.svg` ... `/decks/<deck-id>/32.svg`
+- `/decks/<deck-id>/01.jpg` ... `/decks/<deck-id>/32.jpg`
 
-Hidden-deck behavior:
+Deck content manifest:
 
-- Hidden decks are excluded from catalog responses (`kind=deck-catalog`)
-- Hidden decks are still resolvable with exact ID (`kind=deck&id=<exact-id>`)
+- `content/decks/content-manifest.json`
+- Includes per-card image mapping, Wikimedia attribution/source URLs, normalized gameplay specs, and raw metric proxies.
 
-Current hidden deck in seed data:
+Catalog behavior:
 
-- `pirate-ships-v1`
+- `kind=deck-catalog` returns only visible decks.
+- `kind=deck&id=<deck-id>` resolves an exact deck ID.

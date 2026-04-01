@@ -12,8 +12,6 @@ interface DeckSelectorProps {
 }
 
 const normalize = (value: string) => value.trim().toLowerCase();
-const isLegacyLobbySelectError = (message: string | null | undefined) =>
-  (message ?? "").trim().toLowerCase().includes("game is not running");
 
 export const DeckSelector = ({
   decks,
@@ -202,12 +200,6 @@ export const DeckSelector = ({
       onSelectionConfirmed();
       return;
     }
-
-    if (isLegacyLobbySelectError(errorMessage) && selectedDeckId) {
-      onSelectionConfirmed();
-      return;
-    }
-
     setFooterMessage(errorMessage ?? "Could not create lobby from this deck.");
   };
 
