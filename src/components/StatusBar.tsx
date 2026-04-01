@@ -37,6 +37,7 @@ export const StatusBar = ({
       <div className="deck-chip deck-chip--you">
         <span className="deck-chip__label">Your Deck</span>
         <span className="count-chip__value">{yourCount}</span>
+        <span className="count-chip__meta">cards</span>
       </div>
       <div className="versus-slot">
         <span className="versus-pill">Versus</span>
@@ -45,6 +46,7 @@ export const StatusBar = ({
       <div className="deck-chip deck-chip--opponent">
         <span className="deck-chip__label">Opponent</span>
         <span className="count-chip__value">{opponentCount}</span>
+        <span className="count-chip__meta">cards</span>
       </div>
     </header>
   );

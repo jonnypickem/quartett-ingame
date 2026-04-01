@@ -3,6 +3,7 @@ import { ActionBar } from "./components/ActionBar";
 import { CardPanel } from "./components/CardPanel";
 import { StatusBar } from "./components/StatusBar";
 import { createSession, joinSession } from "./lib/gameApi";
+import { shareOrCopyInvite } from "./lib/share";
 import { useGameSession } from "./hooks/useGameSession";
 
 const localPlayerKey = (sessionId: string) => `quartett.player.${sessionId}`;
@@ -19,6 +20,14 @@ const clearPersistedPlayer = (sessionId: string) => {
   localStorage.removeItem(localPlayerKey(sessionId));
 };
 
+const goHome = () => {
+  window.location.search = "";
+};
+
+const routeToJoinCode = (sessionCode: string) => {
+  window.location.search = `?join=${encodeURIComponent(sessionCode)}`;
+};
+
 const routeToSession = (sessionId: string, playerId: string) => {
   persistPlayer(sessionId, playerId);
   window.location.search = `?session=${encodeURIComponent(sessionId)}&player=${encodeURIComponent(playerId)}`;
@@ -26,6 +35,18 @@ const routeToSession = (sessionId: string, playerId: string) => {
 
 const findSpecValue = (specKey: string, cardSpecs: { key: string; value: number }[]) => {
   return cardSpecs.find((spec) => spec.key === specKey)?.value ?? null;
+};
+
+const AppTopBar = ({ title, badge }: { title: string; badge?: string }) => {
+  return (
+    <header className="top-bar">
+      <div>
+        <p className="top-bar__brand">Quartett Pro</p>
+        <h1 className="top-bar__title">{title}</h1>
+      </div>
+      {badge ? <span className="energy-pill">{badge}</span> : null}
+    </header>
+  );
 };
 
 const InvalidContext = ({ title, message }: { title: string; message: string }) => {
@@ -81,51 +102,64 @@ const EntryScreen = ({ prefilledCode, joinOnly }: { prefilledCode: string; joinO
   };
 
   return (
-    <main className="fallback">
-      <section className="context-error-card">
-        <h2>{joinOnly ? "Join Session" : "Quartett Duel"}</h2>
-        <p>{joinOnly ? "Enter your name to join this session." : "Create a new 1v1 session or join with invite code."}</p>
-        {!joinOnly ? (
-          <div className="request-box">
-            <p>Create Game</p>
+    <main className="app-shell app-shell--entry">
+      <section className="game-screen game-screen--entry">
+        <AppTopBar title={joinOnly ? "Join Round" : "Collect. Battle. Win."} badge="2 Players" />
+
+        <p className="entry-subline">
+          {joinOnly
+            ? "Use your invite to jump directly into the lobby."
+            : "Start a new duel in seconds or join a friend with their invite code."}
+        </p>
+
+        <div className={`entry-grid ${joinOnly ? "entry-grid--single" : ""}`}>
+          {!joinOnly ? (
+            <section className="request-box request-box--entry" aria-label="Create game panel">
+              <h2>Create Game</h2>
+              <p>Host a lobby and invite one opponent.</p>
+              <input
+                value={hostName}
+                onChange={(event) => setHostName(event.target.value)}
+                placeholder="Your name"
+                className="session-input"
+              />
+              <button type="button" className="btn-primary" disabled={busy} onClick={() => void onCreate()}>
+                {busy ? "Creating..." : "Create Lobby"}
+              </button>
+            </section>
+          ) : null}
+
+          <section className="request-box request-box--entry" aria-label="Join game panel">
+            <h2>{joinOnly ? "Join This Game" : "Join Game"}</h2>
+            <p>{joinOnly ? "Your code is prefilled below." : "Enter your name and invite code."}</p>
             <input
-              value={hostName}
-              onChange={(event) => setHostName(event.target.value)}
+              value={joinName}
+              onChange={(event) => setJoinName(event.target.value)}
               placeholder="Your name"
               className="session-input"
             />
-            <button type="button" className="btn-primary" disabled={busy} onClick={() => void onCreate()}>
-              {busy ? "Creating..." : "Create Game"}
+            {joinOnly ? (
+              <input value={joinCode} readOnly className="session-input session-input--readonly" />
+            ) : (
+              <input
+                value={joinCode}
+                onChange={(event) => setJoinCode(event.target.value)}
+                placeholder="Invite code"
+                className="session-input"
+              />
+            )}
+            <button type="button" className="btn-secondary" disabled={busy} onClick={() => void onJoin()}>
+              {busy ? "Joining..." : "Join Lobby"}
             </button>
-          </div>
-        ) : null}
-        <div className="request-box">
-          <p>{joinOnly ? "Join This Game" : "Join Game"}</p>
-          <input
-            value={joinName}
-            onChange={(event) => setJoinName(event.target.value)}
-            placeholder="Your name"
-            className="session-input"
-          />
-          {joinOnly ? (
-            <input value={joinCode} readOnly className="session-input session-input--readonly" />
-          ) : (
-            <input
-              value={joinCode}
-              onChange={(event) => setJoinCode(event.target.value)}
-              placeholder="Invite code"
-              className="session-input"
-            />
-          )}
-          <button type="button" className="btn-secondary" disabled={busy} onClick={() => void onJoin()}>
-            {busy ? "Joining..." : "Join Game"}
-          </button>
+          </section>
         </div>
+
         {joinOnly ? (
-          <button type="button" className="btn-tertiary" onClick={() => (window.location.search = "")}>
+          <button type="button" className="btn-tertiary" onClick={goHome}>
             Back To Home
           </button>
         ) : null}
+
         {error ? <p className="error-inline">{error}</p> : null}
       </section>
     </main>
@@ -155,6 +189,7 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
   const isHost = session.hostPlayerId === playerId;
   const showRuntimeWarning = !import.meta.env.DEV && runtimeMode === "local-mock";
   const joinUrl = `${window.location.origin}/?join=${encodeURIComponent(session.sessionCode)}`;
+  const [inviteMessage, setInviteMessage] = useState<string | null>(null);
   const [receiveFlightKey, setReceiveFlightKey] = useState(0);
   const previousRef = useRef<{
     pendingTransferId: string | null;
@@ -184,6 +219,25 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
     };
   }, [playerId, view.pendingTransfer, view.yourCount]);
 
+  useEffect(() => {
+    if (!inviteMessage) {
+      return;
+    }
+
+    const timeout = window.setTimeout(() => {
+      setInviteMessage(null);
+    }, 3200);
+
+    return () => {
+      window.clearTimeout(timeout);
+    };
+  }, [inviteMessage]);
+
+  const shareJoinLink = async () => {
+    const message = await shareOrCopyInvite(session.sessionCode, joinUrl);
+    setInviteMessage(message);
+  };
+
   if (contextError) {
     if (contextError.code === "player_not_in_session") {
       return (
@@ -196,7 +250,7 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
               className="btn-primary"
               onClick={() => {
                 clearPersistedPlayer(sessionId);
-                window.location.search = `?join=${encodeURIComponent(session.sessionCode)}`;
+                routeToJoinCode(session.sessionCode);
               }}
             >
               Rejoin With Code
@@ -227,7 +281,7 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
             className="btn-primary"
             onClick={() => {
               clearPersistedPlayer(sessionId);
-              window.location.search = `?join=${encodeURIComponent(session.sessionCode)}`;
+              routeToJoinCode(session.sessionCode);
             }}
           >
             Rejoin With Code
@@ -239,17 +293,16 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
 
   if (session.status === "lobby") {
     return (
-      <main className="app-shell">
-        <section className="game-screen">
-          <div className="headline-row">
-            <h1>Lobby</h1>
-            <span className="energy-pill">{session.sessionCode}</span>
-          </div>
+      <main className="app-shell app-shell--entry">
+        <section className="game-screen game-screen--entry game-screen--lobby">
+          <AppTopBar title="Lobby" badge={session.sessionCode} />
+
           {showRuntimeWarning ? (
             <div className="runtime-warning" role="alert">
               Realtime is not configured. Lobby updates require backend connection.
             </div>
           ) : null}
+
           {state.lastError ? (
             <div className="error-banner" role="alert">
               <span>{state.lastError}</span>
@@ -258,28 +311,42 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
               </button>
             </div>
           ) : null}
-          <div className="request-box">
-            <p>
-              Invite Code: <strong>{session.sessionCode}</strong>
-            </p>
-            <p>
-              Join Link: <a href={joinUrl}>{joinUrl}</a>
-            </p>
-            <img
-              className="qr-image"
-              alt="Join session QR code"
-              src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(joinUrl)}`}
-            />
+
+          <div className="lobby-layout">
+            <section className="request-box request-box--lobby">
+              <h2>Invite Your Opponent</h2>
+              <p className="lobby-invite-code">{session.sessionCode}</p>
+              <p className="lobby-link-label">Share link</p>
+              <a href={joinUrl} className="lobby-link" target="_blank" rel="noreferrer">
+                {joinUrl}
+              </a>
+              <div className="lobby-share-row">
+                <button type="button" className="btn-secondary" onClick={() => void shareJoinLink()}>
+                  Share Invite
+                </button>
+              </div>
+              {inviteMessage ? <p className="lobby-hint">{inviteMessage}</p> : null}
+              <img
+                className="qr-image"
+                alt="Join session QR code"
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=${encodeURIComponent(joinUrl)}`}
+              />
+            </section>
+
+            <section className="request-box request-box--lobby">
+              <h2>Ready Squad</h2>
+              <p>{session.players.length}/2 players connected</p>
+              <ul className="roster-list">
+                {session.players.map((player) => (
+                  <li key={player.id}>
+                    <span>{player.name}</span>
+                    <span className="roster-role">{player.id === session.hostPlayerId ? "Host" : "Ready"}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
           </div>
-          <div className="request-box">
-            <p>Players ({session.players.length}/2)</p>
-            {session.players.map((player) => (
-              <p key={player.id}>
-                {player.name}
-                {player.id === session.hostPlayerId ? " (Host)" : ""}
-              </p>
-            ))}
-          </div>
+
           <button
             type="button"
             className="btn-primary"
@@ -295,12 +362,31 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
 
   if (session.status === "finished") {
     const winner = session.players.find((player) => player.id === session.winnerPlayerId);
+    const ranking = [...session.players].sort((a, b) => b.hand.length - a.hand.length);
+
     return (
-      <main className="fallback">
-        <section className="context-error-card">
-          <h2>Game Finished</h2>
-          <p>Winner: {winner?.name ?? "Unknown"}</p>
-          <button type="button" className="btn-primary" onClick={() => (window.location.search = "")}>
+      <main className="app-shell app-shell--entry">
+        <section className="game-screen game-screen--entry game-screen--finish">
+          <AppTopBar title="Final Rankings" />
+
+          <section className="winner-callout" aria-label="Winner summary">
+            <p className="winner-callout__label">Winner</p>
+            <h2>{winner?.name ?? "Unknown"}</h2>
+            <p className="winner-callout__subline">Domination achieved</p>
+          </section>
+
+          <ul className="finish-list">
+            {ranking.map((player, index) => (
+              <li key={player.id} className={index === 0 ? "finish-list__item finish-list__item--winner" : "finish-list__item"}>
+                <span>
+                  {String(index + 1).padStart(2, "0")} {player.name}
+                </span>
+                <strong>{player.hand.length} cards</strong>
+              </li>
+            ))}
+          </ul>
+
+          <button type="button" className="btn-primary" onClick={goHome}>
             Back To Landing
           </button>
         </section>
@@ -312,15 +398,13 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
     return <main className="fallback">Waiting for opponent...</main>;
   }
 
-  const selectedByColor =
-    session.players.find((player) => player.id === view.selectedByPlayerId)?.color ?? null;
+  const selectedByColor = session.players.find((player) => player.id === view.selectedByPlayerId)?.color ?? null;
 
   const selectedSpecEqual = Boolean(
     view.selectedSpecKey &&
       view.yourTopCard &&
       view.opponentTopCard &&
-      findSpecValue(view.selectedSpecKey, view.yourTopCard.specs) ===
-        findSpecValue(view.selectedSpecKey, view.opponentTopCard.specs)
+      findSpecValue(view.selectedSpecKey, view.yourTopCard.specs) === findSpecValue(view.selectedSpecKey, view.opponentTopCard.specs)
   );
   const canSwipeSend = !state.busy && Boolean(view.yourTopCard) && !view.pendingTransfer;
   const incomingTransfer = view.pendingTransfer?.toPlayerId === playerId ? view.pendingTransfer : null;
@@ -393,11 +477,11 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
     }
 
     if (outgoingTransfer) {
-      return <p>Card locked. Waiting for {opponent.name} to respond to your send request.</p>;
+      return <p>Waiting for {opponent.name} to respond to your send request.</p>;
     }
 
     if (tieWaitingOther) {
-      return <p>Card locked. Waiting for {opponent.name} to respond to your lost-tie request.</p>;
+      return <p>Waiting for {opponent.name} to respond to your lost-tie request.</p>;
     }
 
     if (state.lastError) {
@@ -424,10 +508,8 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
     <main className="app-shell app-shell--gameplay">
       <section className="game-screen game-screen--gameplay">
         <div className="headline-row headline-row--gameplay">
-          <h1>Quartett Duel</h1>
-          <button type="button" className="icon-button" aria-label="Settings">
-            ⚙
-          </button>
+          <h1>Tactical Quartett</h1>
+          <span className="energy-pill">{session.sessionCode}</span>
         </div>
 
         <StatusBar

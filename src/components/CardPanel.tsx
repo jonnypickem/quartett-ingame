@@ -73,7 +73,7 @@ export const CardPanel = ({
     if (swipeState === "flying") {
       return "Sending...";
     }
-    return "Swipe Up To Send";
+    return "Swipe Card Up";
   }, [swipeState]);
 
   const canSwipeSurface = variant === "you" && swipeEnabled && Boolean(onSwipeUp);
@@ -200,6 +200,7 @@ export const CardPanel = ({
                   type="button"
                   className={`spec-row ${selected ? "spec-row--selected" : ""}`}
                   style={style}
+                  aria-pressed={selected}
                   onClick={() => onSelectSpec?.(spec.key)}
                   disabled={!onSelectSpec}
                 >
