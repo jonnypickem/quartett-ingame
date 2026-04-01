@@ -46,11 +46,13 @@ describe("App in-game structure", () => {
     window.history.replaceState({}, "", "/?session=session-layout&player=p1");
   });
 
-  it("renders running view with one visible card panel and no extra info blocks under action row", () => {
+  it("renders running view with one visible card shell and no extra info blocks under action row", () => {
     const { container } = render(<App />);
 
     expect(screen.queryByText("No card available")).not.toBeInTheDocument();
-    expect(container.querySelectorAll(".player-surface").length).toBe(1);
+    expect(container.querySelectorAll(".card-shell--stack").length).toBe(1);
+    expect(container.querySelector(".player-surface__header")).toBeNull();
+    expect(container.querySelector(".stack-peek__card")).toBeNull();
     expect(container.querySelector(".opponent-state")).toBeNull();
     expect(container.querySelector(".tie-info")).toBeNull();
     expect(container.querySelector(".action-panel__buttons--duel")).not.toBeNull();

@@ -1,4 +1,4 @@
-import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import { motion, useAnimationControls } from "framer-motion";
 import type { CardView } from "../types/game";
 
@@ -60,24 +60,13 @@ export const CardPanel = ({
   receiveFlightKey,
   overlayContent
 }: CardPanelProps) => {
-  const surfaceClass = variant === "you" ? "player-surface--you" : "player-surface--opponent";
   const controls = useAnimationControls();
-  const [swipeState, setSwipeState] = useState<"idle" | "flying" | "rollback">("idle");
   const [inFlight, setInFlight] = useState(false);
   const [resolvedImageSrc, setResolvedImageSrc] = useState(topCard?.imageUrl ?? "");
   const specs = Array.isArray(topCard?.specs) ? topCard.specs : [];
 
-  const swipeLabel = useMemo(() => {
-    if (swipeState === "rollback") {
-      return "Swipe failed. Try again.";
-    }
-    if (swipeState === "flying") {
-      return "Sending...";
-    }
-    return "Swipe Card Up";
-  }, [swipeState]);
-
   const canSwipeSurface = variant === "you" && swipeEnabled && Boolean(onSwipeUp);
+  const rootClassName = topCard ? "card-shell card-shell--stack" : "card-shell card-shell--empty";
 
   useEffect(() => {
     if (!topCard) {
@@ -89,7 +78,7 @@ export const CardPanel = ({
 
   return (
     <motion.section
-      className={`player-surface ${surfaceClass} ${canSwipeSurface ? "player-surface--swipeable" : ""}`}
+      className={`${rootClassName} ${canSwipeSurface ? "card-panel--swipeable" : ""}`}
       drag={canSwipeSurface && !inFlight ? "y" : false}
       dragElastic={0.12}
       dragConstraints={{ top: -320, bottom: 0 }}
@@ -109,7 +98,6 @@ export const CardPanel = ({
         }
 
         setInFlight(true);
-        setSwipeState("flying");
         await controls.start({
           y: -window.innerHeight,
           rotate: -8,
@@ -120,7 +108,6 @@ export const CardPanel = ({
         const succeeded = await onSwipeUp();
 
         if (!succeeded) {
-          setSwipeState("rollback");
           await controls.start({
             y: 0,
             rotate: 0,
@@ -131,27 +118,14 @@ export const CardPanel = ({
 
         if (succeeded) {
           controls.set({ y: 0, rotate: 0, opacity: 1 });
-          setSwipeState("idle");
         }
 
         setInFlight(false);
       }}
     >
-      <div className="player-surface__header">
-        <span className="player-tag">{variant === "you" ? "YOU" : "OPPONENT"}</span>
-        <span className="player-name">{playerName}</span>
-      </div>
-
       {topCard ? (
-        <article className="card-shell card-shell--stack">
-          <div className={`stack-peek ${canSwipeSurface ? "stack-peek--swipeable" : ""}`} aria-hidden="true">
-            <div className="stack-peek__card stack-peek__card--one" />
-            <div className="stack-peek__card stack-peek__card--two" />
-          </div>
-
-          <div
-            className={`card-stack-zone ${swipeEnabled ? "card-stack-zone--swipeable" : ""}`}
-          >
+        <>
+          <div className={`card-stack-zone ${swipeEnabled ? "card-stack-zone--swipeable" : ""}`}>
             <div className="card-meta-row">
               <span className="card-id">{topCard.code}</span>
               <span className="card-category">{topCard.category}</span>
@@ -168,8 +142,6 @@ export const CardPanel = ({
                 }
               }}
             />
-
-            {swipeEnabled ? <div className="swipe-hint">{swipeLabel}</div> : null}
 
             {overlayContent ? <div className="card-stack-overlay">{overlayContent}</div> : null}
           </div>
@@ -212,11 +184,9 @@ export const CardPanel = ({
               );
             })}
           </div>
-        </article>
+        </>
       ) : (
-        <article className="card-shell card-shell--empty">
-          <p>No card available</p>
-        </article>
+        <p>No card available</p>
       )}
     </motion.section>
   );
