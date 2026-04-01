@@ -5,8 +5,31 @@ import { StatusBar } from "./components/StatusBar";
 import { buildPerspectiveUrl, parseSessionRouteContext } from "./lib/routeContext";
 import { useGameSession } from "./hooks/useGameSession";
 
+const SEEDED_SESSION_ID = "11111111-1111-1111-1111-111111111111";
+
 const findSpecValue = (specKey: string, cardSpecs: { key: string; value: number }[]) => {
   return cardSpecs.find((spec) => spec.key === specKey)?.value ?? null;
+};
+
+const LandingScreen = () => {
+  const youUrl = buildPerspectiveUrl(SEEDED_SESSION_ID, "p1");
+  const opponentUrl = buildPerspectiveUrl(SEEDED_SESSION_ID, "p2");
+
+  return (
+    <main className="fallback">
+      <section className="context-error-card">
+        <h2>Quartett Duel</h2>
+        <p>Open one of the seeded live views to jump straight into the in-game screen.</p>
+        <p className="context-error-card__hint">
+          Session: <code>{SEEDED_SESSION_ID}</code>
+        </p>
+        <div className="qa-links">
+          <a href={youUrl}>Open You View</a>
+          <a href={opponentUrl}>Open Opponent View</a>
+        </div>
+      </section>
+    </main>
+  );
 };
 
 const InvalidContext = ({ title, message }: { title: string; message: string }) => {
@@ -26,6 +49,9 @@ const InvalidContext = ({ title, message }: { title: string; message: string }) 
 function App() {
   const routeContext = useMemo(() => parseSessionRouteContext(window.location.search), []);
   if (!routeContext.ok) {
+    if (routeContext.code === "missing_session") {
+      return <LandingScreen />;
+    }
     return <InvalidContext title="Invalid URL Context" message={routeContext.message} />;
   }
 
