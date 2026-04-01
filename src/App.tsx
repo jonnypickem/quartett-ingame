@@ -489,6 +489,7 @@ const SessionScreen = ({
           decks={deckCatalog}
           selectedDeckId={session.deckId}
           busy={state.busy}
+          errorMessage={state.lastError}
           onSelectDeck={selectDeck}
           onResolveDeckById={fetchDeckById}
           onSelectionConfirmed={() => {
