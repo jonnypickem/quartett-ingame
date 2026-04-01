@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { type ReactNode, useMemo, useState } from "react";
 import { motion, useAnimationControls } from "framer-motion";
 import type { CardView } from "../types/game";
 
@@ -12,6 +12,7 @@ interface CardPanelProps {
   swipeEnabled?: boolean;
   onSwipeUp?: () => Promise<boolean>;
   receiveFlightKey?: number;
+  overlayContent?: ReactNode;
 }
 
 export const shouldTriggerSwipe = (offsetY: number, velocityY: number): boolean =>
@@ -35,7 +36,8 @@ export const CardPanel = ({
   onSelectSpec,
   swipeEnabled = false,
   onSwipeUp,
-  receiveFlightKey
+  receiveFlightKey,
+  overlayContent
 }: CardPanelProps) => {
   const surfaceClass = variant === "you" ? "player-surface--you" : "player-surface--opponent";
   const controls = useAnimationControls();
@@ -127,6 +129,8 @@ export const CardPanel = ({
             <img className="card-image" src={topCard.imageUrl} alt={`${topCard.code} card art`} />
 
             {swipeEnabled ? <div className="swipe-hint">{swipeLabel}</div> : null}
+
+            {overlayContent ? <div className="card-stack-overlay">{overlayContent}</div> : null}
           </div>
 
           {receiveFlightKey ? (

@@ -357,14 +357,14 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
     onTieAction = async () => undefined;
   }
 
-  const overlayContent = (() => {
+  const cardOverlayContent = (() => {
     if (incomingTransfer) {
       return (
-        <>
+        <div className="card-request">
           <p>
             {opponent.name} sends <strong>{incomingTransfer.cardId}</strong>. Accept?
           </p>
-          <div className="top-overlay__actions">
+          <div className="card-request__actions">
             <button type="button" className="btn-mini btn-mini--accept" onClick={() => void respondTransfer("accepted")}>
               Accept
             </button>
@@ -372,20 +372,23 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
               Decline
             </button>
           </div>
-        </>
+        </div>
       );
     }
 
     if (tieAwaitingMe) {
       return (
-        <>
-          <p>Tie resolution requested. Accept from tie slot or decline here.</p>
-          <div className="top-overlay__actions">
+        <div className="card-request">
+          <p>Tie resolution requested. Accept or decline.</p>
+          <div className="card-request__actions">
+            <button type="button" className="btn-mini btn-mini--accept" onClick={() => void respondTie("accepted")}>
+              Accept Tie
+            </button>
             <button type="button" className="btn-mini btn-mini--decline" onClick={() => void respondTie("declined")}>
               Decline Tie
             </button>
           </div>
-        </>
+        </div>
       );
     }
 
@@ -399,11 +402,13 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
 
     if (state.lastError) {
       return (
-        <div className="top-overlay__actions">
+        <div className="card-request">
           <p>{state.lastError}</p>
-          <button type="button" className="btn-mini btn-mini--decline" onClick={clearError}>
-            Dismiss
-          </button>
+          <div className="card-request__actions">
+            <button type="button" className="btn-mini btn-mini--decline" onClick={clearError}>
+              Dismiss
+            </button>
+          </div>
         </div>
       );
     }
@@ -418,7 +423,6 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
   return (
     <main className="app-shell app-shell--gameplay">
       <section className="game-screen game-screen--gameplay">
-        {overlayContent ? <div className="top-overlay">{overlayContent}</div> : null}
         <div className="headline-row headline-row--gameplay">
           <h1>Quartett Duel</h1>
           <button type="button" className="icon-button" aria-label="Settings">
@@ -445,6 +449,7 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
             swipeEnabled={canSwipeSend}
             onSwipeUp={sendTopCard}
             receiveFlightKey={receiveFlightKey}
+            overlayContent={cardOverlayContent}
           />
 
           <ActionBar

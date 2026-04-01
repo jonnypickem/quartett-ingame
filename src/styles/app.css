@@ -214,7 +214,6 @@ body {
   flex: 1;
   min-height: 0;
   overflow: hidden;
-  padding-top: 66px;
 }
 
 .player-surface {
@@ -592,33 +591,6 @@ body {
   color: var(--q-white);
 }
 
-.top-overlay {
-  position: absolute;
-  top: 10px;
-  left: 14px;
-  right: 14px;
-  z-index: 5;
-  pointer-events: none;
-  background: rgba(255, 255, 255, 0.93);
-  border: 3px solid rgba(49, 51, 55, 0.18);
-  border-radius: 16px;
-  padding: 10px 12px;
-  font-family: "Sigmar", system-ui, sans-serif;
-  font-size: 0.84rem;
-  color: var(--q-ink);
-}
-
-.top-overlay p {
-  margin: 0;
-}
-
-.top-overlay__actions {
-  margin-top: 8px;
-  display: flex;
-  gap: 8px;
-  pointer-events: auto;
-}
-
 .receive-flight {
   position: absolute;
   width: 72px;
@@ -630,6 +602,39 @@ body {
   background: linear-gradient(180deg, #fffddf 0%, #ffffff 100%);
   box-shadow: 0 12px 22px rgba(49, 51, 55, 0.2);
   pointer-events: none;
+}
+
+.card-stack-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 3px solid rgba(49, 51, 55, 0.16);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px;
+  font-family: "Sigmar", system-ui, sans-serif;
+  color: var(--q-ink);
+}
+
+.card-stack-overlay p {
+  margin: 0;
+  text-align: center;
+}
+
+.card-request {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card-request__actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
 }
 
 .fallback {
