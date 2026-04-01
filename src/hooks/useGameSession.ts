@@ -178,6 +178,24 @@ export const useGameSession = (sessionId: string, currentPlayerId: string) => {
       };
     }
 
+    const currentPlayer = uiState.session.players.find((player) => player.id === playerIdForView) ?? null;
+    const opponentPlayer =
+      uiState.session.players.find((player) => player.id !== playerIdForView) ?? null;
+
+    if (!currentPlayer || !opponentPlayer) {
+      return {
+        yourCount: currentPlayer?.hand.length ?? 0,
+        opponentCount: opponentPlayer?.hand.length ?? 0,
+        yourTopCard: currentPlayer?.hand[0] ?? null,
+        opponentTopCard: opponentPlayer?.hand[0] ?? null,
+        selectedSpecKey: uiState.session.selectedSpecKey,
+        selectedByPlayerId: uiState.session.selectedByPlayerId,
+        tieState: uiState.session.tieState,
+        pendingTransfer: uiState.session.pendingTransfer,
+        loseTieRequest: uiState.session.loseTieRequest
+      };
+    }
+
     return createSessionView(uiState.session, playerIdForView);
   }, [currentPlayerId, uiState.session]);
 

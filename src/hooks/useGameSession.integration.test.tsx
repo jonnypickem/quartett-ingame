@@ -160,4 +160,36 @@ describe("useGameSession realtime integration", () => {
       expect(reconnect.result.current.state.session.selectedSpecKey).not.toBe("armor");
     });
   });
+
+  it("renders safely for lobby bootstrap with only one player", async () => {
+    const lobbyState = createMockSessionState("session-rt");
+    lobbyState.status = "lobby";
+    lobbyState.players = [
+      {
+        ...lobbyState.players[0],
+        hand: []
+      }
+    ];
+    lobbyState.pendingTransfer = null;
+    lobbyState.loseTieRequest = null;
+    lobbyState.tieState = {
+      active: false,
+      rounds: 0,
+      potCards: [],
+      pendingLoseTieRequestId: null
+    };
+    lobbyState.selectedSpecKey = null;
+    lobbyState.selectedByPlayerId = null;
+    serverState = lobbyState;
+
+    const hook = renderHook(() => useGameSession("session-rt", lobbyState.players[0].id));
+
+    await waitFor(() => {
+      expect(hook.result.current.connectionStatus).toBe("connected");
+    });
+
+    expect(hook.result.current.opponent).toBeNull();
+    expect(hook.result.current.view.yourCount).toBe(0);
+    expect(hook.result.current.view.opponentCount).toBe(0);
+  });
 });
