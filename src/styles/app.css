@@ -327,6 +327,7 @@
   gap: var(--space-2);
   min-height: 0;
   overflow: visible;
+  isolation: isolate;
 }
 
 .card-shell--stack::before,
@@ -362,7 +363,7 @@
 
 .card-stack-zone {
   position: relative;
-  z-index: 2;
+  z-index: 1;
 }
 
 .card-stack-zone--swipeable {
@@ -373,7 +374,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  z-index: 0;
+  z-index: -2;
 }
 
 .stack-peek__card {
@@ -518,7 +519,7 @@
 }
 
 .action-panel__buttons--duel {
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 7fr 3fr;
 }
 
 .action-panel__hint {
@@ -972,7 +973,7 @@
   }
 
   .action-panel__buttons--duel {
-    grid-template-columns: 1fr;
+    grid-template-columns: 7fr 3fr;
   }
 
   .btn-secondary--tie-slot {
