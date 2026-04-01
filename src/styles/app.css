@@ -277,10 +277,12 @@
 }
 
 .card-shell--stack {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
+  position: relative;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0;
   min-height: 0;
+  height: 100%;
 }
 
 .card-shell--empty {
@@ -294,6 +296,8 @@
 .card-stack-zone {
   position: relative;
   z-index: 1;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .card-stack-zone--swipeable {
@@ -336,11 +340,11 @@
 
 .card-image {
   width: 100%;
-  height: 170px;
+  height: 100%;
   border-radius: var(--radius-md);
   border: var(--border-base) solid rgba(31, 33, 37, 0.16);
   object-fit: cover;
-  margin-bottom: var(--space-2);
+  margin-bottom: 0;
 }
 
 .spec-grid {
@@ -348,11 +352,15 @@
   z-index: 2;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: minmax(0, 1fr);
   gap: var(--space-2);
-  align-content: start;
-  max-height: min(36dvh, 250px);
+  align-content: stretch;
+  height: 100%;
+  min-height: 0;
+  max-height: none;
   overflow-y: auto;
-  padding-right: 2px;
+  padding-top: var(--space-2);
+  padding-right: 4px;
 }
 
 .spec-empty {
@@ -376,7 +384,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  min-height: 0;
+  padding: 8px 10px;
   font-family: var(--font-display);
   transition: transform var(--dur-fast) var(--ease-std), border-color var(--dur-fast) var(--ease-std);
   cursor: pointer;
@@ -396,11 +405,11 @@
 }
 
 .spec-row__label {
-  font-size: 0.87rem;
+  font-size: 0.82rem;
 }
 
 .spec-row__value {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
 .action-panel {
@@ -847,15 +856,6 @@
     font-size: 1rem;
   }
 
-  .card-image,
-  .game-screen--gameplay .card-image {
-    height: 130px;
-  }
-
-  .spec-grid {
-    max-height: min(34dvh, 220px);
-  }
-
   .spec-row {
     padding: 8px;
   }
@@ -872,10 +872,6 @@
 @media (min-width: 920px) {
   .app-shell {
     padding: var(--space-6);
-  }
-
-  .game-screen--gameplay .card-image {
-    height: 182px;
   }
 
   .lobby-layout {
