@@ -1,4 +1,4 @@
-import { type ReactNode, useMemo, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { motion, useAnimationControls } from "framer-motion";
 import type { CardView } from "../types/game";
 
@@ -27,6 +27,27 @@ const tintFromHex = (hex: string, alpha: number) => {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 };
 
+const buildFallbackImage = (code: string, category: string): string => {
+  const safeCode = code.replace(/[<>&"]/g, "");
+  const safeCategory = category.replace(/[<>&"]/g, "");
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="900" height="600" viewBox="0 0 900 600">
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#112240"/>
+          <stop offset="100%" stop-color="#1f6feb"/>
+        </linearGradient>
+      </defs>
+      <rect width="900" height="600" rx="40" fill="url(#g)"/>
+      <rect x="32" y="32" width="836" height="536" rx="28" fill="none" stroke="#ffffff55" stroke-width="8"/>
+      <text x="70" y="120" fill="#ffffff" font-size="88" font-weight="800" font-family="Nunito, sans-serif">${safeCode}</text>
+      <text x="70" y="190" fill="#dbeafe" font-size="44" font-weight="700" font-family="Nunito, sans-serif">${safeCategory}</text>
+      <text x="70" y="520" fill="#bfdbfe" font-size="30" font-weight="700" font-family="Nunito, sans-serif">Image unavailable</text>
+    </svg>
+  `;
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+};
+
 export const CardPanel = ({
   variant,
   playerName,
@@ -43,6 +64,7 @@ export const CardPanel = ({
   const controls = useAnimationControls();
   const [swipeState, setSwipeState] = useState<"idle" | "flying" | "rollback">("idle");
   const [inFlight, setInFlight] = useState(false);
+  const [resolvedImageSrc, setResolvedImageSrc] = useState(topCard?.imageUrl ?? "");
 
   const swipeLabel = useMemo(() => {
     if (swipeState === "rollback") {
@@ -55,6 +77,14 @@ export const CardPanel = ({
   }, [swipeState]);
 
   const canSwipeSurface = variant === "you" && swipeEnabled && Boolean(onSwipeUp);
+
+  useEffect(() => {
+    if (!topCard) {
+      setResolvedImageSrc("");
+      return;
+    }
+    setResolvedImageSrc(topCard.imageUrl || buildFallbackImage(topCard.code, topCard.category));
+  }, [topCard]);
 
   return (
     <motion.section
@@ -126,7 +156,17 @@ export const CardPanel = ({
               <span className="card-category">{topCard.category}</span>
             </div>
 
-            <img className="card-image" src={topCard.imageUrl} alt={`${topCard.code} card art`} />
+            <img
+              className="card-image"
+              src={resolvedImageSrc}
+              alt={`${topCard.code} card art`}
+              onError={() => {
+                const fallback = buildFallbackImage(topCard.code, topCard.category);
+                if (resolvedImageSrc !== fallback) {
+                  setResolvedImageSrc(fallback);
+                }
+              }}
+            />
 
             {swipeEnabled ? <div className="swipe-hint">{swipeLabel}</div> : null}
 

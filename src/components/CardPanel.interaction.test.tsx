@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { CardPanel, shouldTriggerSwipe } from "./CardPanel";
 
@@ -34,5 +34,25 @@ describe("CardPanel gesture interactions", () => {
     );
 
     expect(container.querySelector(".card-stack-zone--swipeable")).not.toBeNull();
+  });
+
+  it("falls back to generated image when remote image fails", () => {
+    const { container } = render(
+      <CardPanel
+        variant="you"
+        playerName="You"
+        topCard={{
+          ...topCard,
+          imageUrl: "https://example.invalid/missing-image.jpg"
+        }}
+        selectedSpecKey={null}
+        selectedByColor={null}
+      />
+    );
+
+    const image = container.querySelector(".card-image") as HTMLImageElement;
+    expect(image).not.toBeNull();
+    fireEvent.error(image);
+    expect(image.src).toContain("data:image/svg+xml");
   });
 });

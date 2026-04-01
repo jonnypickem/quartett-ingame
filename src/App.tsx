@@ -393,11 +393,11 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
     }
 
     if (outgoingTransfer) {
-      return <p>Waiting for {opponent.name} to respond to your send request.</p>;
+      return <p>Card locked. Waiting for {opponent.name} to respond to your send request.</p>;
     }
 
     if (tieWaitingOther) {
-      return <p>Waiting for {opponent.name} to respond to your lost-tie request.</p>;
+      return <p>Card locked. Waiting for {opponent.name} to respond to your lost-tie request.</p>;
     }
 
     if (state.lastError) {
