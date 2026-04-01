@@ -1,4 +1,5 @@
-import { useRef, type TouchEvent } from "react";
+import { useMemo, useState } from "react";
+import { motion, useAnimationControls } from "framer-motion";
 import type { CardView } from "../types/game";
 
 interface CardPanelProps {
@@ -9,8 +10,12 @@ interface CardPanelProps {
   selectedByColor: string | null;
   onSelectSpec?: (specKey: string) => void;
   swipeEnabled?: boolean;
-  onSwipeUp?: () => void;
+  onSwipeUp?: () => Promise<boolean>;
+  receiveFlightKey?: number;
 }
+
+export const shouldTriggerSwipe = (offsetY: number, velocityY: number): boolean =>
+  offsetY < -95 || velocityY < -720;
 
 const tintFromHex = (hex: string, alpha: number) => {
   const clean = hex.replace("#", "");
@@ -29,38 +34,23 @@ export const CardPanel = ({
   selectedByColor,
   onSelectSpec,
   swipeEnabled = false,
-  onSwipeUp
+  onSwipeUp,
+  receiveFlightKey
 }: CardPanelProps) => {
   const surfaceClass = variant === "you" ? "player-surface--you" : "player-surface--opponent";
-  const swipeStartRef = useRef<{ x: number; y: number } | null>(null);
+  const controls = useAnimationControls();
+  const [swipeState, setSwipeState] = useState<"idle" | "flying" | "rollback">("idle");
+  const [inFlight, setInFlight] = useState(false);
 
-  const handleTouchStart = (event: TouchEvent<HTMLElement>) => {
-    if (!swipeEnabled || !onSwipeUp) {
-      return;
+  const swipeLabel = useMemo(() => {
+    if (swipeState === "rollback") {
+      return "Swipe failed. Try again.";
     }
-    const touch = event.changedTouches[0];
-    swipeStartRef.current = { x: touch.clientX, y: touch.clientY };
-  };
-
-  const handleTouchEnd = (event: TouchEvent<HTMLElement>) => {
-    if (!swipeEnabled || !onSwipeUp) {
-      return;
+    if (swipeState === "flying") {
+      return "Sending...";
     }
-    const start = swipeStartRef.current;
-    swipeStartRef.current = null;
-    if (!start) {
-      return;
-    }
-
-    const touch = event.changedTouches[0];
-    const deltaY = touch.clientY - start.y;
-    const deltaX = touch.clientX - start.x;
-    const isSwipeUp = deltaY < -90 && Math.abs(deltaX) < 80;
-
-    if (isSwipeUp) {
-      onSwipeUp();
-    }
-  };
+    return "Swipe Up To Send";
+  }, [swipeState]);
 
   return (
     <section className={`player-surface ${surfaceClass}`}>
@@ -71,10 +61,54 @@ export const CardPanel = ({
 
       {topCard ? (
         <article className="card-shell card-shell--stack">
-          <div
+          <motion.div
             className={`card-stack-zone ${swipeEnabled ? "card-stack-zone--swipeable" : ""}`}
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
+            drag={swipeEnabled && !inFlight ? "y" : false}
+            dragElastic={0.12}
+            dragConstraints={{ top: -260, bottom: 0 }}
+            animate={controls}
+            onDragEnd={async (_event, info) => {
+              if (!swipeEnabled || !onSwipeUp || inFlight) {
+                return;
+              }
+              if (!shouldTriggerSwipe(info.offset.y, info.velocity.y)) {
+                await controls.start({
+                  y: 0,
+                  rotate: 0,
+                  opacity: 1,
+                  transition: { type: "spring", stiffness: 300, damping: 26 }
+                });
+                return;
+              }
+
+              setInFlight(true);
+              setSwipeState("flying");
+              await controls.start({
+                y: -window.innerHeight,
+                rotate: -8,
+                opacity: 0.08,
+                transition: { duration: 0.28, ease: "easeIn" }
+              });
+
+              const succeeded = await onSwipeUp();
+
+              if (!succeeded) {
+                setSwipeState("rollback");
+                await controls.start({
+                  y: 0,
+                  rotate: 0,
+                  opacity: 1,
+                  transition: { type: "spring", stiffness: 260, damping: 24 }
+                });
+              }
+
+              if (succeeded) {
+                controls.set({ y: 0, rotate: 0, opacity: 1 });
+                setSwipeState("idle");
+              }
+
+              setInFlight(false);
+            }}
           >
             <div className="card-meta-row">
               <span className="card-id">{topCard.code}</span>
@@ -83,8 +117,18 @@ export const CardPanel = ({
 
             <img className="card-image" src={topCard.imageUrl} alt={`${topCard.code} card art`} />
 
-            {swipeEnabled ? <div className="swipe-hint">Swipe Up To Send</div> : null}
-          </div>
+            {swipeEnabled ? <div className="swipe-hint">{swipeLabel}</div> : null}
+          </motion.div>
+
+          {receiveFlightKey ? (
+            <motion.div
+              key={receiveFlightKey}
+              className="receive-flight"
+              initial={{ x: 8, y: 120, rotate: -18, opacity: 0 }}
+              animate={{ x: -110, y: -240, rotate: 18, opacity: [0, 1, 0.2] }}
+              transition={{ duration: 0.65, ease: "easeOut" }}
+            />
+          ) : null}
 
           <div className="spec-grid">
             {topCard.specs.map((spec) => {

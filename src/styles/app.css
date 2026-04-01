@@ -53,6 +53,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: relative;
 }
 
 .headline-row {
@@ -213,6 +214,7 @@ body {
   flex: 1;
   min-height: 0;
   overflow: hidden;
+  padding-top: 66px;
 }
 
 .player-surface {
@@ -292,6 +294,10 @@ body {
 
 .card-stack-zone--swipeable {
   touch-action: none;
+}
+
+.card-stack-zone {
+  position: relative;
 }
 
 .swipe-hint {
@@ -390,6 +396,7 @@ body {
   border-radius: var(--radius-xl);
   background: var(--q-white);
   padding: 12px;
+  margin-top: auto;
 }
 
 .action-panel__buttons {
@@ -544,6 +551,46 @@ body {
 .btn-mini--decline {
   background: var(--q-ink);
   color: var(--q-white);
+}
+
+.top-overlay {
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  right: 14px;
+  z-index: 5;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.93);
+  border: 3px solid rgba(49, 51, 55, 0.18);
+  border-radius: 16px;
+  padding: 10px 12px;
+  font-family: "Sigmar", system-ui, sans-serif;
+  font-size: 0.84rem;
+  color: var(--q-ink);
+}
+
+.top-overlay p {
+  margin: 0;
+}
+
+.top-overlay__actions {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+.receive-flight {
+  position: absolute;
+  width: 72px;
+  height: 102px;
+  right: 24px;
+  bottom: 28px;
+  border-radius: 14px;
+  border: 3px solid rgba(49, 51, 55, 0.2);
+  background: linear-gradient(180deg, #fffddf 0%, #ffffff 100%);
+  box-shadow: 0 12px 22px rgba(49, 51, 55, 0.2);
+  pointer-events: none;
 }
 
 .fallback {

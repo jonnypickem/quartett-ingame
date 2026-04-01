@@ -115,9 +115,9 @@ export const useGameSession = (sessionId: string, currentPlayerId: string) => {
   }, [uiState.eventQueue]);
 
   const callAction = useCallback(
-    async (request: Omit<GameActionRequest, "sessionId" | "expectedVersion">) => {
+    async (request: Omit<GameActionRequest, "sessionId" | "expectedVersion">): Promise<boolean> => {
       if (uiState.contextError) {
-        return;
+        return false;
       }
 
       dispatch({ type: "SET_BUSY", value: true });
@@ -139,9 +139,11 @@ export const useGameSession = (sessionId: string, currentPlayerId: string) => {
           session: response.state,
           lastSeenEventId: response.latestEventId
         });
+        return true;
       } catch (error) {
         const message = error instanceof Error ? error.message : "Unknown action error.";
         dispatch({ type: "SET_ERROR", message });
+        return false;
       } finally {
         dispatch({ type: "SET_BUSY", value: false });
       }
@@ -201,7 +203,7 @@ export const useGameSession = (sessionId: string, currentPlayerId: string) => {
 
   const selectSpec = useCallback(
     async (specKey: string) => {
-      await callAction({
+      return await callAction({
         actionType: "SELECT_SPEC",
         actorPlayerId: currentPlayerId,
         payload: { specKey }
@@ -212,10 +214,10 @@ export const useGameSession = (sessionId: string, currentPlayerId: string) => {
 
   const sendTopCard = useCallback(async () => {
     if (!view.yourTopCard) {
-      return;
+      return false;
     }
 
-    await callAction({
+    return await callAction({
       actionType: "SEND_CARD",
       actorPlayerId: currentPlayerId,
       payload: {
@@ -225,7 +227,7 @@ export const useGameSession = (sessionId: string, currentPlayerId: string) => {
   }, [callAction, currentPlayerId, view.yourTopCard]);
 
   const startGame = useCallback(async () => {
-    await callAction({
+    return await callAction({
       actionType: "START_GAME",
       actorPlayerId: currentPlayerId,
       payload: {}
@@ -236,10 +238,10 @@ export const useGameSession = (sessionId: string, currentPlayerId: string) => {
     async (status: Exclude<RequestStatus, "pending">) => {
       const pending = sessionRef.current.pendingTransfer;
       if (!pending) {
-        return;
+        return false;
       }
 
-      await callAction({
+      return await callAction({
         actionType: "RESPOND_TRANSFER",
         actorPlayerId: currentPlayerId,
         payload: {
@@ -252,7 +254,7 @@ export const useGameSession = (sessionId: string, currentPlayerId: string) => {
   );
 
   const startTie = useCallback(async () => {
-    await callAction({
+    return await callAction({
       actionType: "START_TIE",
       actorPlayerId: currentPlayerId,
       payload: {
@@ -263,10 +265,10 @@ export const useGameSession = (sessionId: string, currentPlayerId: string) => {
 
   const loseTie = useCallback(async () => {
     if (!opponent) {
-      return;
+      return false;
     }
 
-    await callAction({
+    return await callAction({
       actionType: "LOSE_TIE",
       actorPlayerId: currentPlayerId,
       payload: {
@@ -279,10 +281,10 @@ export const useGameSession = (sessionId: string, currentPlayerId: string) => {
     async (status: Exclude<RequestStatus, "pending">) => {
       const loseTieRequest = sessionRef.current.loseTieRequest;
       if (!loseTieRequest) {
-        return;
+        return false;
       }
 
-      await callAction({
+      return await callAction({
         actionType: "RESPOND_TIE",
         actorPlayerId: currentPlayerId,
         payload: {

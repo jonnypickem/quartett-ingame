@@ -1,6 +1,6 @@
-import { fireEvent, render } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
-import { CardPanel } from "./CardPanel";
+import { render } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+import { CardPanel, shouldTriggerSwipe } from "./CardPanel";
 
 const topCard = {
   id: "card-1",
@@ -14,8 +14,13 @@ const topCard = {
 };
 
 describe("CardPanel gesture interactions", () => {
-  it("calls onSwipeUp when user swipes upward on card stack", () => {
-    const onSwipeUp = vi.fn();
+  it("marks swipe as valid only when threshold is exceeded", () => {
+    expect(shouldTriggerSwipe(-96, -100)).toBe(true);
+    expect(shouldTriggerSwipe(-20, -721)).toBe(true);
+    expect(shouldTriggerSwipe(-70, -320)).toBe(false);
+  });
+
+  it("renders a swipeable zone in player mode", () => {
     const { container } = render(
       <CardPanel
         variant="you"
@@ -24,20 +29,10 @@ describe("CardPanel gesture interactions", () => {
         selectedSpecKey={null}
         selectedByColor={null}
         swipeEnabled
-        onSwipeUp={onSwipeUp}
+        onSwipeUp={async () => true}
       />
     );
 
-    const swipeZone = container.querySelector(".card-stack-zone--swipeable");
-    expect(swipeZone).not.toBeNull();
-
-    fireEvent.touchStart(swipeZone!, {
-      changedTouches: [{ clientX: 120, clientY: 250 }]
-    });
-    fireEvent.touchEnd(swipeZone!, {
-      changedTouches: [{ clientX: 122, clientY: 120 }]
-    });
-
-    expect(onSwipeUp).toHaveBeenCalledTimes(1);
+    expect(container.querySelector(".card-stack-zone--swipeable")).not.toBeNull();
   });
 });

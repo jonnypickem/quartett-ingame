@@ -46,11 +46,14 @@ describe("App in-game structure", () => {
     window.history.replaceState({}, "", "/?session=session-layout&player=p1");
   });
 
-  it("renders running view with one visible card panel and hidden opponent details", () => {
+  it("renders running view with one visible card panel and no extra info blocks under action row", () => {
     const { container } = render(<App />);
 
-    expect(screen.getByText("Top card hidden")).toBeInTheDocument();
     expect(screen.queryByText("No card available")).not.toBeInTheDocument();
     expect(container.querySelectorAll(".player-surface").length).toBe(1);
+    expect(container.querySelector(".opponent-state")).toBeNull();
+    expect(container.querySelector(".tie-info")).toBeNull();
+    expect(container.querySelector(".action-panel__buttons--duel")).not.toBeNull();
+    expect(screen.queryByText("Swipe up to send")).not.toBeInTheDocument();
   });
 });

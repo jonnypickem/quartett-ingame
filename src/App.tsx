@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ActionBar } from "./components/ActionBar";
 import { CardPanel } from "./components/CardPanel";
 import { StatusBar } from "./components/StatusBar";
@@ -155,6 +155,34 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
   const isHost = session.hostPlayerId === playerId;
   const showRuntimeWarning = !import.meta.env.DEV && runtimeMode === "local-mock";
   const joinUrl = `${window.location.origin}/?join=${encodeURIComponent(session.sessionCode)}`;
+  const [receiveFlightKey, setReceiveFlightKey] = useState(0);
+  const previousRef = useRef<{
+    pendingTransferId: string | null;
+    incomingTransferForMe: boolean;
+    yourCount: number;
+  } | null>(null);
+
+  useEffect(() => {
+    const previous = previousRef.current;
+    const currentPending = view.pendingTransfer;
+    const incomingForMe = Boolean(currentPending && currentPending.toPlayerId === playerId);
+
+    if (
+      previous &&
+      previous.pendingTransferId &&
+      previous.incomingTransferForMe &&
+      !currentPending &&
+      view.yourCount > previous.yourCount
+    ) {
+      setReceiveFlightKey((value) => value + 1);
+    }
+
+    previousRef.current = {
+      pendingTransferId: currentPending?.id ?? null,
+      incomingTransferForMe: incomingForMe,
+      yourCount: view.yourCount
+    };
+  }, [playerId, view.pendingTransfer, view.yourCount]);
 
   if (contextError) {
     if (contextError.code === "player_not_in_session") {
@@ -295,31 +323,108 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
         findSpecValue(view.selectedSpecKey, view.opponentTopCard.specs)
   );
   const canSwipeSend = !state.busy && Boolean(view.yourTopCard) && !view.pendingTransfer;
+  const incomingTransfer = view.pendingTransfer?.toPlayerId === playerId ? view.pendingTransfer : null;
+  const outgoingTransfer = view.pendingTransfer?.fromPlayerId === playerId ? view.pendingTransfer : null;
+  const tieAwaitingMe = view.loseTieRequest?.winnerPlayerId === playerId;
+  const tieWaitingOther = view.loseTieRequest?.loserPlayerId === playerId;
+  const tieActiveWithoutRequest = view.tieState.active && !view.loseTieRequest;
+
+  let tieLabel = "Tie";
+  let tieDisabled = state.busy || !view.yourTopCard || !selectedSpecEqual || Boolean(view.pendingTransfer);
+  let onTieAction = async () => {
+    await startTie();
+  };
+
+  if (tieActiveWithoutRequest) {
+    tieLabel = "Lost Tie";
+    tieDisabled = state.busy || Boolean(view.pendingTransfer);
+    onTieAction = async () => {
+      await loseTie();
+    };
+  }
+
+  if (tieAwaitingMe) {
+    tieLabel = "Accept Tie";
+    tieDisabled = state.busy;
+    onTieAction = async () => {
+      await respondTie("accepted");
+    };
+  }
+
+  if (tieWaitingOther) {
+    tieLabel = "Tie Pending";
+    tieDisabled = true;
+    onTieAction = async () => undefined;
+  }
+
+  const overlayContent = (() => {
+    if (incomingTransfer) {
+      return (
+        <>
+          <p>
+            {opponent.name} sends <strong>{incomingTransfer.cardId}</strong>. Accept?
+          </p>
+          <div className="top-overlay__actions">
+            <button type="button" className="btn-mini btn-mini--accept" onClick={() => void respondTransfer("accepted")}>
+              Accept
+            </button>
+            <button type="button" className="btn-mini btn-mini--decline" onClick={() => void respondTransfer("declined")}>
+              Decline
+            </button>
+          </div>
+        </>
+      );
+    }
+
+    if (tieAwaitingMe) {
+      return (
+        <>
+          <p>Tie resolution requested. Accept from tie slot or decline here.</p>
+          <div className="top-overlay__actions">
+            <button type="button" className="btn-mini btn-mini--decline" onClick={() => void respondTie("declined")}>
+              Decline Tie
+            </button>
+          </div>
+        </>
+      );
+    }
+
+    if (outgoingTransfer) {
+      return <p>Waiting for {opponent.name} to respond to your send request.</p>;
+    }
+
+    if (tieWaitingOther) {
+      return <p>Waiting for {opponent.name} to respond to your lost-tie request.</p>;
+    }
+
+    if (state.lastError) {
+      return (
+        <div className="top-overlay__actions">
+          <p>{state.lastError}</p>
+          <button type="button" className="btn-mini btn-mini--decline" onClick={clearError}>
+            Dismiss
+          </button>
+        </div>
+      );
+    }
+
+    if (showRuntimeWarning) {
+      return <p>Realtime is not configured for this environment. Running in local mock mode.</p>;
+    }
+
+    return null;
+  })();
 
   return (
     <main className="app-shell app-shell--gameplay">
       <section className="game-screen game-screen--gameplay">
+        {overlayContent ? <div className="top-overlay">{overlayContent}</div> : null}
         <div className="headline-row headline-row--gameplay">
           <h1>Quartett Duel</h1>
           <button type="button" className="icon-button" aria-label="Settings">
             ⚙
           </button>
         </div>
-
-        {showRuntimeWarning ? (
-          <div className="runtime-warning" role="alert">
-            Realtime is not configured for this environment. This screen is running in local mock mode.
-          </div>
-        ) : null}
-
-        {state.lastError ? (
-          <div className="error-banner" role="alert">
-            <span>{state.lastError}</span>
-            <button type="button" onClick={clearError}>
-              Dismiss
-            </button>
-          </div>
-        ) : null}
 
         <StatusBar
           yourCount={view.yourCount}
@@ -338,33 +443,18 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
             selectedByColor={selectedByColor}
             onSelectSpec={selectSpec}
             swipeEnabled={canSwipeSend}
-            onSwipeUp={() => void sendTopCard()}
+            onSwipeUp={sendTopCard}
+            receiveFlightKey={receiveFlightKey}
           />
 
           <ActionBar
-            currentPlayerId={playerId}
-            opponentName={opponent.name}
-            hasYourTopCard={Boolean(view.yourTopCard)}
-            canStartTie={selectedSpecEqual}
-            tieActive={view.tieState.active}
+            canSend={canSwipeSend}
+            tieLabel={tieLabel}
+            tieDisabled={tieDisabled}
             busy={state.busy}
-            pendingTransfer={view.pendingTransfer}
-            loseTieRequest={view.loseTieRequest}
             onSendCard={sendTopCard}
-            onStartTie={startTie}
-            onLoseTie={loseTie}
-            onRespondTransfer={respondTransfer}
-            onRespondTie={respondTie}
+            onTieAction={onTieAction}
           />
-
-          <div className="tie-info" aria-live="polite">
-            <span>Tie Pot Cards: {view.tieState.potCards.length}</span>
-            <span>Tie Rounds: {view.tieState.rounds}</span>
-          </div>
-          <div className="opponent-state">
-            <span className="opponent-state__title">{opponent.name}</span>
-            <span className="opponent-state__subtitle">Top card hidden</span>
-          </div>
         </div>
       </section>
     </main>
