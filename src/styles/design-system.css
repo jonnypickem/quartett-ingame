@@ -67,6 +67,11 @@ body,
   min-height: 100%;
 }
 
+html.no-viewport-scroll,
+body.no-viewport-scroll {
+  overflow: hidden;
+}
+
 body {
   margin: 0;
   font-family: var(--font-body);

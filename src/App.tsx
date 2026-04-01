@@ -33,6 +33,12 @@ const routeToSession = (sessionId: string, playerId: string) => {
   window.location.search = `?session=${encodeURIComponent(sessionId)}&player=${encodeURIComponent(playerId)}`;
 };
 
+const recentSessionCards = [
+  { name: "Supercars Pro", lastPlayed: "Last played: 2h ago", code: "ABC-123", icon: "car" },
+  { name: "Cute Animals", lastPlayed: "Last played: yesterday", code: "PETS-77", icon: "paw" },
+  { name: "Retro Gaming", lastPlayed: "Last played: 2 days ago", code: "RETRO-9", icon: "arcade" }
+] as const;
+
 const findSpecValue = (specKey: string, cardSpecs: { key: string; value: number }[]) => {
   return cardSpecs.find((spec) => spec.key === specKey)?.value ?? null;
 };
@@ -66,6 +72,7 @@ const EntryScreen = ({ prefilledCode, joinOnly }: { prefilledCode: string; joinO
   const [joinCode, setJoinCode] = useState(prefilledCode);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [activePanel, setActivePanel] = useState<"create" | "join" | null>(joinOnly ? "join" : null);
 
   const onCreate = async () => {
     if (!hostName.trim()) {
@@ -103,64 +110,158 @@ const EntryScreen = ({ prefilledCode, joinOnly }: { prefilledCode: string; joinO
 
   return (
     <main className="app-shell app-shell--entry">
-      <section className="game-screen game-screen--entry">
-        <AppTopBar title={joinOnly ? "Join Round" : "Collect. Battle. Win."} badge="2 Players" />
+      <section className={`landing-screen ${joinOnly ? "landing-screen--join" : ""}`}>
+        <header className="landing-header" aria-label="Quartett top bar">
+          <span className="landing-header__icon" aria-hidden="true">
+            game
+          </span>
+          <p className="landing-header__brand">Quartett Pro</p>
+          <span className="landing-header__icon" aria-hidden="true">
+            settings
+          </span>
+        </header>
 
-        <p className="entry-subline">
-          {joinOnly
-            ? "Use your invite to jump directly into the lobby."
-            : "Start a new duel in seconds or join a friend with their invite code."}
-        </p>
+        <section className="landing-hero">
+          <h1>{joinOnly ? "Join The Round" : "Collect. Battle. Win."}</h1>
+          <p>
+            {joinOnly
+              ? "Use your invite details below and jump into the lobby."
+              : "Pick your duel mode and jump right back into action."}
+          </p>
 
-        <div className={`entry-grid ${joinOnly ? "entry-grid--single" : ""}`}>
           {!joinOnly ? (
-            <section className="request-box request-box--entry" aria-label="Create game panel">
-              <h2>Create Game</h2>
-              <p>Host a lobby and invite one opponent.</p>
-              <input
-                value={hostName}
-                onChange={(event) => setHostName(event.target.value)}
-                placeholder="Your name"
-                className="session-input"
-              />
-              <button type="button" className="btn-primary" disabled={busy} onClick={() => void onCreate()}>
-                {busy ? "Creating..." : "Create Lobby"}
-              </button>
-            </section>
+            <div className="hero-card-stack" aria-hidden="true">
+              <article className="hero-card hero-card--back hero-card--back-left">
+                <div className="hero-card__art hero-card__art--back-left" />
+              </article>
+              <article className="hero-card hero-card--back hero-card--back-right">
+                <div className="hero-card__art hero-card__art--back-right" />
+              </article>
+              <article className="hero-card hero-card--front">
+                <span className="hero-card__badge">Legendary</span>
+                <div className="hero-card__art hero-card__art--front">Qnash-O-Matic</div>
+                <p className="hero-card__stats">Pow: 95 · Spd: 40</p>
+              </article>
+            </div>
           ) : null}
+        </section>
 
-          <section className="request-box request-box--entry" aria-label="Join game panel">
-            <h2>{joinOnly ? "Join This Game" : "Join Game"}</h2>
-            <p>{joinOnly ? "Your code is prefilled below." : "Enter your name and invite code."}</p>
-            <input
-              value={joinName}
-              onChange={(event) => setJoinName(event.target.value)}
-              placeholder="Your name"
-              className="session-input"
-            />
-            {joinOnly ? (
-              <input value={joinCode} readOnly className="session-input session-input--readonly" />
-            ) : (
-              <input
-                value={joinCode}
-                onChange={(event) => setJoinCode(event.target.value)}
-                placeholder="Invite code"
-                className="session-input"
-              />
-            )}
-            <button type="button" className="btn-secondary" disabled={busy} onClick={() => void onJoin()}>
-              {busy ? "Joining..." : "Join Lobby"}
+        <section className="landing-sheet">
+          <div className="landing-actions">
+            {!joinOnly ? (
+              <button
+                type="button"
+                className="btn-primary landing-action-btn"
+                disabled={busy}
+                onClick={() => {
+                  setError(null);
+                  setActivePanel("create");
+                }}
+              >
+                Start Game
+              </button>
+            ) : null}
+
+            <button
+              type="button"
+              className="btn-secondary landing-action-btn"
+              disabled={busy}
+              onClick={() => {
+                setError(null);
+                setActivePanel("join");
+              }}
+            >
+              {joinOnly ? "Join This Round" : "Join Round"}
             </button>
-          </section>
-        </div>
+          </div>
 
-        {joinOnly ? (
-          <button type="button" className="btn-tertiary" onClick={goHome}>
-            Back To Home
-          </button>
-        ) : null}
+          <div className={`landing-form-drawer ${activePanel ? "landing-form-drawer--open" : ""}`}>
+            {activePanel === "create" && !joinOnly ? (
+              <form
+                className="landing-form"
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  void onCreate();
+                }}
+              >
+                <h2>Create Lobby</h2>
+                <input
+                  value={hostName}
+                  onChange={(event) => setHostName(event.target.value)}
+                  placeholder="Your name"
+                  className="session-input"
+                />
+                <button type="submit" className="btn-primary" disabled={busy}>
+                  {busy ? "Creating..." : "Create Lobby"}
+                </button>
+              </form>
+            ) : null}
 
-        {error ? <p className="error-inline">{error}</p> : null}
+            {activePanel === "join" ? (
+              <form
+                className="landing-form"
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  void onJoin();
+                }}
+              >
+                <h2>{joinOnly ? "Join With Invite" : "Join Lobby"}</h2>
+                <input
+                  value={joinName}
+                  onChange={(event) => setJoinName(event.target.value)}
+                  placeholder="Your name"
+                  className="session-input"
+                />
+                {joinOnly ? (
+                  <input value={joinCode} readOnly className="session-input session-input--readonly" />
+                ) : (
+                  <input
+                    value={joinCode}
+                    onChange={(event) => setJoinCode(event.target.value)}
+                    placeholder="Invite code"
+                    className="session-input"
+                  />
+                )}
+                <button type="submit" className="btn-secondary" disabled={busy}>
+                  {busy ? "Joining..." : "Join Lobby"}
+                </button>
+              </form>
+            ) : null}
+          </div>
+
+          {!joinOnly ? (
+            <section className="last-sessions" aria-label="Last sessions">
+              <h2>Last Sessions</h2>
+              <ul className="last-sessions__list">
+                {recentSessionCards.map((sessionCard) => (
+                  <li key={sessionCard.code}>
+                    <div className={`session-pill session-pill--${sessionCard.icon}`} aria-hidden="true" />
+                    <div className="session-meta">
+                      <p>{sessionCard.name}</p>
+                      <span>{sessionCard.lastPlayed}</span>
+                    </div>
+                    <button
+                      type="button"
+                      className="session-play-btn"
+                      onClick={() => {
+                        setJoinCode(sessionCard.code);
+                        setActivePanel("join");
+                      }}
+                    >
+                      Play
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : (
+            <button type="button" className="btn-tertiary landing-back-btn" onClick={goHome}>
+              Back To Home
+            </button>
+          )}
+
+          {error ? <p className="error-inline">{error}</p> : null}
+        </section>
       </section>
     </main>
   );
@@ -196,6 +297,21 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
     incomingTransferForMe: boolean;
     yourCount: number;
   } | null>(null);
+
+  useEffect(() => {
+    if (session.status === "running") {
+      document.documentElement.classList.add("no-viewport-scroll");
+      document.body.classList.add("no-viewport-scroll");
+    } else {
+      document.documentElement.classList.remove("no-viewport-scroll");
+      document.body.classList.remove("no-viewport-scroll");
+    }
+
+    return () => {
+      document.documentElement.classList.remove("no-viewport-scroll");
+      document.body.classList.remove("no-viewport-scroll");
+    };
+  }, [session.status]);
 
   useEffect(() => {
     const previous = previousRef.current;
