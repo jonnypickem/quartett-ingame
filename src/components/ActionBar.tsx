@@ -31,7 +31,6 @@ export const ActionBar = ({
           {tieLabel}
         </button>
       </div>
-      <p className="action-panel__hint">Choose your strongest stat, then send your top card.</p>
     </section>
   );
 };

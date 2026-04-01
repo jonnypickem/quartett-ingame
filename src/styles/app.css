@@ -301,11 +301,17 @@
 }
 
 .card-meta-row {
-  margin-bottom: var(--space-2);
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  z-index: 3;
+  margin: 0;
   display: flex;
   justify-content: space-between;
   gap: var(--space-2);
   align-items: center;
+  pointer-events: none;
 }
 
 .card-id {
@@ -398,10 +404,9 @@
 }
 
 .action-panel {
-  border-radius: var(--radius-lg);
-  border: var(--border-base) solid rgba(31, 33, 37, 0.18);
-  background: linear-gradient(180deg, #ffffff 0%, #f2efeb 100%);
-  padding: var(--space-3);
+  border: none;
+  background: transparent;
+  padding: 0;
   margin-top: 0;
 }
 
@@ -413,16 +418,6 @@
 
 .action-panel__buttons--duel {
   grid-template-columns: 7fr 3fr;
-}
-
-.action-panel__hint {
-  margin: 10px 0 0;
-  text-align: center;
-  font-size: 0.75rem;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.35px;
-  color: rgba(49, 51, 55, 0.65);
 }
 
 .btn-primary,
