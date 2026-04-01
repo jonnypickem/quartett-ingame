@@ -404,10 +404,16 @@ const applyGameplayAction = (inputState: SessionState, request: GameActionReques
       const sender = findPlayer(state, transfer.fromPlayerId);
       const receiver = findPlayer(state, transfer.toPlayerId);
       const senderTop = getTopCard(sender);
+      const receiverTop = getTopCard(receiver);
       if (!senderTop || senderTop.id !== transfer.cardId) {
         throw new GameActionError("Sender top card changed.");
       }
-      receiver.hand.push(removeTopCard(sender));
+      if (!receiverTop) {
+        throw new GameActionError("Receiver top card missing.");
+      }
+      const movedReceiverTop = removeTopCard(receiver);
+      const movedSenderTop = removeTopCard(sender);
+      receiver.hand.push(movedReceiverTop, movedSenderTop);
     }
     state.pendingTransfer = null;
     events.push({

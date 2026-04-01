@@ -199,12 +199,17 @@ const handleRespondTransfer = (
 
   if (req.payload.status === "accepted") {
     const senderTop = getTopCard(sender);
+    const receiverTop = getTopCard(receiver);
     if (!senderTop || senderTop.id !== transfer.cardId) {
       throw new GameActionError("Transfer cannot be accepted because sender top card changed.");
     }
+    if (!receiverTop) {
+      throw new GameActionError("Transfer cannot be accepted because receiver has no top card.");
+    }
 
-    const movedCard = removeTopCard(sender);
-    receiver.hand.push(movedCard);
+    const movedReceiverTop = removeTopCard(receiver);
+    const movedSenderTop = removeTopCard(sender);
+    receiver.hand.push(movedReceiverTop, movedSenderTop);
   }
 
   state.pendingTransfer = null;

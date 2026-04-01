@@ -34,6 +34,11 @@ body {
   padding: 14px;
 }
 
+.app-shell--gameplay {
+  height: 100dvh;
+  overflow: hidden;
+}
+
 .game-screen {
   width: min(100%, 1100px);
   margin: 0 auto;
@@ -41,6 +46,13 @@ body {
   background: linear-gradient(180deg, #e9e6e1 0%, #d7d2cb 100%);
   border: 4px solid rgba(49, 51, 55, 0.12);
   padding: 14px;
+}
+
+.game-screen--gameplay {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .headline-row {
@@ -152,6 +164,15 @@ body {
   gap: 12px;
 }
 
+.gameplay-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
 .player-surface {
   border-radius: 30px;
   padding: 12px;
@@ -193,11 +214,51 @@ body {
   padding: 12px;
 }
 
+.card-shell--stack {
+  position: relative;
+}
+
+.card-shell--stack::before,
+.card-shell--stack::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  border-radius: 20px;
+  background: rgba(49, 51, 55, 0.08);
+  z-index: -1;
+}
+
+.card-shell--stack::before {
+  top: -8px;
+  height: 12px;
+}
+
+.card-shell--stack::after {
+  top: -14px;
+  left: 24px;
+  right: 24px;
+  height: 10px;
+}
+
 .card-shell--empty {
   min-height: 180px;
   display: grid;
   place-items: center;
   font-family: "Sigmar", system-ui, sans-serif;
+}
+
+.card-stack-zone--swipeable {
+  touch-action: none;
+}
+
+.swipe-hint {
+  margin: 4px 0 10px;
+  font-family: "Sigmar", system-ui, sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.25px;
+  text-align: center;
+  color: rgba(49, 51, 55, 0.7);
 }
 
 .card-meta-row {
@@ -283,7 +344,6 @@ body {
 }
 
 .action-panel {
-  margin-top: 12px;
   border-radius: var(--radius-xl);
   background: var(--q-white);
   padding: 12px;
@@ -352,6 +412,46 @@ body {
   gap: 8px;
 }
 
+.swipe-caption {
+  margin: 10px 0 0;
+  font-family: "Nunito", system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.86rem;
+  color: rgba(49, 51, 55, 0.75);
+}
+
+.session-input {
+  margin-top: 8px;
+  width: 100%;
+  border: 2px solid rgba(49, 51, 55, 0.2);
+  border-radius: 14px;
+  min-height: 42px;
+  padding: 0 12px;
+  font-size: 1rem;
+  font-family: "Nunito", system-ui, sans-serif;
+  font-weight: 800;
+}
+
+.session-input--readonly {
+  background: #ececec;
+  color: rgba(49, 51, 55, 0.8);
+}
+
+.error-inline {
+  margin-top: 10px;
+  color: #8f1f00;
+  font-size: 0.95rem;
+  font-family: "Nunito", system-ui, sans-serif;
+  font-weight: 900;
+}
+
+.qr-image {
+  margin-top: 10px;
+  width: min(100%, 220px);
+  border-radius: 16px;
+  border: 2px solid rgba(49, 51, 55, 0.15);
+}
+
 .btn-mini {
   border: none;
   border-radius: 999px;
@@ -401,21 +501,12 @@ body {
   font-size: 0.9rem;
 }
 
-.qa-links {
-  margin-top: 10px;
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+.game-screen--gameplay .card-image {
+  height: 130px;
 }
 
-.qa-links a {
-  text-decoration: none;
-  border-radius: 999px;
-  background: var(--q-ink);
-  color: var(--q-white);
-  padding: 8px 12px;
-  font-family: "Sigmar", system-ui, sans-serif;
-  font-size: 0.8rem;
+.game-screen--gameplay .spec-row {
+  padding: 8px;
 }
 
 @media (min-width: 920px) {
@@ -433,5 +524,9 @@ body {
 
   .card-image {
     height: 210px;
+  }
+
+  .game-screen--gameplay .card-image {
+    height: 170px;
   }
 }

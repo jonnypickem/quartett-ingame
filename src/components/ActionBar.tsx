@@ -33,6 +33,7 @@ export const ActionBar = ({
 }: ActionBarProps) => {
   const incomingTransfer = pendingTransfer?.toPlayerId === currentPlayerId ? pendingTransfer : null;
   const outgoingTransfer = pendingTransfer?.fromPlayerId === currentPlayerId ? pendingTransfer : null;
+  const canSendNow = !busy && hasYourTopCard && !pendingTransfer;
 
   const tieAwaitingMe = loseTieRequest?.winnerPlayerId === currentPlayerId;
   const tieWaitingOther = loseTieRequest?.loserPlayerId === currentPlayerId;
@@ -67,6 +68,8 @@ export const ActionBar = ({
           Lost Tie
         </button>
       </div>
+
+      {canSendNow ? <p className="swipe-caption">Tip: swipe your top card up to send.</p> : null}
 
       {outgoingTransfer ? (
         <div className="request-box request-box--pending">

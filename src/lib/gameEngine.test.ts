@@ -21,7 +21,7 @@ describe("gameEngine", () => {
     expect(view.selectedSpecKey).toBe("range");
   });
 
-  it("moves sender top card on transfer accept", () => {
+  it("cycles both top cards to winner bottom on transfer accept", () => {
     const state = cloneSessionState(initialMockState);
 
     const pending = applyGameAction(state, {
@@ -47,6 +47,8 @@ describe("gameEngine", () => {
     const p2 = accepted.state.players.find((player) => player.id === "p2")!;
 
     expect(p1.hand[0].id).toBe("card-a2");
+    expect(p2.hand[0].id).toBe("card-b2");
+    expect(p2.hand[p2.hand.length - 2].id).toBe("card-b1");
     expect(p2.hand[p2.hand.length - 1].id).toBe("card-a1");
   });
 

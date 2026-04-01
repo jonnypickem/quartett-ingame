@@ -3,7 +3,6 @@ import { ActionBar } from "./components/ActionBar";
 import { CardPanel } from "./components/CardPanel";
 import { StatusBar } from "./components/StatusBar";
 import { createSession, joinSession } from "./lib/gameApi";
-import { buildPerspectiveUrl } from "./lib/routeContext";
 import { useGameSession } from "./hooks/useGameSession";
 
 const localPlayerKey = (sessionId: string) => `quartett.player.${sessionId}`;
@@ -40,7 +39,7 @@ const InvalidContext = ({ title, message }: { title: string; message: string }) 
   );
 };
 
-const EntryScreen = ({ prefilledCode }: { prefilledCode: string }) => {
+const EntryScreen = ({ prefilledCode, joinOnly }: { prefilledCode: string; joinOnly: boolean }) => {
   const [hostName, setHostName] = useState("");
   const [joinName, setJoinName] = useState("");
   const [joinCode, setJoinCode] = useState(prefilledCode);
@@ -84,38 +83,49 @@ const EntryScreen = ({ prefilledCode }: { prefilledCode: string }) => {
   return (
     <main className="fallback">
       <section className="context-error-card">
-        <h2>Quartett Duel</h2>
-        <p>Create a new 1v1 session or join with invite code.</p>
+        <h2>{joinOnly ? "Join Session" : "Quartett Duel"}</h2>
+        <p>{joinOnly ? "Enter your name to join this session." : "Create a new 1v1 session or join with invite code."}</p>
+        {!joinOnly ? (
+          <div className="request-box">
+            <p>Create Game</p>
+            <input
+              value={hostName}
+              onChange={(event) => setHostName(event.target.value)}
+              placeholder="Your name"
+              className="session-input"
+            />
+            <button type="button" className="btn-primary" disabled={busy} onClick={() => void onCreate()}>
+              {busy ? "Creating..." : "Create Game"}
+            </button>
+          </div>
+        ) : null}
         <div className="request-box">
-          <p>Create Game</p>
-          <input
-            value={hostName}
-            onChange={(event) => setHostName(event.target.value)}
-            placeholder="Your name"
-            className="session-input"
-          />
-          <button type="button" className="btn-primary" disabled={busy} onClick={() => void onCreate()}>
-            {busy ? "Creating..." : "Create Game"}
-          </button>
-        </div>
-        <div className="request-box">
-          <p>Join Game</p>
+          <p>{joinOnly ? "Join This Game" : "Join Game"}</p>
           <input
             value={joinName}
             onChange={(event) => setJoinName(event.target.value)}
             placeholder="Your name"
             className="session-input"
           />
-          <input
-            value={joinCode}
-            onChange={(event) => setJoinCode(event.target.value)}
-            placeholder="Invite code"
-            className="session-input"
-          />
+          {joinOnly ? (
+            <input value={joinCode} readOnly className="session-input session-input--readonly" />
+          ) : (
+            <input
+              value={joinCode}
+              onChange={(event) => setJoinCode(event.target.value)}
+              placeholder="Invite code"
+              className="session-input"
+            />
+          )}
           <button type="button" className="btn-secondary" disabled={busy} onClick={() => void onJoin()}>
             {busy ? "Joining..." : "Join Game"}
           </button>
         </div>
+        {joinOnly ? (
+          <button type="button" className="btn-tertiary" onClick={() => (window.location.search = "")}>
+            Back To Home
+          </button>
+        ) : null}
         {error ? <p className="error-inline">{error}</p> : null}
       </section>
     </main>
@@ -144,7 +154,7 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
   const session = state.session;
   const isHost = session.hostPlayerId === playerId;
   const showRuntimeWarning = !import.meta.env.DEV && runtimeMode === "local-mock";
-  const joinUrl = `${window.location.origin}/?code=${encodeURIComponent(session.sessionCode)}`;
+  const joinUrl = `${window.location.origin}/?join=${encodeURIComponent(session.sessionCode)}`;
 
   if (contextError) {
     if (contextError.code === "player_not_in_session") {
@@ -158,7 +168,7 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
               className="btn-primary"
               onClick={() => {
                 clearPersistedPlayer(sessionId);
-                window.location.search = `?code=${encodeURIComponent(session.sessionCode)}`;
+                window.location.search = `?join=${encodeURIComponent(session.sessionCode)}`;
               }}
             >
               Rejoin With Code
@@ -189,7 +199,7 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
             className="btn-primary"
             onClick={() => {
               clearPersistedPlayer(sessionId);
-              window.location.search = `?code=${encodeURIComponent(session.sessionCode)}`;
+              window.location.search = `?join=${encodeURIComponent(session.sessionCode)}`;
             }}
           >
             Rejoin With Code
@@ -284,10 +294,11 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
       findSpecValue(view.selectedSpecKey, view.yourTopCard.specs) ===
         findSpecValue(view.selectedSpecKey, view.opponentTopCard.specs)
   );
+  const canSwipeSend = !state.busy && Boolean(view.yourTopCard) && !view.pendingTransfer;
 
   return (
-    <main className="app-shell">
-      <section className="game-screen">
+    <main className="app-shell app-shell--gameplay">
+      <section className="game-screen game-screen--gameplay">
         <div className="headline-row">
           <h1>Quartett Duel</h1>
           <span className="energy-pill">Session {session.sessionCode}</span>
@@ -316,7 +327,7 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
           runtimeMode={runtimeMode}
         />
 
-        <div className="cards-layout">
+        <div className="gameplay-flow">
           <CardPanel
             variant="you"
             playerName={yourPlayer.name}
@@ -324,7 +335,30 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
             selectedSpecKey={view.selectedSpecKey}
             selectedByColor={selectedByColor}
             onSelectSpec={selectSpec}
+            swipeEnabled={canSwipeSend}
+            onSwipeUp={() => void sendTopCard()}
           />
+
+          <ActionBar
+            currentPlayerId={playerId}
+            opponentName={opponent.name}
+            hasYourTopCard={Boolean(view.yourTopCard)}
+            canStartTie={selectedSpecEqual}
+            tieActive={view.tieState.active}
+            busy={state.busy}
+            pendingTransfer={view.pendingTransfer}
+            loseTieRequest={view.loseTieRequest}
+            onSendCard={sendTopCard}
+            onStartTie={startTie}
+            onLoseTie={loseTie}
+            onRespondTransfer={respondTransfer}
+            onRespondTie={respondTie}
+          />
+
+          <div className="tie-info" aria-live="polite">
+            <span>Tie Pot Cards: {view.tieState.potCards.length}</span>
+            <span>Tie Rounds: {view.tieState.rounds}</span>
+          </div>
 
           <CardPanel
             variant="opponent"
@@ -333,36 +367,6 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
             selectedSpecKey={view.selectedSpecKey}
             selectedByColor={selectedByColor}
           />
-        </div>
-
-        <div className="tie-info" aria-live="polite">
-          <span>Tie Pot Cards: {view.tieState.potCards.length}</span>
-          <span>Tie Rounds: {view.tieState.rounds}</span>
-        </div>
-
-        <ActionBar
-          currentPlayerId={playerId}
-          opponentName={opponent.name}
-          hasYourTopCard={Boolean(view.yourTopCard)}
-          canStartTie={selectedSpecEqual}
-          tieActive={view.tieState.active}
-          busy={state.busy}
-          pendingTransfer={view.pendingTransfer}
-          loseTieRequest={view.loseTieRequest}
-          onSendCard={sendTopCard}
-          onStartTie={startTie}
-          onLoseTie={loseTie}
-          onRespondTransfer={respondTransfer}
-          onRespondTie={respondTie}
-        />
-
-        <div className="qa-links">
-          <a href={buildPerspectiveUrl(session.sessionId, yourPlayer.id)} target="_blank" rel="noreferrer">
-            Open {yourPlayer.name} View
-          </a>
-          <a href={buildPerspectiveUrl(session.sessionId, opponent.id)} target="_blank" rel="noreferrer">
-            Open {opponent.name} View
-          </a>
         </div>
       </section>
     </main>
@@ -373,10 +377,12 @@ function App() {
   const params = useMemo(() => new URLSearchParams(window.location.search), []);
   const sessionId = params.get("session")?.trim() ?? "";
   const playerId = params.get("player")?.trim() ?? "";
+  const joinCode = params.get("join")?.trim().toUpperCase() ?? "";
   const code = params.get("code")?.trim().toUpperCase() ?? "";
+  const prefilledCode = joinCode || code;
 
   if (!sessionId) {
-    return <EntryScreen prefilledCode={code} />;
+    return <EntryScreen prefilledCode={prefilledCode} joinOnly={Boolean(joinCode)} />;
   }
 
   if (!playerId) {
