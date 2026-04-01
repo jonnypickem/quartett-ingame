@@ -159,7 +159,27 @@ export const useGameSession = (sessionId: string, currentPlayerId: string) => {
     [currentPlayerId, uiState.session.players]
   );
 
-  const view = useMemo(() => createSessionView(uiState.session, currentPlayerId), [currentPlayerId, uiState.session]);
+  const view = useMemo(() => {
+    const hasCurrentPlayer = uiState.session.players.some((player) => player.id === currentPlayerId);
+    const fallbackPlayerId = uiState.session.players[0]?.id;
+    const playerIdForView = hasCurrentPlayer ? currentPlayerId : fallbackPlayerId;
+
+    if (!playerIdForView) {
+      return {
+        yourCount: 0,
+        opponentCount: 0,
+        yourTopCard: null,
+        opponentTopCard: null,
+        selectedSpecKey: uiState.session.selectedSpecKey,
+        selectedByPlayerId: uiState.session.selectedByPlayerId,
+        tieState: uiState.session.tieState,
+        pendingTransfer: uiState.session.pendingTransfer,
+        loseTieRequest: uiState.session.loseTieRequest
+      };
+    }
+
+    return createSessionView(uiState.session, playerIdForView);
+  }, [currentPlayerId, uiState.session]);
 
   const selectSpec = useCallback(
     async (specKey: string) => {
