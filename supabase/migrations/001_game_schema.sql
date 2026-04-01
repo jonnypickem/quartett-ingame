@@ -22,6 +22,9 @@ create index if not exists game_events_session_id_idx on public.game_events(sess
 alter table public.game_sessions enable row level security;
 alter table public.game_events enable row level security;
 
+grant select on public.game_sessions to anon, authenticated;
+grant select on public.game_events to anon, authenticated;
+
 create policy "Allow read game sessions" on public.game_sessions
   for select
   using (true);
@@ -29,3 +32,17 @@ create policy "Allow read game sessions" on public.game_sessions
 create policy "Allow read game events" on public.game_events
   for select
   using (true);
+
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_publication_tables
+    where pubname = 'supabase_realtime'
+      and schemaname = 'public'
+      and tablename = 'game_events'
+  ) then
+    alter publication supabase_realtime add table public.game_events;
+  end if;
+end
+$$;
