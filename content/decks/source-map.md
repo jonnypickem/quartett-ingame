@@ -6,9 +6,14 @@ This build ships three visible deck packs with local image assets in `public/dec
 - `supercars-v1`
 - `military-submarines-v1`
 
-Card records (names, IDs, and specs) are generated from the deck seed in:
+Card records (names, IDs, and specs) are generated from the content manifest in:
 
-- `src/data/decks.ts`
+- `content/decks/content-manifest.json`
+
+Seed SQL is generated from the manifest via:
+
+- `scripts/generate-seed-from-manifest.mjs`
+- output: `supabase/seed.sql`
 
 Local image paths are mapped as:
 

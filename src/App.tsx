@@ -3,7 +3,7 @@ import { ActionBar } from "./components/ActionBar";
 import { CardPanel } from "./components/CardPanel";
 import { DeckSelector } from "./components/DeckSelector";
 import { StatusBar } from "./components/StatusBar";
-import { getVisibleDecks } from "./data/decks";
+import { getVisibleDecks, sortDeckCatalog } from "./data/decks";
 import { createSession, fetchDeckById, fetchDeckCatalog, joinSession } from "./lib/gameApi";
 import { shareOrCopyInvite } from "./lib/share";
 import { useGameSession } from "./hooks/useGameSession";
@@ -292,7 +292,7 @@ const SessionScreen = ({
   const showRuntimeWarning = !import.meta.env.DEV && runtimeMode === "local-mock";
   const joinUrl = `${window.location.origin}/?join=${encodeURIComponent(session.sessionCode)}`;
   const [inviteMessage, setInviteMessage] = useState<string | null>(null);
-  const [deckCatalog, setDeckCatalog] = useState<DeckCatalogItem[]>(() => getVisibleDecks());
+  const [deckCatalog, setDeckCatalog] = useState<DeckCatalogItem[]>(() => sortDeckCatalog(getVisibleDecks()));
   const [selectedDeck, setSelectedDeck] = useState<DeckCatalogItem | null>(null);
   const [showDeckSelector, setShowDeckSelector] = useState(false);
   const [forceDeckGateOpen, setForceDeckGateOpen] = useState(forceDeckSelection);
@@ -364,11 +364,11 @@ const SessionScreen = ({
       try {
         const decks = await fetchDeckCatalog();
         if (!cancelled) {
-          setDeckCatalog(decks.length > 0 ? decks : getVisibleDecks());
+          setDeckCatalog(sortDeckCatalog(decks.length > 0 ? decks : getVisibleDecks()));
         }
       } catch {
         if (!cancelled) {
-          setDeckCatalog(getVisibleDecks());
+          setDeckCatalog(sortDeckCatalog(getVisibleDecks()));
         }
       }
     };

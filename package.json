@@ -10,6 +10,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:contract": "node scripts/check-api-contract.mjs",
+    "seed:generate": "node scripts/generate-seed-from-manifest.mjs",
+    "seed:remote": "node scripts/reseed-remote-from-manifest.mjs",
     "go-live:deploy": "bash scripts/deploy-realtime.sh"
   },
   "dependencies": {

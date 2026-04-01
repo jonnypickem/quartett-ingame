@@ -8,11 +8,22 @@ describe("deck catalog", () => {
     const decks = getVisibleDecks();
     expect(decks.length).toBe(3);
     expect(decks.every((deck) => deck.isHidden === false)).toBe(true);
+    expect(decks.map((deck) => deck.id)).toEqual([
+      "military-jets-v1",
+      "supercars-v1",
+      "military-submarines-v1"
+    ]);
   });
 
   it("does not expose legacy placeholder decks", () => {
     const hidden = getDeckById("pirate-ships-v1");
     expect(hidden).toBeNull();
+  });
+
+  it("handles empty or undefined deck IDs safely", () => {
+    expect(getDeckById(undefined)).toBeNull();
+    expect(getDeckById("")).toBeNull();
+    expect(getDeckById("   ")).toBeNull();
   });
 
   it("provides 32 cards and stable local asset paths for each visible deck", () => {

@@ -1,4 +1,4 @@
-import { getDeckById, getVisibleDecks } from "../data/decks";
+import { getDeckById, getVisibleDecks, sortDeckCatalog } from "../data/decks";
 import { createMockSessionState } from "../state/mockState";
 import type {
   ActionResponse,
@@ -123,7 +123,7 @@ export const joinSession = async (sessionCode: string): Promise<SessionAccessRes
 
 export const fetchDeckCatalog = async (): Promise<DeckCatalogItem[]> => {
   if (resolveRuntimeMode() !== "realtime") {
-    return getVisibleDecks();
+    return sortDeckCatalog(getVisibleDecks());
   }
 
   const endpoint = getEndpoint();
@@ -137,16 +137,17 @@ export const fetchDeckCatalog = async (): Promise<DeckCatalogItem[]> => {
   if (!response.ok) {
     const message = await readErrorMessage(response, "Deck catalog request failed.");
     if (isLegacyDeckEndpointError(response.status, message)) {
-      return getVisibleDecks();
+      return sortDeckCatalog(getVisibleDecks());
     }
     throw new Error(message);
   }
 
-  return (await response.json()) as DeckCatalogItem[];
+  const decks = (await response.json()) as DeckCatalogItem[];
+  return sortDeckCatalog(decks);
 };
 
-export const fetchDeckById = async (deckId: string): Promise<DeckCatalogItem | null> => {
-  const normalizedDeckId = deckId.trim().toLowerCase();
+export const fetchDeckById = async (deckId: string | null | undefined): Promise<DeckCatalogItem | null> => {
+  const normalizedDeckId = typeof deckId === "string" ? deckId.trim().toLowerCase() : "";
   if (!normalizedDeckId) {
     return null;
   }

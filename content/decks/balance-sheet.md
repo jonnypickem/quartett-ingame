@@ -2,12 +2,12 @@
 
 ## Strategy
 
-Specs are generated deterministically from each card's `(name, tier)` seed:
+Specs are manifest-driven and deterministic per card:
 
-- Tier baseline (2-5) per card
-- Reproducible seeded offsets per metric
-- Clamped to `1..100`
-- Monotonic mapping from normalized values to raw-world proxy units in `content/decks/content-manifest.json`
+- Each card stores explicit normalized gameplay specs in `content/decks/content-manifest.json`
+- Values are clamped to `1..100`
+- Raw metric proxies and source references are tracked alongside each card in the same manifest
+- `supabase/seed.sql` is generated from this manifest to keep frontend fallback and backend runtime aligned
 
 ## Jet Specs
 

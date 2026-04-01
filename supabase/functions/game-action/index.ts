@@ -249,6 +249,8 @@ interface DeckCatalogItem {
 class GameActionError extends Error {}
 
 const PLAYER_COLORS = ["#01ADFF", "#C669FF"];
+const VISIBLE_DECK_ORDER = ["military-jets-v1", "supercars-v1", "military-submarines-v1"] as const;
+const visibleDeckOrderIndex = new Map<string, number>(VISIBLE_DECK_ORDER.map((deckId, index) => [deckId, index]));
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -752,7 +754,7 @@ const fetchVisibleDeckCatalog = async (
     .from("decks")
     .select("id, name, description, cover_image_url, is_hidden")
     .eq("is_hidden", false)
-    .order("name", { ascending: true });
+    .order("id", { ascending: true });
 
   if (error) {
     throw new GameActionError(error.message);
@@ -764,7 +766,14 @@ const fetchVisibleDeckCatalog = async (
     items.push(await deckRowToCatalogItem(client, row));
   }
 
-  return items;
+  return items.sort((left, right) => {
+    const leftRank = visibleDeckOrderIndex.get(left.id) ?? Number.POSITIVE_INFINITY;
+    const rightRank = visibleDeckOrderIndex.get(right.id) ?? Number.POSITIVE_INFINITY;
+    if (leftRank !== rightRank) {
+      return leftRank - rightRank;
+    }
+    return left.name.localeCompare(right.name);
+  });
 };
 
 const shuffle = <T>(values: T[]): T[] => {
