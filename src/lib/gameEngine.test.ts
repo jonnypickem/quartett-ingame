@@ -23,13 +23,17 @@ describe("gameEngine", () => {
 
   it("cycles both top cards to winner bottom on transfer accept", () => {
     const state = cloneSessionState(initialMockState);
+    const firstP1 = state.players.find((player) => player.id === "p1")!.hand[0]!;
+    const firstP2 = state.players.find((player) => player.id === "p2")!.hand[0]!;
+    const nextP1 = state.players.find((player) => player.id === "p1")!.hand[1]!;
+    const nextP2 = state.players.find((player) => player.id === "p2")!.hand[1]!;
 
     const pending = applyGameAction(state, {
       sessionId: state.sessionId,
       actorPlayerId: "p1",
       expectedVersion: state.version,
       actionType: "SEND_CARD",
-      payload: { cardId: "card-a1" }
+      payload: { cardId: firstP1.id }
     });
 
     const accepted = applyGameAction(pending.state, {
@@ -46,21 +50,23 @@ describe("gameEngine", () => {
     const p1 = accepted.state.players.find((player) => player.id === "p1")!;
     const p2 = accepted.state.players.find((player) => player.id === "p2")!;
 
-    expect(p1.hand[0].id).toBe("card-a2");
-    expect(p2.hand[0].id).toBe("card-b2");
-    expect(p2.hand[p2.hand.length - 2].id).toBe("card-b1");
-    expect(p2.hand[p2.hand.length - 1].id).toBe("card-a1");
+    expect(p1.hand[0].id).toBe(nextP1.id);
+    expect(p2.hand[0].id).toBe(nextP2.id);
+    expect(p2.hand[p2.hand.length - 2].id).toBe(firstP2.id);
+    expect(p2.hand[p2.hand.length - 1].id).toBe(firstP1.id);
   });
 
   it("keeps cards unchanged when transfer declined", () => {
     const state = cloneSessionState(initialMockState);
+    const firstP1 = state.players.find((player) => player.id === "p1")!.hand[0]!;
+    const firstP2 = state.players.find((player) => player.id === "p2")!.hand[0]!;
 
     const pending = applyGameAction(state, {
       sessionId: state.sessionId,
       actorPlayerId: "p1",
       expectedVersion: state.version,
       actionType: "SEND_CARD",
-      payload: { cardId: "card-a1" }
+      payload: { cardId: firstP1.id }
     });
 
     const declined = applyGameAction(pending.state, {
@@ -77,12 +83,15 @@ describe("gameEngine", () => {
     const p1 = declined.state.players.find((player) => player.id === "p1")!;
     const p2 = declined.state.players.find((player) => player.id === "p2")!;
 
-    expect(p1.hand[0].id).toBe("card-a1");
-    expect(p2.hand[0].id).toBe("card-b1");
+    expect(p1.hand[0].id).toBe(firstP1.id);
+    expect(p2.hand[0].id).toBe(firstP2.id);
   });
 
   it("resolves tie pot and awards cards plus loser top card", () => {
     const state = cloneSessionState(initialMockState);
+    const firstP1 = state.players.find((player) => player.id === "p1")!.hand[0]!;
+    const firstP2 = state.players.find((player) => player.id === "p2")!.hand[0]!;
+    const secondP1 = state.players.find((player) => player.id === "p1")!.hand[1]!;
 
     const tieStarted = applyGameAction(state, {
       sessionId: state.sessionId,
@@ -115,9 +124,9 @@ describe("gameEngine", () => {
 
     expect(resolved.state.tieState.active).toBe(false);
     expect(resolved.state.tieState.potCards.length).toBe(0);
-    expect(p2.hand.map((card) => card.id)).toContain("card-a1");
-    expect(p2.hand.map((card) => card.id)).toContain("card-b1");
-    expect(p2.hand.map((card) => card.id)).toContain("card-a2");
+    expect(p2.hand.map((card) => card.id)).toContain(firstP1.id);
+    expect(p2.hand.map((card) => card.id)).toContain(firstP2.id);
+    expect(p2.hand.map((card) => card.id)).toContain(secondP1.id);
   });
 
   it("keeps tie active and pot frozen when lost tie is declined", () => {
@@ -171,13 +180,15 @@ describe("gameEngine", () => {
 
   it("rejects duplicate send while pending transfer exists", () => {
     const state = cloneSessionState(initialMockState);
+    const firstP1 = state.players.find((player) => player.id === "p1")!.hand[0]!;
+    const secondP1 = state.players.find((player) => player.id === "p1")!.hand[1]!;
 
     const first = applyGameAction(state, {
       sessionId: state.sessionId,
       actorPlayerId: "p1",
       expectedVersion: state.version,
       actionType: "SEND_CARD",
-      payload: { cardId: "card-a1" }
+      payload: { cardId: firstP1.id }
     });
 
     expect(() =>
@@ -186,7 +197,51 @@ describe("gameEngine", () => {
         actorPlayerId: "p1",
         expectedVersion: first.state.version,
         actionType: "SEND_CARD",
-        payload: { cardId: "card-a2" }
+        payload: { cardId: secondP1.id }
+      })
+    ).toThrow(GameActionError);
+  });
+
+  it("allows only host to select deck in lobby", () => {
+    const lobbyState = cloneSessionState(initialMockState);
+    lobbyState.status = "lobby";
+    lobbyState.players = lobbyState.players.map((player) => ({ ...player, hand: [] }));
+    lobbyState.deckId = null;
+
+    expect(() =>
+      applyGameAction(lobbyState, {
+        sessionId: lobbyState.sessionId,
+        actorPlayerId: "p2",
+        expectedVersion: lobbyState.version,
+        actionType: "SELECT_DECK",
+        payload: { deckId: "supercars-v1" }
+      })
+    ).toThrow(GameActionError);
+
+    const selected = applyGameAction(lobbyState, {
+      sessionId: lobbyState.sessionId,
+      actorPlayerId: "p1",
+      expectedVersion: lobbyState.version,
+      actionType: "SELECT_DECK",
+      payload: { deckId: "supercars-v1" }
+    });
+
+    expect(selected.state.deckId).toBe("supercars-v1");
+  });
+
+  it("requires deck selection before starting from lobby", () => {
+    const lobbyState = cloneSessionState(initialMockState);
+    lobbyState.status = "lobby";
+    lobbyState.players = lobbyState.players.map((player) => ({ ...player, hand: [] }));
+    lobbyState.deckId = null;
+
+    expect(() =>
+      applyGameAction(lobbyState, {
+        sessionId: lobbyState.sessionId,
+        actorPlayerId: "p1",
+        expectedVersion: lobbyState.version,
+        actionType: "START_GAME",
+        payload: {}
       })
     ).toThrow(GameActionError);
   });

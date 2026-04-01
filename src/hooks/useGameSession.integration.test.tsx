@@ -100,8 +100,8 @@ describe("useGameSession realtime integration", () => {
     });
 
     await waitFor(() => {
-      expect(a.result.current.view.yourCount).toBe(2);
-      expect(b.result.current.view.opponentCount).toBe(2);
+      expect(a.result.current.view.yourCount).toBe(15);
+      expect(b.result.current.view.opponentCount).toBe(15);
     });
   });
 

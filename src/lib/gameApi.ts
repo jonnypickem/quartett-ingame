@@ -1,6 +1,8 @@
+import { getDeckById, getVisibleDecks } from "../data/decks";
 import { createMockSessionState } from "../state/mockState";
 import type {
   ActionResponse,
+  DeckCatalogItem,
   GameActionRequest,
   RealtimeEventRow,
   RuntimeMode,
@@ -71,7 +73,7 @@ const assertRealtimeEnabled = () => {
   }
 };
 
-export const createSession = async (playerName: string): Promise<SessionAccessResponse> => {
+export const createSession = async (): Promise<SessionAccessResponse> => {
   assertRealtimeEnabled();
   const endpoint = getEndpoint();
   const response = await fetch(endpoint, {
@@ -80,8 +82,7 @@ export const createSession = async (playerName: string): Promise<SessionAccessRe
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      kind: "CREATE_SESSION",
-      playerName
+      kind: "CREATE_SESSION"
     })
   });
 
@@ -92,7 +93,7 @@ export const createSession = async (playerName: string): Promise<SessionAccessRe
   return (await response.json()) as SessionAccessResponse;
 };
 
-export const joinSession = async (playerName: string, sessionCode: string): Promise<SessionAccessResponse> => {
+export const joinSession = async (sessionCode: string): Promise<SessionAccessResponse> => {
   assertRealtimeEnabled();
   const endpoint = getEndpoint();
   const response = await fetch(endpoint, {
@@ -102,7 +103,6 @@ export const joinSession = async (playerName: string, sessionCode: string): Prom
     },
     body: JSON.stringify({
       kind: "JOIN_SESSION",
-      playerName,
       sessionCode
     })
   });
@@ -112,6 +112,56 @@ export const joinSession = async (playerName: string, sessionCode: string): Prom
   }
 
   return (await response.json()) as SessionAccessResponse;
+};
+
+export const fetchDeckCatalog = async (): Promise<DeckCatalogItem[]> => {
+  if (resolveRuntimeMode() !== "realtime") {
+    return getVisibleDecks();
+  }
+
+  const endpoint = getEndpoint();
+  const url = new URL(endpoint);
+  url.searchParams.set("kind", "deck-catalog");
+
+  const response = await fetch(url.toString(), {
+    method: "GET"
+  });
+
+  if (!response.ok) {
+    throw new Error(await readErrorMessage(response, "Deck catalog request failed."));
+  }
+
+  return (await response.json()) as DeckCatalogItem[];
+};
+
+export const fetchDeckById = async (deckId: string): Promise<DeckCatalogItem | null> => {
+  const normalizedDeckId = deckId.trim().toLowerCase();
+  if (!normalizedDeckId) {
+    return null;
+  }
+
+  if (resolveRuntimeMode() !== "realtime") {
+    return getDeckById(normalizedDeckId);
+  }
+
+  const endpoint = getEndpoint();
+  const url = new URL(endpoint);
+  url.searchParams.set("kind", "deck");
+  url.searchParams.set("id", normalizedDeckId);
+
+  const response = await fetch(url.toString(), {
+    method: "GET"
+  });
+
+  if (response.status === 404) {
+    return null;
+  }
+
+  if (!response.ok) {
+    throw new Error(await readErrorMessage(response, "Deck request failed."));
+  }
+
+  return (await response.json()) as DeckCatalogItem;
 };
 
 export const submitAction = async (

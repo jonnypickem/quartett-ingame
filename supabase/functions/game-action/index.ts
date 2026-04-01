@@ -5,6 +5,7 @@ type SessionStatus = "lobby" | "running" | "finished";
 
 type GameActionType =
   | "START_GAME"
+  | "SELECT_DECK"
   | "SELECT_SPEC"
   | "SEND_CARD"
   | "RESPOND_TRANSFER"
@@ -60,7 +61,7 @@ interface SessionState {
   sessionCode: string;
   status: SessionStatus;
   hostPlayerId: string;
-  deckId: string;
+  deckId: string | null;
   winnerPlayerId: string | null;
   players: PlayerState[];
   selectedSpecKey: string | null;
@@ -79,6 +80,13 @@ type GameActionRequest =
       expectedVersion: number;
       actionType: "START_GAME";
       payload: Record<string, never>;
+    }
+  | {
+      sessionId: string;
+      actorPlayerId: string;
+      expectedVersion: number;
+      actionType: "SELECT_DECK";
+      payload: { deckId: string };
     }
   | {
       sessionId: string;
@@ -126,11 +134,9 @@ type GameActionRequest =
 type SessionAccessRequest =
   | {
       kind: "CREATE_SESSION";
-      playerName: string;
     }
   | {
       kind: "JOIN_SESSION";
-      playerName: string;
       sessionCode: string;
     };
 
@@ -223,9 +229,25 @@ interface DeckCardRow {
   specs: SpecField[];
 }
 
+interface DeckCatalogRow {
+  id: string;
+  name: string;
+  description: string;
+  cover_image_url: string;
+  is_hidden: boolean;
+}
+
+interface DeckCatalogItem {
+  id: string;
+  name: string;
+  description: string;
+  coverImageUrl: string;
+  cardCount: number;
+  isHidden: boolean;
+}
+
 class GameActionError extends Error {}
 
-const BUILTIN_DECK_ID = "pirate-ships-v1";
 const PLAYER_COLORS = ["#01ADFF", "#C669FF"];
 
 const corsHeaders = {
@@ -241,8 +263,6 @@ const json = (status: number, body: unknown) =>
       "Content-Type": "application/json"
     }
   });
-
-const normalizeName = (value: string): string => value.trim().replace(/\s+/g, " ").slice(0, 24);
 
 const nowIso = () => new Date().toISOString();
 
@@ -341,6 +361,29 @@ const applyGameplayAction = (inputState: SessionState, request: GameActionReques
   const state = cloneState(inputState);
   const at = nowIso();
   const events: GameEvent[] = [];
+
+  if (request.actionType === "SELECT_DECK") {
+    if (state.status !== "lobby") {
+      throw new GameActionError("Deck can only be selected in lobby.");
+    }
+    if (state.hostPlayerId !== request.actorPlayerId) {
+      throw new GameActionError("Only host can select the deck.");
+    }
+    const deckId = request.payload.deckId.trim().toLowerCase();
+    if (!deckId) {
+      throw new GameActionError("Deck ID is required.");
+    }
+    state.deckId = deckId;
+    state.version += 1;
+    state.updatedAt = at;
+    appendStateUpdate(events, state, at);
+    return {
+      state,
+      events,
+      appliedVersion: state.version,
+      latestEventId: 0
+    };
+  }
 
   if (state.status !== "running") {
     throw new GameActionError("Game is not running.");
@@ -648,6 +691,82 @@ const fetchDeckCards = async (
   }));
 };
 
+const fetchDeckCardCount = async (
+  client: ReturnType<typeof createClient>,
+  deckId: string
+): Promise<number> => {
+  const { count, error } = await client
+    .from("deck_cards")
+    .select("id", { count: "exact", head: true })
+    .eq("deck_id", deckId);
+  if (error) {
+    throw new GameActionError(error.message);
+  }
+  return count ?? 0;
+};
+
+const deckRowToCatalogItem = async (
+  client: ReturnType<typeof createClient>,
+  row: DeckCatalogRow
+): Promise<DeckCatalogItem> => {
+  const cardCount = await fetchDeckCardCount(client, row.id);
+  return {
+    id: row.id,
+    name: row.name,
+    description: row.description,
+    coverImageUrl: row.cover_image_url,
+    cardCount,
+    isHidden: row.is_hidden
+  };
+};
+
+const fetchDeckCatalogById = async (
+  client: ReturnType<typeof createClient>,
+  deckId: string
+): Promise<DeckCatalogItem | null> => {
+  const normalizedId = deckId.trim().toLowerCase();
+  if (!normalizedId) {
+    return null;
+  }
+
+  const { data, error } = await client
+    .from("decks")
+    .select("id, name, description, cover_image_url, is_hidden")
+    .eq("id", normalizedId)
+    .maybeSingle();
+
+  if (error) {
+    throw new GameActionError(error.message);
+  }
+  if (!data) {
+    return null;
+  }
+
+  return await deckRowToCatalogItem(client, data as DeckCatalogRow);
+};
+
+const fetchVisibleDeckCatalog = async (
+  client: ReturnType<typeof createClient>
+): Promise<DeckCatalogItem[]> => {
+  const { data, error } = await client
+    .from("decks")
+    .select("id, name, description, cover_image_url, is_hidden")
+    .eq("is_hidden", false)
+    .order("name", { ascending: true });
+
+  if (error) {
+    throw new GameActionError(error.message);
+  }
+
+  const rows = (data ?? []) as DeckCatalogRow[];
+  const items: DeckCatalogItem[] = [];
+  for (const row of rows) {
+    items.push(await deckRowToCatalogItem(client, row));
+  }
+
+  return items;
+};
+
 const shuffle = <T>(values: T[]): T[] => {
   const copy = [...values];
   for (let i = copy.length - 1; i > 0; i -= 1) {
@@ -678,7 +797,7 @@ const buildLobbyState = (
     sessionCode,
     status: "lobby",
     hostPlayerId: hostPlayer.id,
-    deckId: BUILTIN_DECK_ID,
+    deckId: null,
     winnerPlayerId: null,
     players: [
       {
@@ -703,31 +822,10 @@ const buildLobbyState = (
   };
 };
 
-const ensureBuiltinDeckExists = async (client: ReturnType<typeof createClient>) => {
-  const { data, error } = await client
-    .from("decks")
-    .select("id")
-    .eq("id", BUILTIN_DECK_ID)
-    .maybeSingle();
-  if (error) {
-    throw new GameActionError(error.message);
-  }
-  if (!data) {
-    throw new GameActionError("Built-in deck is missing.");
-  }
-};
-
 const createSessionAccess = async (
   client: ReturnType<typeof createClient>,
-  payload: Extract<SessionAccessRequest, { kind: "CREATE_SESSION" }>
+  _payload: Extract<SessionAccessRequest, { kind: "CREATE_SESSION" }>
 ): Promise<SessionAccessResponse> => {
-  const playerName = normalizeName(payload.playerName);
-  if (!playerName) {
-    throw new GameActionError("Player name is required.");
-  }
-
-  await ensureBuiltinDeckExists(client);
-
   for (let attempt = 0; attempt < 12; attempt += 1) {
     const sessionId = crypto.randomUUID();
     const sessionCode = makeSessionCode();
@@ -735,7 +833,7 @@ const createSessionAccess = async (
     const hostColor = PLAYER_COLORS[0];
     const state = buildLobbyState(sessionId, sessionCode, {
       id: playerId,
-      name: playerName,
+      name: "Player 1",
       color: hostColor
     });
 
@@ -761,7 +859,7 @@ const createSessionAccess = async (
     const { error: insertPlayerError } = await client.from("game_players").insert({
       id: playerId,
       session_id: sessionId,
-      player_name: playerName,
+      player_name: "Player 1",
       color: hostColor,
       is_host: true,
       seat_index: 1
@@ -798,11 +896,7 @@ const joinSessionAccess = async (
   client: ReturnType<typeof createClient>,
   payload: Extract<SessionAccessRequest, { kind: "JOIN_SESSION" }>
 ): Promise<SessionAccessResponse> => {
-  const playerName = normalizeName(payload.playerName);
   const sessionCode = payload.sessionCode.trim().toUpperCase();
-  if (!playerName) {
-    throw new GameActionError("Player name is required.");
-  }
   if (!sessionCode) {
     throw new GameActionError("Invite code is required.");
   }
@@ -815,21 +909,17 @@ const joinSessionAccess = async (
   }
 
   const players = await fetchSessionPlayers(client, state.sessionId);
-  const existingPlayer = players.find(
-    (player) => player.player_name.toLowerCase() === playerName.toLowerCase()
-  );
-
-  if (existingPlayer) {
+  if (players.length >= 2 || state.players.length >= 2) {
+    const guestSeat = players.find((player) => !player.is_host);
+    if (!guestSeat) {
+      throw new GameActionError("Session is full.");
+    }
     const latestEventId = await fetchLatestEventId(client, state.sessionId);
     return {
       state,
       latestEventId,
-      playerId: existingPlayer.id
+      playerId: guestSeat.id
     };
-  }
-
-  if (players.length >= 2 || state.players.length >= 2) {
-    throw new GameActionError("Session is full.");
   }
 
   const playerId = makePlayerId();
@@ -839,7 +929,7 @@ const joinSessionAccess = async (
   const { error: insertPlayerError } = await client.from("game_players").insert({
     id: playerId,
     session_id: state.sessionId,
-    player_name: playerName,
+    player_name: "Player 2",
     color: playerColor,
     is_host: false,
     seat_index: seatIndex
@@ -855,7 +945,7 @@ const joinSessionAccess = async (
   const nextState = cloneState(state);
   nextState.players.push({
     id: playerId,
-    name: playerName,
+    name: "Player 2",
     color: playerColor,
     hand: []
   });
@@ -913,13 +1003,24 @@ const startGameAction = async (
   if (inputState.players.length !== 2) {
     throw new GameActionError("Exactly two players are required.");
   }
+  if (!inputState.deckId) {
+    throw new GameActionError("Select a deck before starting the game.");
+  }
+
+  const selectedDeck = await fetchDeckCatalogById(client, inputState.deckId);
+  if (!selectedDeck) {
+    throw new GameActionError("Selected deck does not exist.");
+  }
 
   const playerRows = await fetchSessionPlayers(client, inputState.sessionId);
   if (playerRows.length !== 2) {
     throw new GameActionError("Lobby must contain exactly two connected players.");
   }
 
-  const cards = await fetchDeckCards(client, inputState.deckId);
+  const cards = await fetchDeckCards(client, selectedDeck.id);
+  if (cards.length !== 32) {
+    throw new GameActionError("Selected deck must contain exactly 32 cards.");
+  }
   const shuffledCards = shuffle(cards);
 
   const players: PlayerState[] = playerRows.map((row) => ({
@@ -936,6 +1037,7 @@ const startGameAction = async (
 
   const nextState = cloneState(inputState);
   nextState.status = "running";
+  nextState.deckId = selectedDeck.id;
   nextState.players = players;
   nextState.selectedSpecKey = null;
   nextState.selectedByPlayerId = null;
@@ -980,6 +1082,25 @@ Deno.serve(async (request) => {
 
     if (request.method === "GET") {
       const url = new URL(request.url);
+      const kind = url.searchParams.get("kind")?.trim().toLowerCase() ?? "";
+
+      if (kind === "deck-catalog") {
+        const decks = await fetchVisibleDeckCatalog(client);
+        return json(200, decks);
+      }
+
+      if (kind === "deck") {
+        const deckId = url.searchParams.get("id")?.trim().toLowerCase() ?? "";
+        if (!deckId) {
+          return json(400, { error: "Missing deck id query parameter." });
+        }
+        const deck = await fetchDeckCatalogById(client, deckId);
+        if (!deck) {
+          return json(404, { error: "Deck not found." });
+        }
+        return json(200, deck);
+      }
+
       const sessionId = url.searchParams.get("session")?.trim() ?? "";
       if (!sessionId) {
         return json(400, { error: "Missing session query parameter." });
@@ -1019,6 +1140,18 @@ Deno.serve(async (request) => {
     const row = await fetchSessionById(client, action.sessionId);
     const currentState = asSessionState(row);
     assertPlayerInSession(currentState, action.actorPlayerId);
+
+    if (action.actionType === "SELECT_DECK") {
+      const deckId = action.payload.deckId.trim().toLowerCase();
+      const deck = await fetchDeckCatalogById(client, deckId);
+      if (!deck) {
+        return json(404, { error: "Deck not found." });
+      }
+      if (deck.cardCount !== 32) {
+        return json(400, { error: "Selected deck is not tournament-ready (32 cards required)." });
+      }
+      action.payload.deckId = deck.id;
+    }
 
     const response =
       action.actionType === "START_GAME"

@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import { getDeckById, getDeckCards } from "../data/decks";
 import type {
   ActionResponse,
   CardView,
@@ -126,6 +127,27 @@ const handleSelectSpec = (
     },
     at
   });
+};
+
+const handleSelectDeck = (
+  state: SessionState,
+  req: Extract<GameActionRequest, { actionType: "SELECT_DECK" }>
+) => {
+  if (state.status !== "lobby") {
+    throw new GameActionError("Deck can only be selected in lobby.");
+  }
+  if (state.hostPlayerId !== req.actorPlayerId) {
+    throw new GameActionError("Only host can select the deck.");
+  }
+  const deckId = req.payload.deckId.trim().toLowerCase();
+  const deck = getDeckById(deckId);
+  if (!deck) {
+    throw new GameActionError("Deck was not found.");
+  }
+  if (deck.cardCount !== 32) {
+    throw new GameActionError("Selected deck is not tournament-ready (32 cards required).");
+  }
+  state.deckId = deck.id;
 };
 
 const handleSendCard = (
@@ -378,6 +400,24 @@ const handleStartGame = (state: SessionState, actorPlayerId: string) => {
   if (state.players.length !== 2) {
     throw new GameActionError("Exactly two players are required.");
   }
+  const selectedDeckId = state.deckId?.trim().toLowerCase() ?? "";
+  if (!selectedDeckId) {
+    throw new GameActionError("Select a deck before starting the game.");
+  }
+  const cards = getDeckCards(selectedDeckId);
+  if (cards.length !== 32) {
+    throw new GameActionError("Selected deck does not have the required 32 cards.");
+  }
+  const players = state.players.map((player) => ({
+    ...player,
+    hand: [] as CardView[]
+  }));
+  cards.forEach((card, index) => {
+    const playerIndex = index % players.length;
+    players[playerIndex].hand.push(card);
+  });
+
+  state.players = players;
   state.status = "running";
   state.winnerPlayerId = null;
 };
@@ -397,6 +437,9 @@ export const applyGameAction = (
   switch (req.actionType) {
     case "START_GAME":
       handleStartGame(state, req.actorPlayerId);
+      break;
+    case "SELECT_DECK":
+      handleSelectDeck(state, req);
       break;
     case "SELECT_SPEC":
       handleSelectSpec(state, req, events, at);

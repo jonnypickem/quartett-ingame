@@ -234,6 +234,17 @@ export const useGameSession = (sessionId: string, currentPlayerId: string) => {
     });
   }, [callAction, currentPlayerId]);
 
+  const selectDeck = useCallback(
+    async (deckId: string) => {
+      return await callAction({
+        actionType: "SELECT_DECK",
+        actorPlayerId: currentPlayerId,
+        payload: { deckId }
+      });
+    },
+    [callAction, currentPlayerId]
+  );
+
   const respondTransfer = useCallback(
     async (status: Exclude<RequestStatus, "pending">) => {
       const pending = sessionRef.current.pendingTransfer;
@@ -304,6 +315,7 @@ export const useGameSession = (sessionId: string, currentPlayerId: string) => {
     opponent,
     selectSpec,
     sendTopCard,
+    selectDeck,
     startGame,
     respondTransfer,
     startTie,

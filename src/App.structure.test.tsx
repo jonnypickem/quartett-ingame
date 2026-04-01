@@ -28,6 +28,7 @@ vi.mock("./hooks/useGameSession", () => ({
     opponent: session.players.find((player) => player.id !== playerId)!,
     selectSpec: vi.fn(),
     sendTopCard: vi.fn(),
+    selectDeck: vi.fn(),
     startGame: vi.fn(),
     respondTransfer: vi.fn(),
     startTie: vi.fn(),

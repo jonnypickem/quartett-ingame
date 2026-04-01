@@ -1,5 +1,6 @@
 export type GameActionType =
   | "START_GAME"
+  | "SELECT_DECK"
   | "SELECT_SPEC"
   | "SEND_CARD"
   | "RESPOND_TRANSFER"
@@ -57,7 +58,7 @@ export interface SessionState {
   sessionCode: string;
   status: "lobby" | "running" | "finished";
   hostPlayerId: string;
-  deckId: string;
+  deckId: string | null;
   winnerPlayerId: string | null;
   players: PlayerState[];
   selectedSpecKey: string | null;
@@ -91,6 +92,12 @@ export type GameActionRequest =
   | (ActionBase & {
       actionType: "START_GAME";
       payload: Record<string, never>;
+    })
+  | (ActionBase & {
+      actionType: "SELECT_DECK";
+      payload: {
+        deckId: string;
+      };
     })
   | (ActionBase & {
       actionType: "SELECT_SPEC";
@@ -194,6 +201,15 @@ export interface ActionResponse {
 export interface SessionBootstrapResponse {
   state: SessionState;
   latestEventId: number;
+}
+
+export interface DeckCatalogItem {
+  id: string;
+  name: string;
+  description: string;
+  coverImageUrl: string;
+  cardCount: number;
+  isHidden: boolean;
 }
 
 export interface SessionAccessResponse {

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600" viewBox="0 0 900 600">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#102a36"/>
+      <stop offset="100%" stop-color="#1f7a8c"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="600" rx="38" fill="url(#g)"/>
+  <rect x="24" y="24" width="852" height="552" rx="28" fill="none" stroke="#ffffff66" stroke-width="8"/>
+  <text x="62" y="126" fill="#ffffff" font-size="80" font-weight="800" font-family="Nunito, Arial, sans-serif">Military Submarines</text>
+  <text x="62" y="208" fill="#eaf4ff" font-size="42" font-weight="700" font-family="Nunito, Arial, sans-serif">Card 30</text>
+  <text x="62" y="525" fill="#d6e8ff" font-size="32" font-weight="700" font-family="Nunito, Arial, sans-serif">Local deck art placeholder</text>
+</svg>

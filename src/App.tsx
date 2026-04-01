@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ActionBar } from "./components/ActionBar";
 import { CardPanel } from "./components/CardPanel";
+import { DeckSelector } from "./components/DeckSelector";
 import { StatusBar } from "./components/StatusBar";
-import { createSession, joinSession } from "./lib/gameApi";
+import { createSession, fetchDeckById, fetchDeckCatalog, joinSession } from "./lib/gameApi";
 import { shareOrCopyInvite } from "./lib/share";
 import { useGameSession } from "./hooks/useGameSession";
+import type { DeckCatalogItem } from "./types/game";
 
 const localPlayerKey = (sessionId: string) => `quartett.player.${sessionId}`;
 
@@ -34,9 +36,9 @@ const routeToSession = (sessionId: string, playerId: string) => {
 };
 
 const recentSessionCards = [
-  { name: "Supercars Pro", lastPlayed: "Last played: 2h ago", code: "ABC-123", icon: "car" },
-  { name: "Cute Animals", lastPlayed: "Last played: yesterday", code: "PETS-77", icon: "paw" },
-  { name: "Retro Gaming", lastPlayed: "Last played: 2 days ago", code: "RETRO-9", icon: "arcade" }
+  { name: "Military Jets", lastPlayed: "Deck ID: military-jets-v1", code: "MIL-JETS", icon: "jet" },
+  { name: "Supercars", lastPlayed: "Deck ID: supercars-v1", code: "SUPERCARS", icon: "car" },
+  { name: "Military Submarines", lastPlayed: "Deck ID: military-submarines-v1", code: "SUBS", icon: "sub" }
 ] as const;
 
 const findSpecValue = (specKey: string, cardSpecs: { key: string; value: number }[]) => {
@@ -67,22 +69,16 @@ const InvalidContext = ({ title, message }: { title: string; message: string }) 
 };
 
 const EntryScreen = ({ prefilledCode, joinOnly }: { prefilledCode: string; joinOnly: boolean }) => {
-  const [hostName, setHostName] = useState("");
-  const [joinName, setJoinName] = useState("");
   const [joinCode, setJoinCode] = useState(prefilledCode);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [activePanel, setActivePanel] = useState<"create" | "join" | null>(joinOnly ? "join" : null);
 
   const onCreate = async () => {
-    if (!hostName.trim()) {
-      setError("Please enter your name.");
-      return;
-    }
     setBusy(true);
     setError(null);
     try {
-      const response = await createSession(hostName.trim());
+      const response = await createSession();
       routeToSession(response.state.sessionId, response.playerId);
     } catch (cause) {
       const message = cause instanceof Error ? cause.message : "Failed to create game.";
@@ -92,14 +88,14 @@ const EntryScreen = ({ prefilledCode, joinOnly }: { prefilledCode: string; joinO
   };
 
   const onJoin = async () => {
-    if (!joinName.trim() || !joinCode.trim()) {
-      setError("Please enter your name and invite code.");
+    if (!joinCode.trim()) {
+      setError("Please enter an invite code.");
       return;
     }
     setBusy(true);
     setError(null);
     try {
-      const response = await joinSession(joinName.trim(), joinCode.trim().toUpperCase());
+      const response = await joinSession(joinCode.trim().toUpperCase());
       routeToSession(response.state.sessionId, response.playerId);
     } catch (cause) {
       const message = cause instanceof Error ? cause.message : "Failed to join game.";
@@ -112,13 +108,7 @@ const EntryScreen = ({ prefilledCode, joinOnly }: { prefilledCode: string; joinO
     <main className="app-shell app-shell--entry">
       <section className={`landing-screen ${joinOnly ? "landing-screen--join" : ""}`}>
         <header className="landing-header" aria-label="Quartett top bar">
-          <span className="landing-header__icon" aria-hidden="true">
-            game
-          </span>
           <p className="landing-header__brand">Quartett Pro</p>
-          <span className="landing-header__icon" aria-hidden="true">
-            settings
-          </span>
         </header>
 
         <section className="landing-hero">
@@ -185,12 +175,6 @@ const EntryScreen = ({ prefilledCode, joinOnly }: { prefilledCode: string; joinO
                 }}
               >
                 <h2>Create Lobby</h2>
-                <input
-                  value={hostName}
-                  onChange={(event) => setHostName(event.target.value)}
-                  placeholder="Your name"
-                  className="session-input"
-                />
                 <button type="submit" className="btn-primary" disabled={busy}>
                   {busy ? "Creating..." : "Create Lobby"}
                 </button>
@@ -206,12 +190,6 @@ const EntryScreen = ({ prefilledCode, joinOnly }: { prefilledCode: string; joinO
                 }}
               >
                 <h2>{joinOnly ? "Join With Invite" : "Join Lobby"}</h2>
-                <input
-                  value={joinName}
-                  onChange={(event) => setJoinName(event.target.value)}
-                  placeholder="Your name"
-                  className="session-input"
-                />
                 {joinOnly ? (
                   <input value={joinCode} readOnly className="session-input session-input--readonly" />
                 ) : (
@@ -276,6 +254,7 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
     opponent,
     selectSpec,
     sendTopCard,
+    selectDeck,
     startGame,
     respondTransfer,
     startTie,
@@ -291,6 +270,9 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
   const showRuntimeWarning = !import.meta.env.DEV && runtimeMode === "local-mock";
   const joinUrl = `${window.location.origin}/?join=${encodeURIComponent(session.sessionCode)}`;
   const [inviteMessage, setInviteMessage] = useState<string | null>(null);
+  const [deckCatalog, setDeckCatalog] = useState<DeckCatalogItem[]>([]);
+  const [selectedDeck, setSelectedDeck] = useState<DeckCatalogItem | null>(null);
+  const [showDeckSelector, setShowDeckSelector] = useState(false);
   const [receiveFlightKey, setReceiveFlightKey] = useState(0);
   const previousRef = useRef<{
     pendingTransferId: string | null;
@@ -348,6 +330,61 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
       window.clearTimeout(timeout);
     };
   }, [inviteMessage]);
+
+  useEffect(() => {
+    if (session.status !== "lobby") {
+      return;
+    }
+    let cancelled = false;
+
+    const loadCatalog = async () => {
+      try {
+        const decks = await fetchDeckCatalog();
+        if (!cancelled) {
+          setDeckCatalog(decks);
+        }
+      } catch {
+        if (!cancelled) {
+          setDeckCatalog([]);
+        }
+      }
+    };
+
+    void loadCatalog();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [session.status]);
+
+  useEffect(() => {
+    if (session.status !== "lobby") {
+      setSelectedDeck(null);
+      return;
+    }
+    const currentDeckId = session.deckId;
+    if (!currentDeckId) {
+      setSelectedDeck(null);
+      return;
+    }
+    let cancelled = false;
+    const loadCurrentDeck = async () => {
+      const deck = await fetchDeckById(currentDeckId);
+      if (!cancelled) {
+        setSelectedDeck(deck);
+      }
+    };
+    void loadCurrentDeck();
+    return () => {
+      cancelled = true;
+    };
+  }, [session.deckId, session.status]);
+
+  useEffect(() => {
+    if (session.status === "lobby" && isHost && !session.deckId) {
+      setShowDeckSelector(true);
+    }
+  }, [isHost, session.deckId, session.status]);
 
   const shareJoinLink = async () => {
     const message = await shareOrCopyInvite(session.sessionCode, joinUrl);
@@ -408,6 +445,21 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
   }
 
   if (session.status === "lobby") {
+    const canStart = isHost && session.players.length === 2 && Boolean(session.deckId) && !state.busy;
+
+    if (showDeckSelector && isHost) {
+      return (
+        <DeckSelector
+          decks={deckCatalog}
+          selectedDeckId={session.deckId}
+          busy={state.busy}
+          onSelectDeck={selectDeck}
+          onResolveDeckById={fetchDeckById}
+          onDone={() => setShowDeckSelector(false)}
+        />
+      );
+    }
+
     return (
       <main className="app-shell app-shell--entry">
         <section className="game-screen game-screen--entry game-screen--lobby">
@@ -452,10 +504,20 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
             <section className="request-box request-box--lobby">
               <h2>Ready Squad</h2>
               <p>{session.players.length}/2 players connected</p>
+              <div className="lobby-deck-summary">
+                <span>Selected deck</span>
+                <strong>{selectedDeck?.name ?? "Not selected yet"}</strong>
+                <small>{selectedDeck?.id ?? "Host must pick a deck first."}</small>
+                {isHost ? (
+                  <button type="button" className="btn-secondary" onClick={() => setShowDeckSelector(true)} disabled={state.busy}>
+                    Change Deck
+                  </button>
+                ) : null}
+              </div>
               <ul className="roster-list">
                 {session.players.map((player) => (
                   <li key={player.id}>
-                    <span>{player.name}</span>
+                    <span>{player.id === playerId ? "You" : "Opponent"}</span>
                     <span className="roster-role">{player.id === session.hostPlayerId ? "Host" : "Ready"}</span>
                   </li>
                 ))}
@@ -466,10 +528,10 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
           <button
             type="button"
             className="btn-primary"
-            disabled={!isHost || session.players.length !== 2 || state.busy}
+            disabled={!canStart}
             onClick={() => void startGame()}
           >
-            {isHost ? "Start Game" : "Waiting For Host"}
+            {isHost ? (session.deckId ? "Start Game" : "Select Deck First") : "Waiting For Host"}
           </button>
         </section>
       </main>
@@ -479,6 +541,7 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
   if (session.status === "finished") {
     const winner = session.players.find((player) => player.id === session.winnerPlayerId);
     const ranking = [...session.players].sort((a, b) => b.hand.length - a.hand.length);
+    const winnerLabel = winner?.id === playerId ? "You" : winner ? "Opponent" : "Unknown";
 
     return (
       <main className="app-shell app-shell--entry">
@@ -487,7 +550,7 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
 
           <section className="winner-callout" aria-label="Winner summary">
             <p className="winner-callout__label">Winner</p>
-            <h2>{winner?.name ?? "Unknown"}</h2>
+            <h2>{winnerLabel}</h2>
             <p className="winner-callout__subline">Domination achieved</p>
           </section>
 
@@ -495,7 +558,7 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
             {ranking.map((player, index) => (
               <li key={player.id} className={index === 0 ? "finish-list__item finish-list__item--winner" : "finish-list__item"}>
                 <span>
-                  {String(index + 1).padStart(2, "0")} {player.name}
+                  {String(index + 1).padStart(2, "0")} {player.id === playerId ? "You" : "Opponent"}
                 </span>
                 <strong>{player.hand.length} cards</strong>
               </li>
@@ -562,7 +625,7 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
       return (
         <div className="card-request">
           <p>
-            {opponent.name} sends <strong>{incomingTransfer.cardId}</strong>. Accept?
+            Opponent sends <strong>{incomingTransfer.cardId}</strong>. Accept?
           </p>
           <div className="card-request__actions">
             <button type="button" className="btn-mini btn-mini--accept" onClick={() => void respondTransfer("accepted")}>
@@ -593,11 +656,11 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
     }
 
     if (outgoingTransfer) {
-      return <p>Waiting for {opponent.name} to respond to your send request.</p>;
+      return <p>Waiting for Opponent to respond to your send request.</p>;
     }
 
     if (tieWaitingOther) {
-      return <p>Waiting for {opponent.name} to respond to your lost-tie request.</p>;
+      return <p>Waiting for Opponent to respond to your lost-tie request.</p>;
     }
 
     if (state.lastError) {
