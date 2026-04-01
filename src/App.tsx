@@ -26,6 +26,10 @@ const goHome = () => {
   window.location.search = "";
 };
 
+const routeToJoinPage = () => {
+  window.location.search = "?mode=join";
+};
+
 const routeToJoinCode = (sessionCode: string) => {
   window.location.search = `?join=${encodeURIComponent(sessionCode)}`;
 };
@@ -72,7 +76,8 @@ const EntryScreen = ({ prefilledCode, joinOnly }: { prefilledCode: string; joinO
   const [joinCode, setJoinCode] = useState(prefilledCode);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [activePanel, setActivePanel] = useState<"create" | "join" | null>(joinOnly ? "join" : null);
+  const [activePanel, setActivePanel] = useState<"join" | null>(joinOnly ? "join" : null);
+  const isInviteJoin = joinOnly && Boolean(prefilledCode);
 
   const onCreate = async () => {
     setBusy(true);
@@ -143,12 +148,9 @@ const EntryScreen = ({ prefilledCode, joinOnly }: { prefilledCode: string; joinO
                 type="button"
                 className="btn-primary landing-action-btn"
                 disabled={busy}
-                onClick={() => {
-                  setError(null);
-                  setActivePanel("create");
-                }}
+                onClick={() => void onCreate()}
               >
-                Start Game
+                {busy ? "Creating..." : "Create Game"}
               </button>
             ) : null}
 
@@ -158,6 +160,10 @@ const EntryScreen = ({ prefilledCode, joinOnly }: { prefilledCode: string; joinO
               disabled={busy}
               onClick={() => {
                 setError(null);
+                if (!joinOnly) {
+                  routeToJoinPage();
+                  return;
+                }
                 setActivePanel("join");
               }}
             >
@@ -166,21 +172,6 @@ const EntryScreen = ({ prefilledCode, joinOnly }: { prefilledCode: string; joinO
           </div>
 
           <div className={`landing-form-drawer ${activePanel ? "landing-form-drawer--open" : ""}`}>
-            {activePanel === "create" && !joinOnly ? (
-              <form
-                className="landing-form"
-                onSubmit={(event) => {
-                  event.preventDefault();
-                  void onCreate();
-                }}
-              >
-                <h2>Create Lobby</h2>
-                <button type="submit" className="btn-primary" disabled={busy}>
-                  {busy ? "Creating..." : "Create Lobby"}
-                </button>
-              </form>
-            ) : null}
-
             {activePanel === "join" ? (
               <form
                 className="landing-form"
@@ -191,7 +182,17 @@ const EntryScreen = ({ prefilledCode, joinOnly }: { prefilledCode: string; joinO
               >
                 <h2>{joinOnly ? "Join With Invite" : "Join Lobby"}</h2>
                 {joinOnly ? (
-                  <input value={joinCode} readOnly className="session-input session-input--readonly" />
+                  <input
+                    value={joinCode}
+                    onChange={(event) => {
+                      if (isInviteJoin) {
+                        return;
+                      }
+                      setJoinCode(event.target.value);
+                    }}
+                    readOnly={isInviteJoin}
+                    className={`session-input ${isInviteJoin ? "session-input--readonly" : ""}`}
+                  />
                 ) : (
                   <input
                     value={joinCode}
@@ -222,8 +223,7 @@ const EntryScreen = ({ prefilledCode, joinOnly }: { prefilledCode: string; joinO
                       type="button"
                       className="session-play-btn"
                       onClick={() => {
-                        setJoinCode(sessionCard.code);
-                        setActivePanel("join");
+                        window.location.search = `?mode=join&code=${encodeURIComponent(sessionCard.code)}`;
                       }}
                     >
                       Play
@@ -732,11 +732,12 @@ function App() {
   const sessionId = params.get("session")?.trim() ?? "";
   const playerId = params.get("player")?.trim() ?? "";
   const joinCode = params.get("join")?.trim().toUpperCase() ?? "";
+  const joinMode = params.get("mode")?.trim().toLowerCase() === "join";
   const code = params.get("code")?.trim().toUpperCase() ?? "";
   const prefilledCode = joinCode || code;
 
   if (!sessionId) {
-    return <EntryScreen prefilledCode={prefilledCode} joinOnly={Boolean(joinCode)} />;
+    return <EntryScreen prefilledCode={prefilledCode} joinOnly={joinMode || Boolean(joinCode)} />;
   }
 
   if (!playerId) {
