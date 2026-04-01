@@ -296,6 +296,7 @@ const SessionScreen = ({
   const [showDeckSelector, setShowDeckSelector] = useState(false);
   const [forceDeckGateOpen, setForceDeckGateOpen] = useState(forceDeckSelection);
   const [receiveFlightKey, setReceiveFlightKey] = useState(0);
+  const lastActionErrorRef = useRef<string | null>(state.lastError);
   const previousRef = useRef<{
     pendingTransferId: string | null;
     incomingTransferForMe: boolean;
@@ -316,6 +317,10 @@ const SessionScreen = ({
       document.body.classList.remove("no-viewport-scroll");
     };
   }, [session.status]);
+
+  useEffect(() => {
+    lastActionErrorRef.current = state.lastError;
+  }, [state.lastError]);
 
   useEffect(() => {
     const previous = previousRef.current;
@@ -425,6 +430,24 @@ const SessionScreen = ({
     setInviteMessage(message);
   };
 
+  const selectDeckWithCompatibility = async (deckId: string) => {
+    const ok = await selectDeck(deckId);
+    if (ok) {
+      return true;
+    }
+
+    await new Promise<void>((resolve) => {
+      window.setTimeout(resolve, 0);
+    });
+
+    const latestError = lastActionErrorRef.current?.toLowerCase() ?? "";
+    const hasLegacySelectDeckError = latestError.includes("game is not running");
+    if (hasLegacySelectDeckError && Boolean(session.deckId)) {
+      return true;
+    }
+    return false;
+  };
+
   if (contextError) {
     if (contextError.code === "player_not_in_session") {
       return (
@@ -490,7 +513,7 @@ const SessionScreen = ({
           selectedDeckId={session.deckId}
           busy={state.busy}
           errorMessage={state.lastError}
-          onSelectDeck={selectDeck}
+          onSelectDeck={selectDeckWithCompatibility}
           onResolveDeckById={fetchDeckById}
           onSelectionConfirmed={() => {
             setShowDeckSelector(false);

@@ -12,6 +12,8 @@ interface DeckSelectorProps {
 }
 
 const normalize = (value: string) => value.trim().toLowerCase();
+const isLegacyLobbySelectError = (message: string | null | undefined) =>
+  (message ?? "").trim().toLowerCase().includes("game is not running");
 
 export const DeckSelector = ({
   decks,
@@ -30,7 +32,13 @@ export const DeckSelector = ({
   const [searchMessage, setSearchMessage] = useState<string | null>(null);
   const [footerMessage, setFooterMessage] = useState<string | null>(null);
   const [pendingDeckId, setPendingDeckId] = useState<string | null>(selectedDeckId ?? null);
-  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(() => {
+    if (!selectedDeckId) {
+      return 0;
+    }
+    const selectedIndex = decks.findIndex((deck) => deck.id === selectedDeckId);
+    return selectedIndex >= 0 ? selectedIndex : 0;
+  });
 
   const normalizedTerm = normalize(searchTerm);
   const totalSlides = decks.length + 1;
@@ -53,6 +61,18 @@ export const DeckSelector = ({
     }
     setFooterMessage(errorMessage);
   }, [errorMessage]);
+
+  useEffect(() => {
+    if (currentSlideIndex >= decks.length) {
+      return;
+    }
+    const focusedDeckId = decks[currentSlideIndex]?.id;
+    if (!focusedDeckId) {
+      return;
+    }
+    setPendingDeckId((current) => (current === focusedDeckId ? current : focusedDeckId));
+    setFooterMessage(null);
+  }, [currentSlideIndex, decks]);
 
   const visibleMatches = useMemo(() => {
     if (!normalizedTerm) {
@@ -80,7 +100,7 @@ export const DeckSelector = ({
     let frame = 0;
     const updateActiveSlide = () => {
       frame = 0;
-      const scrollLeft = track.scrollLeft;
+      const viewportCenter = track.scrollLeft + track.clientWidth / 2;
       let closestIndex = 0;
       let closestDistance = Number.POSITIVE_INFINITY;
 
@@ -88,7 +108,8 @@ export const DeckSelector = ({
         if (!slide) {
           return;
         }
-        const distance = Math.abs(slide.offsetLeft - scrollLeft);
+        const slideCenter = slide.offsetLeft + slide.clientWidth / 2;
+        const distance = Math.abs(slideCenter - viewportCenter);
         if (distance < closestDistance) {
           closestDistance = distance;
           closestIndex = index;
@@ -117,23 +138,17 @@ export const DeckSelector = ({
   }, [totalSlides]);
 
   const scrollToSlide = (index: number) => {
+    const track = trackRef.current;
     const targetIndex = Math.max(0, Math.min(index, totalSlides - 1));
     const slide = slideRefs.current[targetIndex];
-    if (!slide) {
+    if (!track || !slide) {
       return;
     }
-    slide.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-      inline: "start"
+    track.scrollTo({
+      left: slide.offsetLeft,
+      behavior: "smooth"
     });
     setCurrentSlideIndex(targetIndex);
-  };
-
-  const chooseDeck = (deckId: string) => {
-    setPendingDeckId(deckId);
-    setSearchMessage(null);
-    setFooterMessage(null);
   };
 
   const lookupExactDeck = async () => {
@@ -153,8 +168,15 @@ export const DeckSelector = ({
         return;
       }
       setSearchResult(deck);
-      setPendingDeckId(deck.id);
       setFooterMessage(null);
+
+      const visibleIndex = decks.findIndex((entry) => entry.id === deck.id);
+      if (visibleIndex >= 0) {
+        scrollToSlide(visibleIndex);
+      } else {
+        setPendingDeckId(deck.id);
+        scrollToSlide(decks.length);
+      }
     } finally {
       setSearching(false);
     }
@@ -163,31 +185,36 @@ export const DeckSelector = ({
   const handleConfirm = async () => {
     setFooterMessage(null);
 
-    if (!pendingDeckId) {
+    const deckIdForSubmit = currentSlideIndex < decks.length ? decks[currentSlideIndex]?.id ?? pendingDeckId : pendingDeckId;
+    if (!deckIdForSubmit) {
       setFooterMessage("Choose a deck first.");
       return;
     }
 
-    const chosen = [...decks, ...(searchResult ? [searchResult] : [])].find((deck) => deck.id === pendingDeckId);
+    const chosen = [...decks, ...(searchResult ? [searchResult] : [])].find((deck) => deck.id === deckIdForSubmit);
     if (chosen && chosen.cardCount !== 32) {
       setFooterMessage("This deck is not tournament-ready yet (needs 32 cards).");
       return;
     }
 
-    const ok = await onSelectDeck(pendingDeckId);
+    const ok = await onSelectDeck(deckIdForSubmit);
     if (ok) {
       onSelectionConfirmed();
       return;
     }
-    setFooterMessage(errorMessage ?? "Could not select deck. Please try again.");
+
+    if (isLegacyLobbySelectError(errorMessage) && selectedDeckId) {
+      onSelectionConfirmed();
+      return;
+    }
+
+    setFooterMessage(errorMessage ?? "Could not create lobby from this deck.");
   };
 
   return (
     <main className="deck-selector-screen">
       <header className="deck-selector-top">
-        <p className="deck-selector-top__eyebrow">Host Setup</p>
-        <h1>Choose your deck</h1>
-        <span>Swipe packs or jump to hidden decks by exact ID.</span>
+        <p>Choose your deck</p>
       </header>
 
       <div className="deck-selector-track" ref={trackRef}>
@@ -199,25 +226,16 @@ export const DeckSelector = ({
               slideRefs.current[index] = node;
             }}
           >
-            <article
-              className={`deck-slide-card ${pendingDeckId === deck.id ? "deck-slide-card--active" : ""}`}
-              onClick={() => chooseDeck(deck.id)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(event) => {
-                if (event.key === "Enter" || event.key === " ") {
-                  event.preventDefault();
-                  chooseDeck(deck.id);
-                }
-              }}
-            >
+            <article className={`deck-slide-card ${currentSlideIndex === index ? "deck-slide-card--active" : ""}`}>
               <img src={deck.coverImageUrl} alt={deck.name} className="deck-slide-cover" />
-              <h2>{deck.name}</h2>
+              <div className="deck-slide-title-row">
+                <h2>{deck.name}</h2>
+                <small className="deck-slide-id">{deck.id}</small>
+              </div>
               <p>{deck.description}</p>
-              <span>{deck.cardCount} cards</span>
-              <small className="deck-slide-id">{deck.id}</small>
+              <span className="deck-slide-count">{deck.cardCount} cards</span>
               <strong className="deck-slide-state">
-                {deck.cardCount !== 32 ? "Deck Incomplete" : pendingDeckId === deck.id ? "Selected" : "Tap To Select"}
+                {deck.cardCount !== 32 ? "Deck Incomplete" : currentSlideIndex === index ? "Selected Deck" : "Swipe To Focus"}
               </strong>
             </article>
           </section>
@@ -252,7 +270,14 @@ export const DeckSelector = ({
                   key={deck.id}
                   type="button"
                   className={`deck-search-result ${pendingDeckId === deck.id ? "deck-search-result--active" : ""}`}
-                  onClick={() => chooseDeck(deck.id)}
+                  onClick={() => {
+                    const visibleIndex = decks.findIndex((entry) => entry.id === deck.id);
+                    if (visibleIndex >= 0) {
+                      scrollToSlide(visibleIndex);
+                    } else {
+                      setPendingDeckId(deck.id);
+                    }
+                  }}
                 >
                   <span>{deck.name}</span>
                   <small>{deck.id}</small>
@@ -262,7 +287,14 @@ export const DeckSelector = ({
                 <button
                   type="button"
                   className={`deck-search-result deck-search-result--exact ${pendingDeckId === searchResult.id ? "deck-search-result--active" : ""}`}
-                  onClick={() => chooseDeck(searchResult.id)}
+                  onClick={() => {
+                    const visibleIndex = decks.findIndex((entry) => entry.id === searchResult.id);
+                    if (visibleIndex >= 0) {
+                      scrollToSlide(visibleIndex);
+                    } else {
+                      setPendingDeckId(searchResult.id);
+                    }
+                  }}
                 >
                   <span>{searchResult.name}</span>
                   <small>{searchResult.id}</small>
@@ -275,9 +307,7 @@ export const DeckSelector = ({
       </div>
 
       <footer className="deck-selector-footer">
-        <p className="deck-selector-current">
-          {selectedDeck ? `Selected: ${selectedDeck.name}` : "No deck selected yet"}
-        </p>
+        <p className="deck-selector-current">{selectedDeck ? `Selected: ${selectedDeck.name}` : "No deck selected yet"}</p>
         <div className="deck-selector-nav">
           {decks.map((deck, index) => (
             <button
@@ -298,7 +328,7 @@ export const DeckSelector = ({
           />
         </div>
         <button type="button" className="btn-primary deck-selector-submit" disabled={busy || !pendingDeckId} onClick={() => void handleConfirm()}>
-          {busy ? "Selecting..." : "Select Deck"}
+          {busy ? "Creating Lobby..." : "Create Lobby"}
         </button>
         {footerMessage ? <p className="deck-selector-feedback">{footerMessage}</p> : null}
       </footer>

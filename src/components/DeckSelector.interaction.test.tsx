@@ -43,7 +43,7 @@ describe("DeckSelector interactions", () => {
     const props = makeProps();
     render(<DeckSelector {...props} />);
 
-    await user.click(screen.getByRole("button", { name: "Select Deck" }));
+    await user.click(screen.getByRole("button", { name: "Create Lobby" }));
 
     expect(props.onSelectDeck).toHaveBeenCalledWith("military-jets-v1");
     expect(props.onSelectionConfirmed).toHaveBeenCalledTimes(1);
@@ -53,13 +53,14 @@ describe("DeckSelector interactions", () => {
     const user = userEvent.setup();
     const props = makeProps();
     const scrollSpy = vi.fn();
-    Object.defineProperty(HTMLElement.prototype, "scrollIntoView", {
+    Object.defineProperty(HTMLElement.prototype, "scrollTo", {
       configurable: true,
       value: scrollSpy
     });
     render(<DeckSelector {...props} />);
 
-    await user.click(screen.getByRole("button", { name: "Go to Supercars" }));
+    const [supercarsDot] = screen.getAllByRole("button", { name: "Go to Supercars" });
+    await user.click(supercarsDot);
 
     expect(scrollSpy).toHaveBeenCalled();
   });
@@ -70,9 +71,9 @@ describe("DeckSelector interactions", () => {
     props.onSelectDeck = vi.fn(async () => false);
     render(<DeckSelector {...props} />);
 
-    const [selectButton] = screen.getAllByRole("button", { name: "Select Deck" });
+    const [selectButton] = screen.getAllByRole("button", { name: "Create Lobby" });
     await user.click(selectButton);
 
-    expect(await screen.findByText("Could not select deck. Please try again.")).toBeInTheDocument();
+    expect(await screen.findByText("Could not create lobby from this deck.")).toBeInTheDocument();
   });
 });
