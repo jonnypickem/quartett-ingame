@@ -186,6 +186,14 @@ export const useGameSession = (sessionId: string, currentPlayerId: string) => {
     });
   }, [callAction, currentPlayerId, view.yourTopCard]);
 
+  const startGame = useCallback(async () => {
+    await callAction({
+      actionType: "START_GAME",
+      actorPlayerId: currentPlayerId,
+      payload: {}
+    });
+  }, [callAction, currentPlayerId]);
+
   const respondTransfer = useCallback(
     async (status: Exclude<RequestStatus, "pending">) => {
       const pending = sessionRef.current.pendingTransfer;
@@ -256,6 +264,7 @@ export const useGameSession = (sessionId: string, currentPlayerId: string) => {
     opponent,
     selectSpec,
     sendTopCard,
+    startGame,
     respondTransfer,
     startTie,
     loseTie,

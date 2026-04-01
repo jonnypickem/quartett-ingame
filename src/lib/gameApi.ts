@@ -4,6 +4,7 @@ import type {
   GameActionRequest,
   RealtimeEventRow,
   RuntimeMode,
+  SessionAccessResponse,
   SessionBootstrapResponse,
   SessionState
 } from "../types/game";
@@ -42,6 +43,57 @@ export const fetchSessionBootstrap = async (sessionId: string): Promise<SessionB
   }
 
   return (await response.json()) as SessionBootstrapResponse;
+};
+
+const assertRealtimeEnabled = () => {
+  if (resolveRuntimeMode() !== "realtime") {
+    throw new Error("Realtime backend is not configured.");
+  }
+};
+
+export const createSession = async (playerName: string): Promise<SessionAccessResponse> => {
+  assertRealtimeEnabled();
+  const endpoint = getEndpoint();
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      kind: "CREATE_SESSION",
+      playerName
+    })
+  });
+
+  if (!response.ok) {
+    const message = await response.text();
+    throw new Error(message || "Create session request failed.");
+  }
+
+  return (await response.json()) as SessionAccessResponse;
+};
+
+export const joinSession = async (playerName: string, sessionCode: string): Promise<SessionAccessResponse> => {
+  assertRealtimeEnabled();
+  const endpoint = getEndpoint();
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      kind: "JOIN_SESSION",
+      playerName,
+      sessionCode
+    })
+  });
+
+  if (!response.ok) {
+    const message = await response.text();
+    throw new Error(message || "Join session request failed.");
+  }
+
+  return (await response.json()) as SessionAccessResponse;
 };
 
 export const submitAction = async (

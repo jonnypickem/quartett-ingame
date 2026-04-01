@@ -104,6 +104,11 @@ const cardsP2: CardView[] = [
 
 export const createMockSessionState = (sessionId = "demo-session-01"): SessionState => ({
   sessionId,
+  sessionCode: "DEMO01",
+  status: "running",
+  hostPlayerId: "p1",
+  deckId: "pirate-ships-v1",
+  winnerPlayerId: null,
   players: [
     {
       id: "p1",

@@ -1,4 +1,5 @@
 export type GameActionType =
+  | "START_GAME"
   | "SELECT_SPEC"
   | "SEND_CARD"
   | "RESPOND_TRANSFER"
@@ -53,6 +54,11 @@ export interface TieState {
 
 export interface SessionState {
   sessionId: string;
+  sessionCode: string;
+  status: "lobby" | "running" | "finished";
+  hostPlayerId: string;
+  deckId: string;
+  winnerPlayerId: string | null;
   players: PlayerState[];
   selectedSpecKey: string | null;
   selectedByPlayerId: string | null;
@@ -82,6 +88,10 @@ export interface ActionBase {
 }
 
 export type GameActionRequest =
+  | (ActionBase & {
+      actionType: "START_GAME";
+      payload: Record<string, never>;
+    })
   | (ActionBase & {
       actionType: "SELECT_SPEC";
       payload: {
@@ -184,6 +194,12 @@ export interface ActionResponse {
 export interface SessionBootstrapResponse {
   state: SessionState;
   latestEventId: number;
+}
+
+export interface SessionAccessResponse {
+  state: SessionState;
+  latestEventId: number;
+  playerId: string;
 }
 
 export interface RealtimeEventRow {

@@ -1,6 +1,6 @@
-# Quartett In-Game Screen v2
+# Quartett 2-Player Realtime (Vite + Supabase + Vercel)
 
-Mobile-first React + Vite + TypeScript implementation of the Quartett 1v1 game screen with Method design language.
+Anonymous 2-player Quartett web game with full create/join/lobby/game/finish flow.
 
 ## What is implemented
 
@@ -25,29 +25,34 @@ Mobile-first React + Vite + TypeScript implementation of the Quartett 1v1 game s
   - Lost Tie accepted gives winner pot + loser current top card.
   - Lost Tie declined keeps tie active and pot frozen.
 - Reducer + event queue to process server events deterministically.
-- URL-based dual perspective:
-  - `/?session=<session-id>&player=<player-id>`
-  - Invalid-context handling for missing session/player and player-not-in-session.
+- Full product flow:
+  - Landing (create or join)
+  - Realtime lobby (invite code, join link, QR)
+  - Host start-game gate (2 players required)
+  - Running duel gameplay
+  - Finished screen with winner
+- Session restoration:
+  - Session-scoped player identity persisted in browser storage.
+  - Refresh/reopen restores player seat without account login.
 - Supabase backend scaffolding:
-  - SQL schema migration
+  - SQL schema + product-flow migration
   - Edge Function endpoint `game-action` with:
-    - `GET` bootstrap (`state + latestEventId`)
-    - `POST` action handling (`state + appliedVersion + latestEventId`)
+    - `GET` bootstrap by session id
+    - `POST` create session / join session
+    - `POST` host start-game + duel actions
 
-## URL usage
+## Primary UX
 
-Open the app with query params:
+Open root URL and use the in-app flow:
 
-```text
-/?session=<session-id>&player=<player-id>
-```
+- Create game with player name
+- Share invite code / QR
+- Second player joins by code
+- Host starts game
 
-Examples:
+Session links still work directly:
 
-- `/?session=demo-session-01&player=p1`
-- `/?session=demo-session-01&player=p2`
-
-The UI includes helper links to open both player perspectives in separate tabs for QA.
+- `/?session=<session-id>&player=<player-id>`
 
 ## Deterministic Seed Session
 
@@ -63,7 +68,8 @@ Test URLs:
 ## Project structure
 
 - `src/` frontend app, game engine, reducer, hook, components, tests
-- `supabase/migrations/001_game_schema.sql` database schema
+- `supabase/migrations/001_game_schema.sql` base schema
+- `supabase/migrations/002_product_flow_schema.sql` players + deck model + lifecycle columns
 - `supabase/functions/game-action/index.ts` action endpoint
 
 ## Local setup
@@ -111,7 +117,7 @@ npm run go-live:deploy
 
 This workflow performs:
 
-1. Migration push (`supabase/migrations/001_game_schema.sql`)
+1. Migration push (`supabase/migrations/*`)
 2. Deterministic seed (`supabase/seed.sql`)
 3. Function deploy (`supabase/functions/game-action`)
 4. GET/POST contract verification (`npm run test:contract`)
@@ -127,10 +133,12 @@ npm run test:contract
 supabase db push --db-url "$SUPABASE_DB_URL" --include-seed
 ```
 
-Edge function contract (frozen for this phase):
+Edge function contract:
 
 - `GET /game-action?session=<uuid>` -> `SessionBootstrapResponse { state, latestEventId }`
 - `POST /game-action` -> `ActionResponse { state, events, appliedVersion, latestEventId }`
+- `POST /game-action` with `kind: "CREATE_SESSION"` -> `SessionAccessResponse { state, latestEventId, playerId }`
+- `POST /game-action` with `kind: "JOIN_SESSION"` -> `SessionAccessResponse { state, latestEventId, playerId }`
 
 When any realtime env dependency is missing (`VITE_GAME_ACTION_ENDPOINT`, `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`), the app explicitly falls back to local mock runtime mode.
 

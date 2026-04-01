@@ -59,6 +59,21 @@ const removeTopCard = (player: PlayerState): CardView => {
 
 const getTopCard = (player: PlayerState): CardView | null => player.hand[0] ?? null;
 
+const maybeFinishGame = (state: SessionState) => {
+  if (state.status !== "running") {
+    return;
+  }
+  if (state.tieState.active || state.pendingTransfer || state.loseTieRequest) {
+    return;
+  }
+  const winner = state.players.find((player) => player.hand.length > 0);
+  const loser = state.players.find((player) => player.hand.length === 0);
+  if (winner && loser) {
+    state.status = "finished";
+    state.winnerPlayerId = winner.id;
+  }
+};
+
 export const createSessionView = (
   session: SessionState,
   currentPlayerId: string
@@ -85,6 +100,10 @@ const handleSelectSpec = (
   events: GameEvent[],
   at: string
 ) => {
+  if (state.status !== "running") {
+    throw new GameActionError("Game is not running.");
+  }
+
   const actor = findPlayer(state, req.actorPlayerId);
   const topCard = getTopCard(actor);
   if (!topCard) {
@@ -115,6 +134,10 @@ const handleSendCard = (
   events: GameEvent[],
   at: string
 ) => {
+  if (state.status !== "running") {
+    throw new GameActionError("Game is not running.");
+  }
+
   if (state.pendingTransfer) {
     throw new GameActionError("There is already a pending transfer request.");
   }
@@ -154,6 +177,10 @@ const handleRespondTransfer = (
   events: GameEvent[],
   at: string
 ) => {
+  if (state.status !== "running") {
+    throw new GameActionError("Game is not running.");
+  }
+
   const transfer = state.pendingTransfer;
   if (!transfer) {
     throw new GameActionError("No pending transfer request.");
@@ -200,6 +227,10 @@ const handleStartTie = (
   events: GameEvent[],
   at: string
 ) => {
+  if (state.status !== "running") {
+    throw new GameActionError("Game is not running.");
+  }
+
   if (state.pendingTransfer) {
     throw new GameActionError("Resolve pending transfer before starting tie.");
   }
@@ -238,6 +269,10 @@ const handleLoseTie = (
   events: GameEvent[],
   at: string
 ) => {
+  if (state.status !== "running") {
+    throw new GameActionError("Game is not running.");
+  }
+
   if (!state.tieState.active) {
     throw new GameActionError("Tie is not active.");
   }
@@ -281,6 +316,10 @@ const handleRespondTie = (
   events: GameEvent[],
   at: string
 ) => {
+  if (state.status !== "running") {
+    throw new GameActionError("Game is not running.");
+  }
+
   const loseTieRequest = state.loseTieRequest;
   if (!loseTieRequest) {
     throw new GameActionError("No pending lose-tie request.");
@@ -324,6 +363,20 @@ const handleRespondTie = (
   });
 };
 
+const handleStartGame = (state: SessionState, actorPlayerId: string) => {
+  if (state.status !== "lobby") {
+    throw new GameActionError("Game already started.");
+  }
+  if (state.hostPlayerId !== actorPlayerId) {
+    throw new GameActionError("Only host can start the game.");
+  }
+  if (state.players.length !== 2) {
+    throw new GameActionError("Exactly two players are required.");
+  }
+  state.status = "running";
+  state.winnerPlayerId = null;
+};
+
 export const applyGameAction = (
   inputState: SessionState,
   req: GameActionRequest
@@ -337,6 +390,9 @@ export const applyGameAction = (
   const at = nowIso();
 
   switch (req.actionType) {
+    case "START_GAME":
+      handleStartGame(state, req.actorPlayerId);
+      break;
     case "SELECT_SPEC":
       handleSelectSpec(state, req, events, at);
       break;
@@ -359,6 +415,7 @@ export const applyGameAction = (
       throw new GameActionError("Unknown action type.");
   }
 
+  maybeFinishGame(state);
   bumpSession(state, at);
   appendStateUpdated(events, state, at);
 
