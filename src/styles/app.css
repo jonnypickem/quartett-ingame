@@ -80,6 +80,17 @@ body {
   gap: 10px;
 }
 
+.runtime-warning {
+  margin-bottom: 12px;
+  border: 3px solid var(--q-orange);
+  border-radius: var(--radius-md);
+  background: #fff4e7;
+  color: var(--q-ink);
+  padding: 10px 12px;
+  font-family: "Sigmar", system-ui, sans-serif;
+  font-size: 0.88rem;
+}
+
 .error-banner button {
   border: none;
   background: var(--q-ink);

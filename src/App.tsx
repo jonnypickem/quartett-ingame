@@ -67,6 +67,8 @@ function App() {
         findSpecValue(view.selectedSpecKey, view.opponentTopCard.specs)
   );
 
+  const showRuntimeWarning = !import.meta.env.DEV && runtimeMode === "local-mock";
+
   return (
     <main className="app-shell">
       <section className="game-screen">
@@ -74,6 +76,12 @@ function App() {
           <h1>Quartett Duel</h1>
           <span className="energy-pill">Session {state.session.sessionId.slice(-4).toUpperCase()}</span>
         </div>
+
+        {showRuntimeWarning ? (
+          <div className="runtime-warning" role="alert">
+            Realtime is not configured for this environment. This screen is running in local mock mode.
+          </div>
+        ) : null}
 
         {state.lastError ? (
           <div className="error-banner" role="alert">
