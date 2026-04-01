@@ -30,18 +30,21 @@ export const StatusBar = ({
   connectionStatus,
   runtimeMode
 }: StatusBarProps) => {
+  const statusLabel = getStatusLabel(busy, connectionStatus, runtimeMode);
+
   return (
-    <header className="status-row">
-      <div className="count-chip count-chip--you">
-        <span className="count-chip__label">Your Cards</span>
+    <header className="deck-row">
+      <div className="deck-chip deck-chip--you">
+        <span className="deck-chip__label">Your Deck</span>
         <span className="count-chip__value">{yourCount}</span>
       </div>
-      <div className="count-chip count-chip--opponent">
-        <span className="count-chip__label">Opponent Cards</span>
-        <span className="count-chip__value">{opponentCount}</span>
+      <div className="versus-slot">
+        <span className="versus-pill">Versus</span>
+        <span className="live-dot">{statusLabel}</span>
       </div>
-      <div className="status-badge" aria-live="polite">
-        {getStatusLabel(busy, connectionStatus, runtimeMode)}
+      <div className="deck-chip deck-chip--opponent">
+        <span className="deck-chip__label">Opponent</span>
+        <span className="count-chip__value">{opponentCount}</span>
       </div>
     </header>
   );

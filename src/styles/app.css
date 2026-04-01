@@ -63,11 +63,25 @@ body {
   margin-bottom: 10px;
 }
 
+.headline-row--gameplay {
+  margin-bottom: 12px;
+}
+
 .headline-row h1 {
   margin: 0;
   font-family: "Sigmar", system-ui, sans-serif;
   font-size: clamp(1.5rem, 7vw, 2.3rem);
   line-height: 0.98;
+}
+
+.icon-button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: var(--q-blue);
+  color: var(--q-white);
+  font-size: 1.1rem;
 }
 
 .energy-pill {
@@ -112,41 +126,69 @@ body {
   font-family: "Sigmar", system-ui, sans-serif;
 }
 
-.status-row {
+.deck-row {
   display: grid;
-  grid-template-columns: 1fr 1fr auto;
+  grid-template-columns: 1fr auto 1fr;
   gap: 10px;
   align-items: center;
   margin-bottom: 12px;
 }
 
-.count-chip {
+.deck-chip {
   border-radius: var(--radius-lg);
-  padding: 10px;
+  padding: 8px 10px;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
   color: var(--q-white);
 }
 
-.count-chip--you {
+.deck-chip--you {
   background: var(--q-blue);
 }
 
-.count-chip--opponent {
+.deck-chip--opponent {
   background: var(--q-purple);
+  align-items: flex-end;
 }
 
-.count-chip__label {
-  font-size: 0.72rem;
+.deck-chip__label {
+  font-size: 0.68rem;
   text-transform: uppercase;
   letter-spacing: 0.4px;
+  font-weight: 900;
 }
 
 .count-chip__value {
   font-family: "Sigmar", system-ui, sans-serif;
   font-size: 1.2rem;
   line-height: 1;
+}
+
+.versus-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.versus-pill {
+  background: rgba(49, 51, 55, 0.85);
+  color: var(--q-white);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-family: "Sigmar", system-ui, sans-serif;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+}
+
+.live-dot {
+  color: rgba(49, 51, 55, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.35px;
+  font-family: "Nunito", system-ui, sans-serif;
+  font-weight: 900;
+  font-size: 0.66rem;
 }
 
 .status-badge {
@@ -355,6 +397,10 @@ body {
   gap: 8px;
 }
 
+.action-panel__buttons--duel {
+  grid-template-columns: 7fr 3fr;
+}
+
 .btn-primary,
 .btn-secondary,
 .btn-tertiary {
@@ -374,6 +420,11 @@ body {
 .btn-secondary {
   background: var(--q-orange);
   color: var(--q-white);
+}
+
+.btn-secondary--tie-slot {
+  font-size: 0.9rem;
+  padding-inline: 4px;
 }
 
 .btn-tertiary {
@@ -418,6 +469,30 @@ body {
   font-weight: 800;
   font-size: 0.86rem;
   color: rgba(49, 51, 55, 0.75);
+}
+
+.opponent-state {
+  border-radius: var(--radius-md);
+  border: 2px dashed rgba(49, 51, 55, 0.25);
+  background: rgba(255, 255, 255, 0.45);
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.opponent-state__title {
+  font-family: "Sigmar", system-ui, sans-serif;
+  font-size: 0.95rem;
+}
+
+.opponent-state__subtitle {
+  font-family: "Nunito", system-ui, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.45px;
+  color: rgba(49, 51, 55, 0.7);
 }
 
 .session-input {
@@ -518,15 +593,15 @@ body {
     grid-template-columns: 1fr 1fr;
   }
 
-  .action-panel__buttons {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
   .card-image {
     height: 210px;
   }
 
   .game-screen--gameplay .card-image {
     height: 170px;
+  }
+
+  .game-screen--gameplay {
+    max-width: 640px;
   }
 }

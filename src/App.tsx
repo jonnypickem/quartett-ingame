@@ -299,9 +299,11 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
   return (
     <main className="app-shell app-shell--gameplay">
       <section className="game-screen game-screen--gameplay">
-        <div className="headline-row">
+        <div className="headline-row headline-row--gameplay">
           <h1>Quartett Duel</h1>
-          <span className="energy-pill">Session {session.sessionCode}</span>
+          <button type="button" className="icon-button" aria-label="Settings">
+            ⚙
+          </button>
         </div>
 
         {showRuntimeWarning ? (
@@ -359,14 +361,10 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
             <span>Tie Pot Cards: {view.tieState.potCards.length}</span>
             <span>Tie Rounds: {view.tieState.rounds}</span>
           </div>
-
-          <CardPanel
-            variant="opponent"
-            playerName={opponent.name}
-            topCard={view.opponentTopCard}
-            selectedSpecKey={view.selectedSpecKey}
-            selectedByColor={selectedByColor}
-          />
+          <div className="opponent-state">
+            <span className="opponent-state__title">{opponent.name}</span>
+            <span className="opponent-state__subtitle">Top card hidden</span>
+          </div>
         </div>
       </section>
     </main>

@@ -37,10 +37,34 @@ export const ActionBar = ({
 
   const tieAwaitingMe = loseTieRequest?.winnerPlayerId === currentPlayerId;
   const tieWaitingOther = loseTieRequest?.loserPlayerId === currentPlayerId;
+  const tieBlocked = Boolean(pendingTransfer);
+  const tieActiveWithoutRequest = tieActive && !loseTieRequest;
+
+  let tieLabel = "Tie";
+  let tieDisabled = busy || !hasYourTopCard || !canStartTie || tieBlocked;
+  let tieAction: (() => void) | null = () => void onStartTie();
+
+  if (tieActiveWithoutRequest) {
+    tieLabel = "Lost Tie";
+    tieDisabled = busy || tieBlocked;
+    tieAction = () => void onLoseTie();
+  }
+
+  if (tieAwaitingMe) {
+    tieLabel = "Accept Tie";
+    tieDisabled = busy;
+    tieAction = () => void onRespondTie("accepted");
+  }
+
+  if (tieWaitingOther) {
+    tieLabel = "Tie Pending";
+    tieDisabled = true;
+    tieAction = null;
+  }
 
   return (
     <section className="action-panel">
-      <div className="action-panel__buttons">
+      <div className="action-panel__buttons action-panel__buttons--duel">
         <button
           type="button"
           className="btn-primary"
@@ -52,20 +76,11 @@ export const ActionBar = ({
 
         <button
           type="button"
-          className="btn-secondary"
-          disabled={busy || !hasYourTopCard || !canStartTie || Boolean(pendingTransfer)}
-          onClick={() => void onStartTie()}
+          className="btn-secondary btn-secondary--tie-slot"
+          disabled={tieDisabled}
+          onClick={tieAction ?? undefined}
         >
-          Tie
-        </button>
-
-        <button
-          type="button"
-          className="btn-tertiary"
-          disabled={busy || !tieActive || Boolean(loseTieRequest)}
-          onClick={() => void onLoseTie()}
-        >
-          Lost Tie
+          {tieLabel}
         </button>
       </div>
 
@@ -97,11 +112,8 @@ export const ActionBar = ({
 
       {tieAwaitingMe ? (
         <div className="request-box">
-          <p>Tie resolution requested. Accepting grants the whole tie pot to you.</p>
+          <p>Tie resolution requested. Use “Accept Tie” to take the pot, or decline below.</p>
           <div className="request-actions">
-            <button type="button" className="btn-mini btn-mini--accept" onClick={() => void onRespondTie("accepted")}>
-              Accept Tie
-            </button>
             <button type="button" className="btn-mini btn-mini--decline" onClick={() => void onRespondTie("declined")}>
               Decline Tie
             </button>
