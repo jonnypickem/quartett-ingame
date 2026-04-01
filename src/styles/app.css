@@ -247,13 +247,12 @@
 }
 
 .gameplay-flow {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
   gap: var(--space-3);
-  flex: 1;
+  flex: 1 1 auto;
   min-height: 0;
-  overflow-y: auto;
-  scrollbar-gutter: stable;
+  overflow: hidden;
 }
 
 .cards-layout {
@@ -262,10 +261,13 @@
 }
 
 .player-surface {
+  display: flex;
+  flex-direction: column;
   border-radius: var(--radius-xl);
   border: var(--border-strong) solid rgba(31, 33, 37, 0.2);
   padding: var(--space-3);
   min-height: 0;
+  overflow: hidden;
   box-shadow: var(--shadow-soft);
 }
 
@@ -320,6 +322,10 @@
 
 .card-shell--stack {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-height: 0;
   overflow: visible;
 }
 
@@ -441,6 +447,23 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-2);
+  align-content: start;
+  max-height: min(36dvh, 250px);
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.spec-empty {
+  grid-column: 1 / -1;
+  margin: 0;
+  border-radius: var(--radius-sm);
+  border: var(--border-thin) dashed rgba(31, 33, 37, 0.26);
+  background: rgba(255, 255, 255, 0.9);
+  color: rgba(49, 51, 55, 0.8);
+  padding: 8px 10px;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 900;
 }
 
 .spec-row {
@@ -483,7 +506,7 @@
   border: var(--border-base) solid rgba(31, 33, 37, 0.18);
   background: linear-gradient(180deg, #ffffff 0%, #f2efeb 100%);
   padding: var(--space-3);
-  margin-top: auto;
+  margin-top: 0;
 }
 
 .action-panel__buttons {
@@ -935,7 +958,11 @@
 
   .card-image,
   .game-screen--gameplay .card-image {
-    height: 144px;
+    height: 130px;
+  }
+
+  .spec-grid {
+    max-height: min(34dvh, 220px);
   }
 
   .spec-row {

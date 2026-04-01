@@ -65,6 +65,7 @@ export const CardPanel = ({
   const [swipeState, setSwipeState] = useState<"idle" | "flying" | "rollback">("idle");
   const [inFlight, setInFlight] = useState(false);
   const [resolvedImageSrc, setResolvedImageSrc] = useState(topCard?.imageUrl ?? "");
+  const specs = Array.isArray(topCard?.specs) ? topCard.specs : [];
 
   const swipeLabel = useMemo(() => {
     if (swipeState === "rollback") {
@@ -183,8 +184,9 @@ export const CardPanel = ({
             />
           ) : null}
 
-          <div className="spec-grid">
-            {topCard.specs.map((spec) => {
+          <div className="spec-grid" aria-label="Card specs">
+            {specs.length === 0 ? <p className="spec-empty">Specs are not available for this card yet.</p> : null}
+            {specs.map((spec) => {
               const selected = selectedSpecKey === spec.key;
               const style =
                 selected && selectedByColor
