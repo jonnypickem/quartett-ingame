@@ -3,7 +3,6 @@ import { ActionBar } from "./components/ActionBar";
 import { CardPanel } from "./components/CardPanel";
 import { StatusBar } from "./components/StatusBar";
 import { createSession, joinSession } from "./lib/gameApi";
-import { createSessionView } from "./lib/gameEngine";
 import { buildPerspectiveUrl } from "./lib/routeContext";
 import { useGameSession } from "./hooks/useGameSession";
 
@@ -15,6 +14,10 @@ const persistPlayer = (sessionId: string, playerId: string) => {
 
 const recoverPlayer = (sessionId: string): string | null => {
   return localStorage.getItem(localPlayerKey(sessionId));
+};
+
+const clearPersistedPlayer = (sessionId: string) => {
+  localStorage.removeItem(localPlayerKey(sessionId));
 };
 
 const routeToSession = (sessionId: string, playerId: string) => {
@@ -144,11 +147,56 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
   const joinUrl = `${window.location.origin}/?code=${encodeURIComponent(session.sessionCode)}`;
 
   if (contextError) {
+    if (contextError.code === "player_not_in_session") {
+      return (
+        <main className="fallback">
+          <section className="context-error-card">
+            <h2>Session Error</h2>
+            <p>{contextError.message}</p>
+            <button
+              type="button"
+              className="btn-primary"
+              onClick={() => {
+                clearPersistedPlayer(sessionId);
+                window.location.search = `?code=${encodeURIComponent(session.sessionCode)}`;
+              }}
+            >
+              Rejoin With Code
+            </button>
+          </section>
+        </main>
+      );
+    }
     return <InvalidContext title="Session Error" message={contextError.message} />;
   }
 
   if (!yourPlayer) {
-    return <InvalidContext title="Session Error" message="Current player is not available in this session." />;
+    if (connectionStatus === "bootstrapping" || state.busy) {
+      return <main className="fallback">Loading session...</main>;
+    }
+
+    if (state.lastError) {
+      return <InvalidContext title="Session Error" message={state.lastError} />;
+    }
+
+    return (
+      <main className="fallback">
+        <section className="context-error-card">
+          <h2>Session Error</h2>
+          <p>We could not restore your player seat for this session.</p>
+          <button
+            type="button"
+            className="btn-primary"
+            onClick={() => {
+              clearPersistedPlayer(sessionId);
+              window.location.search = `?code=${encodeURIComponent(session.sessionCode)}`;
+            }}
+          >
+            Rejoin With Code
+          </button>
+        </section>
+      </main>
+    );
   }
 
   if (session.status === "lobby") {

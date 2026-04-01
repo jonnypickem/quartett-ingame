@@ -17,6 +17,27 @@ const hasSupabaseConfig = (): boolean => {
   return Boolean(import.meta.env.VITE_SUPABASE_URL && import.meta.env.VITE_SUPABASE_ANON_KEY);
 };
 
+const readErrorMessage = async (response: Response, fallback: string): Promise<string> => {
+  const text = (await response.text()).trim();
+  if (!text) {
+    return fallback;
+  }
+
+  try {
+    const parsed = JSON.parse(text) as { error?: unknown; message?: unknown };
+    if (typeof parsed.error === "string" && parsed.error) {
+      return parsed.error;
+    }
+    if (typeof parsed.message === "string" && parsed.message) {
+      return parsed.message;
+    }
+  } catch {
+    // Preserve plain-text responses when backend does not return JSON.
+  }
+
+  return text;
+};
+
 export const resolveRuntimeMode = (): RuntimeMode => {
   return getEndpoint() && hasSupabaseConfig() ? "realtime" : "local-mock";
 };
@@ -38,8 +59,7 @@ export const fetchSessionBootstrap = async (sessionId: string): Promise<SessionB
   });
 
   if (!response.ok) {
-    const message = await response.text();
-    throw new Error(message || "Bootstrap request failed.");
+    throw new Error(await readErrorMessage(response, "Bootstrap request failed."));
   }
 
   return (await response.json()) as SessionBootstrapResponse;
@@ -66,8 +86,7 @@ export const createSession = async (playerName: string): Promise<SessionAccessRe
   });
 
   if (!response.ok) {
-    const message = await response.text();
-    throw new Error(message || "Create session request failed.");
+    throw new Error(await readErrorMessage(response, "Create session request failed."));
   }
 
   return (await response.json()) as SessionAccessResponse;
@@ -89,8 +108,7 @@ export const joinSession = async (playerName: string, sessionCode: string): Prom
   });
 
   if (!response.ok) {
-    const message = await response.text();
-    throw new Error(message || "Join session request failed.");
+    throw new Error(await readErrorMessage(response, "Join session request failed."));
   }
 
   return (await response.json()) as SessionAccessResponse;
@@ -111,8 +129,7 @@ export const submitAction = async (
     });
 
     if (!response.ok) {
-      const message = await response.text();
-      throw new Error(message || "Game action request failed.");
+      throw new Error(await readErrorMessage(response, "Game action request failed."));
     }
 
     return (await response.json()) as ActionResponse;
