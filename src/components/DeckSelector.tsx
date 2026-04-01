@@ -7,7 +7,7 @@ interface DeckSelectorProps {
   busy: boolean;
   onSelectDeck: (deckId: string) => Promise<boolean>;
   onResolveDeckById: (deckId: string) => Promise<DeckCatalogItem | null>;
-  onDone: () => void;
+  onSelectionConfirmed: () => void;
 }
 
 const normalize = (value: string) => value.trim().toLowerCase();
@@ -18,13 +18,14 @@ export const DeckSelector = ({
   busy,
   onSelectDeck,
   onResolveDeckById,
-  onDone
+  onSelectionConfirmed
 }: DeckSelectorProps) => {
   const trackRef = useRef<HTMLDivElement | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [searching, setSearching] = useState(false);
   const [searchResult, setSearchResult] = useState<DeckCatalogItem | null>(null);
   const [searchMessage, setSearchMessage] = useState<string | null>(null);
+  const [pendingDeckId, setPendingDeckId] = useState<string | null>(selectedDeckId ?? decks[0]?.id ?? null);
 
   const normalizedTerm = normalize(searchTerm);
 
@@ -52,6 +53,11 @@ export const DeckSelector = ({
     });
   };
 
+  const chooseDeck = (deckId: string) => {
+    setPendingDeckId(deckId);
+    setSearchMessage(null);
+  };
+
   const lookupExactDeck = async () => {
     if (!normalizedTerm) {
       setSearchMessage("Enter a deck name or deck ID.");
@@ -74,15 +80,21 @@ export const DeckSelector = ({
     }
   };
 
-  const handleSelect = async (deckId: string) => {
-    const chosen = [...decks, ...(searchResult ? [searchResult] : [])].find((deck) => deck.id === deckId);
+  const handleConfirm = async () => {
+    if (!pendingDeckId) {
+      setSearchMessage("Choose a deck first.");
+      return;
+    }
+
+    const chosen = [...decks, ...(searchResult ? [searchResult] : [])].find((deck) => deck.id === pendingDeckId);
     if (chosen && chosen.cardCount !== 32) {
       setSearchMessage("This deck is not tournament-ready yet (needs 32 cards).");
       return;
     }
-    const ok = await onSelectDeck(deckId);
+
+    const ok = await onSelectDeck(pendingDeckId);
     if (ok) {
-      onDone();
+      onSelectionConfirmed();
     }
   };
 
@@ -90,27 +102,30 @@ export const DeckSelector = ({
     <main className="deck-selector-screen">
       <header className="deck-selector-top">
         <p>Choose your deck</p>
-        <button type="button" className="btn-secondary" onClick={onDone} disabled={busy}>
-          Done
-        </button>
       </header>
 
       <div className="deck-selector-track" ref={trackRef}>
         {decks.map((deck) => (
           <section key={deck.id} className="deck-slide">
-            <article className="deck-slide-card">
+            <article
+              className={`deck-slide-card ${pendingDeckId === deck.id ? "deck-slide-card--active" : ""}`}
+              onClick={() => chooseDeck(deck.id)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  chooseDeck(deck.id);
+                }
+              }}
+            >
               <img src={deck.coverImageUrl} alt={deck.name} className="deck-slide-cover" />
               <h2>{deck.name}</h2>
               <p>{deck.description}</p>
               <span>{deck.cardCount} cards</span>
-              <button
-                type="button"
-                className="btn-primary"
-                disabled={busy || deck.cardCount !== 32}
-                onClick={() => void handleSelect(deck.id)}
-              >
-                {deck.cardCount !== 32 ? "Deck Incomplete" : selectedDeckId === deck.id ? "Selected" : "Select Deck"}
-              </button>
+              <strong className="deck-slide-state">
+                {deck.cardCount !== 32 ? "Deck Incomplete" : pendingDeckId === deck.id ? "Selected" : "Tap To Select"}
+              </strong>
             </article>
           </section>
         ))}
@@ -135,13 +150,22 @@ export const DeckSelector = ({
 
             <div className="deck-search-results">
               {visibleMatches.slice(0, 3).map((deck) => (
-                <button key={deck.id} type="button" className="deck-search-result" onClick={() => void handleSelect(deck.id)}>
+                <button
+                  key={deck.id}
+                  type="button"
+                  className={`deck-search-result ${pendingDeckId === deck.id ? "deck-search-result--active" : ""}`}
+                  onClick={() => chooseDeck(deck.id)}
+                >
                   <span>{deck.name}</span>
                   <small>{deck.id}</small>
                 </button>
               ))}
               {searchResult ? (
-                <button type="button" className="deck-search-result deck-search-result--exact" onClick={() => void handleSelect(searchResult.id)}>
+                <button
+                  type="button"
+                  className={`deck-search-result deck-search-result--exact ${pendingDeckId === searchResult.id ? "deck-search-result--active" : ""}`}
+                  onClick={() => chooseDeck(searchResult.id)}
+                >
                   <span>{searchResult.name}</span>
                   <small>{searchResult.id}</small>
                 </button>
@@ -152,11 +176,16 @@ export const DeckSelector = ({
         </section>
       </div>
 
-      <footer className="deck-selector-nav">
-        {decks.map((deck, index) => (
-          <button key={deck.id} type="button" className="deck-selector-nav__dot" onClick={() => scrollToSlide(index)} aria-label={`Go to ${deck.name}`} />
-        ))}
-        <button type="button" className="deck-selector-nav__dot deck-selector-nav__dot--search" onClick={() => scrollToSlide(decks.length)} aria-label="Go to search slide" />
+      <footer className="deck-selector-footer">
+        <div className="deck-selector-nav">
+          {decks.map((deck, index) => (
+            <button key={deck.id} type="button" className="deck-selector-nav__dot" onClick={() => scrollToSlide(index)} aria-label={`Go to ${deck.name}`} />
+          ))}
+          <button type="button" className="deck-selector-nav__dot deck-selector-nav__dot--search" onClick={() => scrollToSlide(decks.length)} aria-label="Go to search slide" />
+        </div>
+        <button type="button" className="btn-primary deck-selector-submit" disabled={busy || !pendingDeckId} onClick={() => void handleConfirm()}>
+          {busy ? "Selecting..." : "Select Deck"}
+        </button>
       </footer>
     </main>
   );

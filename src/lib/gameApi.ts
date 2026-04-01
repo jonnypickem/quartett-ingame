@@ -73,6 +73,13 @@ const assertRealtimeEnabled = () => {
   }
 };
 
+const isLegacyDeckEndpointError = (status: number, message: string): boolean => {
+  if (status !== 400) {
+    return false;
+  }
+  return message.toLowerCase().includes("missing session query parameter");
+};
+
 export const createSession = async (): Promise<SessionAccessResponse> => {
   assertRealtimeEnabled();
   const endpoint = getEndpoint();
@@ -132,7 +139,11 @@ export const fetchDeckCatalog = async (): Promise<DeckCatalogItem[]> => {
   });
 
   if (!response.ok) {
-    throw new Error(await readErrorMessage(response, "Deck catalog request failed."));
+    const message = await readErrorMessage(response, "Deck catalog request failed.");
+    if (isLegacyDeckEndpointError(response.status, message)) {
+      return getVisibleDecks();
+    }
+    throw new Error(message);
   }
 
   return (await response.json()) as DeckCatalogItem[];
@@ -162,7 +173,11 @@ export const fetchDeckById = async (deckId: string): Promise<DeckCatalogItem | n
   }
 
   if (!response.ok) {
-    throw new Error(await readErrorMessage(response, "Deck request failed."));
+    const message = await readErrorMessage(response, "Deck request failed.");
+    if (isLegacyDeckEndpointError(response.status, message)) {
+      return getDeckById(normalizedDeckId);
+    }
+    throw new Error(message);
   }
 
   return (await response.json()) as DeckCatalogItem;

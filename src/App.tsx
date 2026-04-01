@@ -446,8 +446,9 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
 
   if (session.status === "lobby") {
     const canStart = isHost && session.players.length === 2 && Boolean(session.deckId) && !state.busy;
+    const mustSelectDeck = isHost && !session.deckId;
 
-    if (showDeckSelector && isHost) {
+    if ((showDeckSelector || mustSelectDeck) && isHost) {
       return (
         <DeckSelector
           decks={deckCatalog}
@@ -455,8 +456,22 @@ const SessionScreen = ({ sessionId, playerId }: { sessionId: string; playerId: s
           busy={state.busy}
           onSelectDeck={selectDeck}
           onResolveDeckById={fetchDeckById}
-          onDone={() => setShowDeckSelector(false)}
+          onSelectionConfirmed={() => setShowDeckSelector(false)}
         />
+      );
+    }
+
+    if (!session.deckId) {
+      return (
+        <main className="app-shell app-shell--entry">
+          <section className="game-screen game-screen--entry game-screen--lobby">
+            <AppTopBar title="Lobby" badge={session.sessionCode} />
+            <section className="request-box request-box--lobby">
+              <h2>Waiting For Deck Selection</h2>
+              <p>Host is choosing a deck. Lobby details will appear right after deck selection.</p>
+            </section>
+          </section>
+        </main>
       );
     }
 
