@@ -24,33 +24,6 @@ const DECK_ID_PREFIX = {
   "military-submarines-v1": "sub"
 };
 
-const DECK_SPEC_KEYS = {
-  "military-jets-v1": ["speed", "range", "payload", "ceiling", "agility", "stealth"],
-  "supercars-v1": ["top_speed", "acceleration", "power", "handling", "braking", "rarity"],
-  "military-submarines-v1": ["submerged_speed", "dive_depth", "endurance", "quietness", "firepower", "sensors"]
-};
-
-const SPEC_LABELS = {
-  speed: "Speed",
-  range: "Range",
-  payload: "Payload",
-  ceiling: "Ceiling",
-  agility: "Agility",
-  stealth: "Stealth",
-  top_speed: "Top Speed",
-  acceleration: "Acceleration",
-  power: "Power",
-  handling: "Handling",
-  braking: "Braking",
-  rarity: "Rarity",
-  submerged_speed: "Sub Speed",
-  dive_depth: "Dive Depth",
-  endurance: "Endurance",
-  quietness: "Quietness",
-  firepower: "Firepower",
-  sensors: "Sensors"
-};
-
 const sqlString = (value) => `'${String(value).replace(/'/g, "''")}'`;
 const sqlJsonb = (value) => `${sqlString(JSON.stringify(value))}::jsonb`;
 
@@ -69,21 +42,15 @@ const toDeckCardsValues = (decks) => {
   const tuples = [];
   for (const deck of decks) {
     const prefix = DECK_ID_PREFIX[deck.id] ?? deck.id;
-    const specKeys = DECK_SPEC_KEYS[deck.id];
-    if (!specKeys) {
-      throw new Error(`Missing stat key mapping for deck ${deck.id}`);
-    }
 
     for (const card of deck.cards) {
-      const specs = specKeys.map((key) => ({
-        key,
-        label: SPEC_LABELS[key] ?? key,
-        value: Math.max(1, Math.min(100, Math.round(card.specsNormalized[key] ?? 0)))
-      }));
+      if (!Array.isArray(card.specs) || card.specs.length !== 6) {
+        throw new Error(`Card ${deck.id}/${card.code} must have 6 real-world specs.`);
+      }
       const code = String(card.code).padStart(2, "0");
       const sortOrder = Number.parseInt(code, 10);
       tuples.push(
-        `  (${sqlString(`${prefix}-${code}`)}, ${sqlString(deck.id)}, ${sqlString(code)}, ${sqlString(card.name)}, ${sqlString(card.localImageUrl)}, ${sqlJsonb(specs)}, ${sortOrder})`
+        `  (${sqlString(`${prefix}-${code}`)}, ${sqlString(deck.id)}, ${sqlString(code)}, ${sqlString(card.name)}, ${sqlString(card.localImageUrl)}, ${sqlJsonb(card.specs)}, ${sortOrder})`
       );
     }
   }

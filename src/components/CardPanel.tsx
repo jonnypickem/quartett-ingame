@@ -27,6 +27,66 @@ const tintFromHex = (hex: string, alpha: number) => {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 };
 
+const iconPathById: Record<string, string> = {
+  jet_speed: "M3 13h8l4 4h3l-3-4h4v-2h-4l3-4h-3l-4 4H3z",
+  radar: "M4 12a8 8 0 0 1 16 0h-2a6 6 0 0 0-12 0zm4 0a4 4 0 0 1 8 0h-2a2 2 0 0 0-4 0zm4 2a1.6 1.6 0 1 0 0 3.2A1.6 1.6 0 0 0 12 14z",
+  range: "M4 12h16M12 4v16M7 7l10 10M17 7 7 17",
+  payload: "M4 8h16v3H4zm2 5h12v7H6z",
+  altitude: "M12 4 7 10h3v6h4v-6h3z",
+  climb_rate: "M6 16h12M8 14l4-6 4 6",
+  top_speed: "M4 14a8 8 0 1 1 16 0h-2a6 6 0 1 0-12 0zm8-1 5-3",
+  acceleration: "M4 15h4l2-3 3 5 2-3h5",
+  power: "M13 3 6 13h5l-1 8 7-10h-5z",
+  torque: "M5 12a7 7 0 1 0 7-7v3l4-4-4-4v3a10 10 0 1 1-10 10z",
+  weight: "M6 9h12l-1 10H7zm3-3h6l1 3H8z",
+  braking: "M6 6h12v6H6zm2 8h8v4H8z",
+  torpedo: "M4 12h10l3-2v4l-3-2H4z",
+  depth: "M12 3v14m0 0-3-3m3 3 3-3M6 21h12",
+  submarine_speed: "M3 13h10l2-2 6 1v2l-6 1-2-2H3z",
+  endurance: "M12 6v6l4 2M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18z",
+  crew: "M8 11a2 2 0 1 0 0-4 2 2 0 0 0 0 4m8 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4M4 19a4 4 0 0 1 8 0m4 0a4 4 0 0 1 8 0",
+  displacement: "M3 15h18l-2 4H5zm3-5h12l2 5H4z",
+  default: "M12 4a8 8 0 1 1 0 16 8 8 0 0 1 0-16z"
+};
+
+const formatNumber = (value: number, precision: number | undefined): string => {
+  const safeValue = Number.isFinite(value) ? value : 0;
+  const absValue = Math.abs(safeValue);
+  if (absValue >= 1_000_000) {
+    const scaled = safeValue / 1_000_000;
+    const rounded = Math.abs(scaled) >= 10 ? scaled.toFixed(0) : scaled.toFixed(1);
+    return `${rounded.replace(/\.0$/, "")} Mio`;
+  }
+  if (absValue >= 1_000) {
+    const scaled = safeValue / 1_000;
+    const rounded = Math.abs(scaled) >= 10 ? scaled.toFixed(0) : scaled.toFixed(1);
+    return `${rounded.replace(/\.0$/, "")}k`;
+  }
+  if (typeof precision === "number" && precision > 0) {
+    return safeValue.toFixed(precision).replace(/\.?0+$/, "");
+  }
+  return Math.round(safeValue).toString();
+};
+
+const formatUnit = (unit: string): string => {
+  if (unit === "people") {
+    return "ppl";
+  }
+  if (unit === "torpedos") {
+    return "torp";
+  }
+  return unit;
+};
+
+const SpecIcon = ({ iconId }: { iconId: string }) => {
+  const path = iconPathById[iconId] ?? iconPathById.default;
+  return (
+    <svg className="spec-row__icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d={path} />
+    </svg>
+  );
+};
+
 const buildFallbackImage = (code: string, category: string): string => {
   const safeCode = code.replace(/[<>&"]/g, "");
   const safeCategory = category.replace(/[<>&"]/g, "");
@@ -178,8 +238,17 @@ export const CardPanel = ({
                   onClick={() => onSelectSpec?.(spec.key)}
                   disabled={!onSelectSpec}
                 >
-                  <span className="spec-row__label">{spec.label}</span>
-                  <span className="spec-row__value">{spec.value}</span>
+                  <div className="spec-row__topline">
+                    <SpecIcon iconId={spec.icon} />
+                    <div className="spec-row__meta">
+                      <span className="spec-row__label">{spec.label}</span>
+                      <span className="spec-row__caption">{spec.caption ?? spec.unit}</span>
+                    </div>
+                  </div>
+                  <span className="spec-row__value">
+                    <span className="spec-row__value-main">{formatNumber(spec.value, spec.displayPrecision)}</span>
+                    <span className="spec-row__value-unit">{formatUnit(spec.unit)}</span>
+                  </span>
                 </button>
               );
             })}

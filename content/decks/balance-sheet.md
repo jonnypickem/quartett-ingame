@@ -2,39 +2,40 @@
 
 ## Strategy
 
-Specs are manifest-driven and deterministic per card:
+Specs are manifest-driven and real-world per card:
 
-- Each card stores explicit normalized gameplay specs in `content/decks/content-manifest.json`
-- Values are clamped to `1..100`
-- Raw metric proxies and source references are tracked alongside each card in the same manifest
+- Each card stores explicit real metric specs in `content/decks/content-manifest.json`
+- Each spec includes icon, unit, caption, and display metadata for UI
+- Estimated/partially classified values are flagged with `estimated: true`
+- Source attribution is tracked via `sourceUrl` + `metricSources`
 - `supabase/seed.sql` is generated from this manifest to keep frontend fallback and backend runtime aligned
 
 ## Jet Specs
 
-- Speed
-- Range
-- Payload
-- Ceiling
-- Agility
-- Stealth
+- Max Speed (km/h)
+- Combat Range (km)
+- Payload (kg)
+- Service Ceiling (m)
+- Climb Rate (m/s)
+- Radar Cross-Section (m²)
 
 ## Supercar Specs
 
-- Top Speed
-- Acceleration
-- Power
-- Handling
-- Braking
-- Rarity
+- Top Speed (km/h)
+- 0-100 (s)
+- Power (hp)
+- Torque (Nm)
+- Weight (kg)
+- Braking 100-0 (m)
 
 ## Submarine Specs
 
-- Sub Speed
-- Dive Depth
-- Endurance
-- Quietness
-- Firepower
-- Sensors
+- Ammunition / Torpedos
+- Max Depth (m)
+- Submerged Speed (kn)
+- Endurance (days)
+- Crew
+- Displacement (t)
 
 ## Validation Targets
 

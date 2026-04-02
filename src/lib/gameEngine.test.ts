@@ -5,20 +5,22 @@ import { cloneSessionState, initialMockState } from "../state/mockState";
 describe("gameEngine", () => {
   it("applies spec selection and mirrors selected metadata", () => {
     const state = cloneSessionState(initialMockState);
+    const selectedSpecKey = state.players.find((player) => player.id === "p1")?.hand[0]?.specs[0]?.key;
+    expect(selectedSpecKey).toBeTruthy();
 
     const response = applyGameAction(state, {
       sessionId: state.sessionId,
       actorPlayerId: "p1",
       expectedVersion: state.version,
       actionType: "SELECT_SPEC",
-      payload: { specKey: "range" }
+      payload: { specKey: selectedSpecKey! }
     });
 
     const view = createSessionView(response.state, "p2");
 
-    expect(response.state.selectedSpecKey).toBe("range");
+    expect(response.state.selectedSpecKey).toBe(selectedSpecKey);
     expect(response.state.selectedByPlayerId).toBe("p1");
-    expect(view.selectedSpecKey).toBe("range");
+    expect(view.selectedSpecKey).toBe(selectedSpecKey);
   });
 
   it("cycles both top cards to winner bottom on transfer accept", () => {

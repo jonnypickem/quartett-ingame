@@ -1,11 +1,23 @@
 import contentManifest from "../../content/decks/content-manifest.json";
 import type { CardView, DeckCatalogItem, SpecField } from "../types/game";
 
+type ManifestSpec = {
+  key: string;
+  label: string;
+  unit: string;
+  value: number;
+  icon: string;
+  caption?: string;
+  estimated?: boolean;
+  sourceUrl?: string;
+  displayPrecision?: number;
+};
+
 type ManifestCard = {
   code: string;
   name: string;
   localImageUrl: string;
-  specsNormalized: Record<string, number>;
+  specs?: ManifestSpec[];
 };
 
 type ManifestDeck = {
@@ -35,33 +47,6 @@ const DECK_ID_PREFIX: Record<string, string> = {
   "military-submarines-v1": "sub"
 };
 
-const DECK_SPEC_KEYS: Record<string, string[]> = {
-  "military-jets-v1": ["speed", "range", "payload", "ceiling", "agility", "stealth"],
-  "supercars-v1": ["top_speed", "acceleration", "power", "handling", "braking", "rarity"],
-  "military-submarines-v1": ["submerged_speed", "dive_depth", "endurance", "quietness", "firepower", "sensors"]
-};
-
-const SPEC_LABELS: Record<string, string> = {
-  speed: "Speed",
-  range: "Range",
-  payload: "Payload",
-  ceiling: "Ceiling",
-  agility: "Agility",
-  stealth: "Stealth",
-  top_speed: "Top Speed",
-  acceleration: "Acceleration",
-  power: "Power",
-  handling: "Handling",
-  braking: "Braking",
-  rarity: "Rarity",
-  submerged_speed: "Sub Speed",
-  dive_depth: "Dive Depth",
-  endurance: "Endurance",
-  quietness: "Quietness",
-  firepower: "Firepower",
-  sensors: "Sensors"
-};
-
 const normalizeDeckId = (deckId: unknown): string => {
   if (typeof deckId !== "string") {
     return "";
@@ -78,15 +63,19 @@ const sortDeckIds = (a: string, b: string): number => {
   return a.localeCompare(b);
 };
 
-const toSpecFields = (deckId: string, specsNormalized: Record<string, number>): SpecField[] => {
-  const keys = DECK_SPEC_KEYS[deckId] ?? Object.keys(specsNormalized);
-  return keys
-    .filter((key) => typeof specsNormalized[key] === "number")
-    .map((key) => ({
-      key,
-      label: SPEC_LABELS[key] ?? key,
-      value: Math.max(1, Math.min(100, Math.round(specsNormalized[key])))
-    }));
+const sanitizeSpec = (spec: ManifestSpec): SpecField => {
+  const value = Number.isFinite(spec.value) ? spec.value : 0;
+  return {
+    key: spec.key,
+    label: spec.label,
+    unit: spec.unit,
+    value,
+    icon: spec.icon,
+    caption: spec.caption,
+    estimated: spec.estimated,
+    sourceUrl: spec.sourceUrl,
+    displayPrecision: typeof spec.displayPrecision === "number" ? spec.displayPrecision : undefined
+  };
 };
 
 const toCardId = (deckId: string, code: string): string => {
@@ -115,7 +104,7 @@ export const cardsByDeckId: Record<string, CardView[]> = Object.fromEntries(
       code: card.code,
       category: card.name,
       imageUrl: card.localImageUrl,
-      specs: toSpecFields(deck.id, card.specsNormalized)
+      specs: (card.specs ?? []).map(sanitizeSpec)
     }))
   ])
 );

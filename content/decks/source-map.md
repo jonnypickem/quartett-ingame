@@ -22,7 +22,7 @@ Local image paths are mapped as:
 Deck content manifest:
 
 - `content/decks/content-manifest.json`
-- Includes per-card image mapping, Wikimedia attribution/source URLs, normalized gameplay specs, and raw metric proxies.
+- Includes per-card image mapping, source URLs, real-world spec payloads (`unit`, `icon`, `caption`), and estimate flags.
 
 Catalog behavior:
 

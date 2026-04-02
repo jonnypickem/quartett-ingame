@@ -16,7 +16,13 @@ type GameActionType =
 interface SpecField {
   key: string;
   label: string;
+  unit: string;
   value: number;
+  icon: string;
+  caption?: string;
+  estimated?: boolean;
+  sourceUrl?: string;
+  displayPrecision?: number;
 }
 
 interface CardView {

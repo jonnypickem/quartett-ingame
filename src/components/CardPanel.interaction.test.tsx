@@ -8,8 +8,8 @@ const topCard = {
   category: "Pirate Ships",
   imageUrl: "https://example.com/a1.jpg",
   specs: [
-    { key: "speed", label: "Speed", value: 50 },
-    { key: "armor", label: "Armor", value: 40 }
+    { key: "speed", label: "Speed", unit: "km/h", value: 50, icon: "jet_speed" },
+    { key: "armor", label: "Armor", unit: "mm", value: 40, icon: "default" }
   ]
 };
 

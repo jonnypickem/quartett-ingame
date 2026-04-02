@@ -32,7 +32,8 @@ describe("deck catalog", () => {
       const cards = getDeckCards(deck.id);
       expect(cards.length).toBe(32);
       expect(cards.every((card) => card.imageUrl.startsWith(`/decks/${deck.id}/`))).toBe(true);
-      expect(cards.every((card) => card.specs.length > 0)).toBe(true);
+      expect(cards.every((card) => card.specs.length === 6)).toBe(true);
+      expect(cards.every((card) => card.specs.every((spec) => spec.unit && spec.icon && Number.isFinite(spec.value)))).toBe(true);
     }
   });
 

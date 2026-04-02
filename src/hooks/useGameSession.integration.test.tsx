@@ -77,14 +77,16 @@ describe("useGameSession realtime integration", () => {
       expect(a.result.current.connectionStatus).toBe("connected");
       expect(b.result.current.connectionStatus).toBe("connected");
     });
+    const selectedSpecKey = a.result.current.view.yourTopCard?.specs[0]?.key;
+    expect(selectedSpecKey).toBeTruthy();
 
     await act(async () => {
-      await a.result.current.selectSpec("range");
+      await a.result.current.selectSpec(selectedSpecKey!);
     });
 
     await waitFor(() => {
-      expect(a.result.current.view.selectedSpecKey).toBe("range");
-      expect(b.result.current.view.selectedSpecKey).toBe("range");
+      expect(a.result.current.view.selectedSpecKey).toBe(selectedSpecKey);
+      expect(b.result.current.view.selectedSpecKey).toBe(selectedSpecKey);
     });
 
     await act(async () => {
@@ -113,13 +115,15 @@ describe("useGameSession realtime integration", () => {
       expect(a.result.current.connectionStatus).toBe("connected");
       expect(b.result.current.connectionStatus).toBe("connected");
     });
+    const selectedSpecKey = a.result.current.view.yourTopCard?.specs[0]?.key;
+    expect(selectedSpecKey).toBeTruthy();
 
     await act(async () => {
-      await a.result.current.selectSpec("range");
+      await a.result.current.selectSpec(selectedSpecKey!);
     });
 
     await waitFor(() => {
-      expect(b.result.current.view.selectedSpecKey).toBe("range");
+      expect(b.result.current.view.selectedSpecKey).toBe(selectedSpecKey);
     });
 
     b.unmount();
