@@ -43,7 +43,7 @@ export const useGameSession = (sessionId: string, currentPlayerId: string) => {
       dispatch({ type: "SET_ERROR", message: null });
 
       try {
-        const response = await fetchSessionBootstrap(sessionId);
+        const response = await fetchSessionBootstrap(sessionId, currentPlayerId);
         if (cancelled) {
           return;
         }
@@ -99,6 +99,34 @@ export const useGameSession = (sessionId: string, currentPlayerId: string) => {
 
     return unsubscribe;
   }, [runtimeMode, sessionId, uiState.contextError]);
+
+  useEffect(() => {
+    if (runtimeMode !== "realtime" || uiState.contextError) {
+      return;
+    }
+
+    const heartbeat = window.setInterval(() => {
+      void fetchSessionBootstrap(sessionId, currentPlayerId)
+        .then((response) => {
+          if (response.state.version > sessionRef.current.version) {
+            dispatch({
+              type: "SET_BOOTSTRAP",
+              session: response.state,
+              lastSeenEventId: response.latestEventId,
+              runtimeMode,
+              connectionStatus: "connected"
+            });
+          }
+        })
+        .catch(() => {
+          // Realtime stream remains source of truth; ignore transient heartbeat failures.
+        });
+    }, 15000);
+
+    return () => {
+      window.clearInterval(heartbeat);
+    };
+  }, [currentPlayerId, runtimeMode, sessionId, uiState.contextError]);
 
   useEffect(() => {
     if (uiState.eventQueue.length === 0) {

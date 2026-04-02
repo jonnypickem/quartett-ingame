@@ -64,7 +64,9 @@ const applySingleEvent = (session: SessionState, event: GameEvent): SessionState
     case "transfer_responded":
       return {
         ...session,
-        pendingTransfer: null
+        pendingTransfer: null,
+        selectedSpecKey: event.payload.status === "accepted" ? null : session.selectedSpecKey,
+        selectedByPlayerId: event.payload.status === "accepted" ? null : session.selectedByPlayerId
       };
     case "tie_started":
       return {

@@ -225,6 +225,7 @@ interface GamePlayerRow {
   color: string;
   is_host: boolean;
   seat_index: number;
+  last_seen_at: string;
 }
 
 interface DeckCardRow {
@@ -257,6 +258,8 @@ class GameActionError extends Error {}
 const PLAYER_COLORS = ["#01ADFF", "#C669FF"];
 const VISIBLE_DECK_ORDER = ["military-jets-v1", "supercars-v1", "military-submarines-v1"] as const;
 const visibleDeckOrderIndex = new Map<string, number>(VISIBLE_DECK_ORDER.map((deckId, index) => [deckId, index]));
+const LOBBY_INACTIVITY_MS = 30 * 60 * 1000;
+const RUNNING_FORFEIT_MS = 2 * 60 * 1000;
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -307,6 +310,82 @@ const sessionColumnsFromState = (state: SessionState) => ({
   winner_player_id: state.winnerPlayerId,
   updated_at: state.updatedAt
 });
+
+const touchPlayerPresence = async (
+  client: ReturnType<typeof createClient>,
+  sessionId: string,
+  playerId: string,
+  at: string
+) => {
+  const { data, error } = await client
+    .from("game_players")
+    .update({ last_seen_at: at })
+    .eq("session_id", sessionId)
+    .eq("id", playerId)
+    .select("id")
+    .maybeSingle();
+
+  if (error) {
+    throw new GameActionError(error.message);
+  }
+  if (!data) {
+    throw new GameActionError("Player is not part of this session.");
+  }
+};
+
+const applyInactivityRules = (state: SessionState, players: GamePlayerRow[], at: string): SessionState | null => {
+  const now = new Date(at).getTime();
+  if (Number.isNaN(now)) {
+    return null;
+  }
+
+  if (state.status === "finished") {
+    return null;
+  }
+
+  const stateUpdatedAt = new Date(state.updatedAt).getTime();
+  const sessionAgeMs = Number.isNaN(stateUpdatedAt) ? 0 : now - stateUpdatedAt;
+  const inactivePlayers = players.filter((player) => {
+    const lastSeenMs = new Date(player.last_seen_at).getTime();
+    if (Number.isNaN(lastSeenMs)) {
+      return true;
+    }
+    return now - lastSeenMs > (state.status === "lobby" ? LOBBY_INACTIVITY_MS : RUNNING_FORFEIT_MS);
+  });
+
+  if (state.status === "lobby") {
+    if (sessionAgeMs > LOBBY_INACTIVITY_MS && inactivePlayers.length === players.length) {
+      const next = cloneState(state);
+      next.status = "finished";
+      next.updatedAt = at;
+      next.version += 1;
+      return next;
+    }
+    return null;
+  }
+
+  if (state.status === "running") {
+    if (inactivePlayers.length === 0) {
+      return null;
+    }
+
+    const activePlayers = players.filter((player) => !inactivePlayers.some((inactive) => inactive.id === player.id));
+    const next = cloneState(state);
+    next.status = "finished";
+    next.updatedAt = at;
+    next.version += 1;
+
+    if (activePlayers.length === 1) {
+      next.winnerPlayerId = activePlayers[0]!.id;
+    } else {
+      next.winnerPlayerId = null;
+    }
+
+    return next;
+  }
+
+  return null;
+};
 
 const findPlayer = (state: SessionState, playerId: string): PlayerState => {
   const player = state.players.find((entry) => entry.id === playerId);
@@ -465,6 +544,10 @@ const applyGameplayAction = (inputState: SessionState, request: GameActionReques
       const movedReceiverTop = removeTopCard(receiver);
       const movedSenderTop = removeTopCard(sender);
       receiver.hand.push(movedReceiverTop, movedSenderTop);
+
+      // A new top card is active for both sides; force fresh spec selection.
+      state.selectedSpecKey = null;
+      state.selectedByPlayerId = null;
     }
     state.pendingTransfer = null;
     events.push({
@@ -625,6 +708,39 @@ const insertEvents = async (
   }
 };
 
+const persistSessionStateWithEvent = async (
+  client: ReturnType<typeof createClient>,
+  sessionId: string,
+  previousVersion: number,
+  nextState: SessionState
+): Promise<boolean> => {
+  const { data: updatedRow, error: updateError } = await client
+    .from("game_sessions")
+    .update(sessionColumnsFromState(nextState))
+    .eq("id", sessionId)
+    .eq("version", previousVersion)
+    .select("id")
+    .maybeSingle();
+
+  if (updateError) {
+    throw new GameActionError(updateError.message);
+  }
+
+  if (!updatedRow) {
+    return false;
+  }
+
+  await insertEvents(client, sessionId, [
+    {
+      type: "state_updated",
+      payload: { state: nextState },
+      at: nextState.updatedAt
+    }
+  ]);
+
+  return true;
+};
+
 const fetchSessionById = async (
   client: ReturnType<typeof createClient>,
   sessionId: string
@@ -663,7 +779,7 @@ const fetchSessionPlayers = async (
 ): Promise<GamePlayerRow[]> => {
   const { data, error } = await client
     .from("game_players")
-    .select("id, player_name, color, is_host, seat_index")
+    .select("id, player_name, color, is_host, seat_index, last_seen_at")
     .eq("session_id", sessionId)
     .order("seat_index", { ascending: true });
 
@@ -671,6 +787,36 @@ const fetchSessionPlayers = async (
     throw new GameActionError(error.message);
   }
   return (data ?? []) as GamePlayerRow[];
+};
+
+const syncSessionInactivity = async (
+  client: ReturnType<typeof createClient>,
+  row: GameSessionRow,
+  options?: {
+    touchingPlayerId?: string | null;
+  }
+): Promise<SessionState> => {
+  const at = nowIso();
+  const touchingPlayerId = options?.touchingPlayerId?.trim() ?? "";
+  if (touchingPlayerId) {
+    await touchPlayerPresence(client, row.id, touchingPlayerId, at);
+  }
+
+  const players = await fetchSessionPlayers(client, row.id);
+  const currentState = asSessionState(row);
+  const nextState = applyInactivityRules(currentState, players, at);
+
+  if (!nextState) {
+    return currentState;
+  }
+
+  const persisted = await persistSessionStateWithEvent(client, row.id, row.version, nextState);
+  if (persisted) {
+    return nextState;
+  }
+
+  const refreshedRow = await fetchSessionById(client, row.id);
+  return asSessionState(refreshedRow);
 };
 
 const fetchDeckCards = async (
@@ -917,7 +1063,7 @@ const joinSessionAccess = async (
   }
 
   const row = await fetchSessionByCode(client, sessionCode);
-  const state = asSessionState(row);
+  const state = await syncSessionInactivity(client, row);
 
   if (state.status !== "lobby") {
     throw new GameActionError("Session is no longer joinable.");
@@ -1122,7 +1268,10 @@ Deno.serve(async (request) => {
       }
 
       const row = await fetchSessionById(client, sessionId);
-      const state = asSessionState(row);
+      const playerId = url.searchParams.get("player")?.trim() ?? "";
+      const state = await syncSessionInactivity(client, row, {
+        touchingPlayerId: playerId || null
+      });
       const latestEventId = await fetchLatestEventId(client, sessionId);
 
       const response: SessionBootstrapResponse = {
@@ -1153,8 +1302,14 @@ Deno.serve(async (request) => {
 
     const action = payload as GameActionRequest;
     const row = await fetchSessionById(client, action.sessionId);
-    const currentState = asSessionState(row);
+    const currentState = await syncSessionInactivity(client, row, {
+      touchingPlayerId: action.actorPlayerId
+    });
     assertPlayerInSession(currentState, action.actorPlayerId);
+
+    if (currentState.status === "finished") {
+      return json(409, { error: "Session ended due to inactivity." });
+    }
 
     if (action.actionType === "SELECT_DECK") {
       const deckId = action.payload.deckId.trim().toLowerCase();

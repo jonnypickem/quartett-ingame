@@ -44,7 +44,10 @@ export const resolveRuntimeMode = (): RuntimeMode => {
   return getEndpoint() && hasSupabaseConfig() ? "realtime" : "local-mock";
 };
 
-export const fetchSessionBootstrap = async (sessionId: string): Promise<SessionBootstrapResponse> => {
+export const fetchSessionBootstrap = async (
+  sessionId: string,
+  playerId?: string
+): Promise<SessionBootstrapResponse> => {
   if (resolveRuntimeMode() !== "realtime") {
     return {
       state: createMockSessionState(sessionId),
@@ -55,6 +58,10 @@ export const fetchSessionBootstrap = async (sessionId: string): Promise<SessionB
   const endpoint = getEndpoint();
   const url = new URL(endpoint);
   url.searchParams.set("session", sessionId);
+  const normalizedPlayerId = playerId?.trim();
+  if (normalizedPlayerId) {
+    url.searchParams.set("player", normalizedPlayerId);
+  }
 
   const response = await fetch(url.toString(), {
     method: "GET"
