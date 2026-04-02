@@ -656,7 +656,7 @@
   z-index: 2;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(3, minmax(0, 1fr));
   gap: var(--space-2);
   align-content: stretch;
   height: 100%;
@@ -689,7 +689,8 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: stretch;
-  min-height: 0;
+  min-height: 72px;
+  min-width: 0;
   padding: 7px 9px 6px;
   font-family: var(--font-body);
   transition: transform var(--dur-fast) var(--ease-std), border-color var(--dur-fast) var(--ease-std);
@@ -734,17 +735,23 @@
   flex-direction: column;
   min-width: 0;
   gap: 1px;
+  flex: 1 1 auto;
 }
 
 .spec-row__label {
   font-size: 0.67rem;
   font-weight: 900;
-  line-height: 1;
+  line-height: 1.05;
   text-transform: uppercase;
   letter-spacing: 0.2px;
-  white-space: nowrap;
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
   overflow: hidden;
   text-overflow: ellipsis;
+  overflow-wrap: anywhere;
 }
 
 .spec-row__caption {
@@ -764,6 +771,8 @@
   display: inline-flex;
   align-items: baseline;
   gap: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .spec-row__value-main {
@@ -1486,8 +1495,38 @@
     font-size: 1rem;
   }
 
+  .spec-grid {
+    grid-template-rows: none;
+    grid-auto-rows: minmax(78px, auto);
+    align-content: start;
+    overflow: visible;
+  }
+
   .spec-row {
-    padding: 8px;
+    min-height: 78px;
+    padding: 7px 8px 6px;
+    gap: 3px;
+  }
+
+  .spec-row__topline {
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .spec-row__label {
+    font-size: 0.64rem;
+  }
+
+  .spec-row__caption {
+    font-size: 0.54rem;
+  }
+
+  .spec-row__value-main {
+    font-size: 1.08rem;
+  }
+
+  .spec-row__value-unit {
+    font-size: 0.58rem;
   }
 
   .action-panel__buttons--duel {
@@ -1496,6 +1535,35 @@
 
   .btn-secondary--tie-slot {
     font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 430px) {
+  .spec-grid {
+    gap: 6px;
+  }
+
+  .spec-row {
+    min-height: 80px;
+    padding: 7px 7px 6px;
+  }
+
+  .spec-row__icon {
+    width: 14px;
+    height: 14px;
+    flex-basis: 14px;
+  }
+
+  .spec-row__label {
+    font-size: 0.62rem;
+  }
+
+  .spec-row__caption {
+    font-size: 0.52rem;
+  }
+
+  .spec-row__value-main {
+    font-size: 1.02rem;
   }
 }
 

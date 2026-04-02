@@ -1,4 +1,4 @@
-import { fireEvent, render } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { CardPanel, shouldTriggerSwipe } from "./CardPanel";
 
@@ -54,5 +54,33 @@ describe("CardPanel gesture interactions", () => {
     expect(image).not.toBeNull();
     fireEvent.error(image);
     expect(image.src).toContain("data:image/svg+xml");
+  });
+
+  it("renders long spec labels without altering text content", () => {
+    render(
+      <CardPanel
+        variant="you"
+        playerName="You"
+        topCard={{
+          ...topCard,
+          specs: [
+            {
+              key: "radar_cross_section_m2",
+              label: "Radar Cross-Section",
+              unit: "m²",
+              value: 0.18,
+              icon: "radar",
+              caption: "Best estimate",
+              displayPrecision: 2
+            }
+          ]
+        }}
+        selectedSpecKey={null}
+        selectedByColor={null}
+      />
+    );
+
+    expect(screen.getByText("Radar Cross-Section")).toBeInTheDocument();
+    expect(screen.getByText("Best estimate")).toBeInTheDocument();
   });
 });
