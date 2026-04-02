@@ -232,6 +232,10 @@ const handleRespondTransfer = (
     const movedReceiverTop = removeTopCard(receiver);
     const movedSenderTop = removeTopCard(sender);
     receiver.hand.push(movedReceiverTop, movedSenderTop);
+
+    // New top cards are now in play, so both players must pick a fresh spec.
+    state.selectedSpecKey = null;
+    state.selectedByPlayerId = null;
   }
 
   state.pendingTransfer = null;

@@ -26,14 +26,23 @@ describe("gameEngine", () => {
   it("cycles both top cards to winner bottom on transfer accept", () => {
     const state = cloneSessionState(initialMockState);
     const firstP1 = state.players.find((player) => player.id === "p1")!.hand[0]!;
+    const selectedSpecKey = firstP1.specs[0]?.key ?? "speed";
     const firstP2 = state.players.find((player) => player.id === "p2")!.hand[0]!;
     const nextP1 = state.players.find((player) => player.id === "p1")!.hand[1]!;
     const nextP2 = state.players.find((player) => player.id === "p2")!.hand[1]!;
 
-    const pending = applyGameAction(state, {
+    const withSelectedSpec = applyGameAction(state, {
       sessionId: state.sessionId,
       actorPlayerId: "p1",
       expectedVersion: state.version,
+      actionType: "SELECT_SPEC",
+      payload: { specKey: selectedSpecKey }
+    });
+
+    const pending = applyGameAction(withSelectedSpec.state, {
+      sessionId: state.sessionId,
+      actorPlayerId: "p1",
+      expectedVersion: withSelectedSpec.state.version,
       actionType: "SEND_CARD",
       payload: { cardId: firstP1.id }
     });
@@ -56,6 +65,8 @@ describe("gameEngine", () => {
     expect(p2.hand[0].id).toBe(nextP2.id);
     expect(p2.hand[p2.hand.length - 2].id).toBe(firstP2.id);
     expect(p2.hand[p2.hand.length - 1].id).toBe(firstP1.id);
+    expect(accepted.state.selectedSpecKey).toBeNull();
+    expect(accepted.state.selectedByPlayerId).toBeNull();
   });
 
   it("keeps cards unchanged when transfer declined", () => {

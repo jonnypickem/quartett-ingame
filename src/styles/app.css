@@ -583,10 +583,11 @@
 .card-shell--stack {
   position: relative;
   display: grid;
-  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 50%) minmax(0, 50%);
   gap: 0;
   min-height: 0;
   height: 100%;
+  overflow: hidden;
 }
 
 .card-shell--empty {
@@ -689,7 +690,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: stretch;
-  min-height: 72px;
+  min-height: 64px;
   min-width: 0;
   padding: 7px 9px 6px;
   font-family: var(--font-body);
@@ -1496,14 +1497,13 @@
   }
 
   .spec-grid {
-    grid-template-rows: none;
-    grid-auto-rows: minmax(78px, auto);
-    align-content: start;
-    overflow: visible;
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    align-content: stretch;
+    overflow: hidden;
   }
 
   .spec-row {
-    min-height: 78px;
+    min-height: 66px;
     padding: 7px 8px 6px;
     gap: 3px;
   }
@@ -1544,7 +1544,7 @@
   }
 
   .spec-row {
-    min-height: 80px;
+    min-height: 68px;
     padding: 7px 7px 6px;
   }
 

@@ -59,10 +59,6 @@ const recentSessionCards = [
   { name: "Military Submarines", lastPlayed: "Deck ID: military-submarines-v1", code: "SUBS", icon: "sub" }
 ] as const;
 
-const findSpecValue = (specKey: string, cardSpecs: { key: string; value: number }[]) => {
-  return cardSpecs.find((spec) => spec.key === specKey)?.value ?? null;
-};
-
 const AppTopBar = ({ title, badge }: { title: string; badge?: string }) => {
   return (
     <header className="top-bar">
@@ -631,12 +627,6 @@ const SessionScreen = ({
 
   const selectedByColor = session.players.find((player) => player.id === view.selectedByPlayerId)?.color ?? null;
 
-  const selectedSpecEqual = Boolean(
-    view.selectedSpecKey &&
-      view.yourTopCard &&
-      view.opponentTopCard &&
-      findSpecValue(view.selectedSpecKey, view.yourTopCard.specs) === findSpecValue(view.selectedSpecKey, view.opponentTopCard.specs)
-  );
   const canSwipeSend = !state.busy && Boolean(view.yourTopCard) && !view.pendingTransfer;
   const incomingTransfer = view.pendingTransfer?.toPlayerId === playerId ? view.pendingTransfer : null;
   const outgoingTransfer = view.pendingTransfer?.fromPlayerId === playerId ? view.pendingTransfer : null;
@@ -645,7 +635,7 @@ const SessionScreen = ({
   const tieActiveWithoutRequest = view.tieState.active && !view.loseTieRequest;
 
   let tieLabel = "Tie";
-  let tieDisabled = state.busy || !view.yourTopCard || !selectedSpecEqual || Boolean(view.pendingTransfer);
+  let tieDisabled = state.busy || !view.yourTopCard || Boolean(view.pendingTransfer);
   let onTieAction = async () => {
     await startTie();
   };
