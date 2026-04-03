@@ -25,13 +25,37 @@ alter table public.game_events enable row level security;
 grant select on public.game_sessions to anon, authenticated;
 grant select on public.game_events to anon, authenticated;
 
-create policy "Allow read game sessions" on public.game_sessions
-  for select
-  using (true);
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'game_sessions'
+      and policyname = 'Allow read game sessions'
+  ) then
+    create policy "Allow read game sessions" on public.game_sessions
+      for select
+      using (true);
+  end if;
+end
+$$;
 
-create policy "Allow read game events" on public.game_events
-  for select
-  using (true);
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'game_events'
+      and policyname = 'Allow read game events'
+  ) then
+    create policy "Allow read game events" on public.game_events
+      for select
+      using (true);
+  end if;
+end
+$$;
 
 do $$
 begin

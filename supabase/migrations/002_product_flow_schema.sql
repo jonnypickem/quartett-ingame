@@ -43,10 +43,34 @@ alter table public.decks enable row level security;
 alter table public.deck_cards enable row level security;
 alter table public.game_players enable row level security;
 
-create policy "Allow read decks" on public.decks
-  for select
-  using (true);
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'decks'
+      and policyname = 'Allow read decks'
+  ) then
+    create policy "Allow read decks" on public.decks
+      for select
+      using (true);
+  end if;
+end
+$$;
 
-create policy "Allow read deck cards" on public.deck_cards
-  for select
-  using (true);
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'deck_cards'
+      and policyname = 'Allow read deck cards'
+  ) then
+    create policy "Allow read deck cards" on public.deck_cards
+      for select
+      using (true);
+  end if;
+end
+$$;

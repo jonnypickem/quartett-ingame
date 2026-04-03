@@ -15,13 +15,15 @@ const DECK_ORDER_INDEX = new Map(DECK_ORDER.map((deckId, index) => [deckId, inde
 const DECK_DESCRIPTIONS = {
   "military-jets-v1": "Air-superiority icons and strike aircraft from modern military aviation.",
   "supercars-v1": "Hypercar legends and track-focused road missiles.",
-  "military-submarines-v1": "Nuclear and diesel-electric attack boats from major naval fleets."
+  "military-submarines-v1": "Nuclear and diesel-electric attack boats from major naval fleets.",
+  "gemeinde-quartett-v1": "Menschen aus der Gemeinde als verstecktes Sonderdeck."
 };
 
 const DECK_ID_PREFIX = {
   "military-jets-v1": "miljet",
   "supercars-v1": "supercar",
-  "military-submarines-v1": "sub"
+  "military-submarines-v1": "sub",
+  "gemeinde-quartett-v1": "gemeinde"
 };
 
 const sqlString = (value) => `'${String(value).replace(/'/g, "''")}'`;
@@ -41,11 +43,11 @@ const loadManifest = async () => {
 const toDeckCardsValues = (decks) => {
   const tuples = [];
   for (const deck of decks) {
-    const prefix = DECK_ID_PREFIX[deck.id] ?? deck.id;
+    const prefix = deck.idPrefix ?? DECK_ID_PREFIX[deck.id] ?? deck.id;
 
     for (const card of deck.cards) {
-      if (!Array.isArray(card.specs) || card.specs.length !== 6) {
-        throw new Error(`Card ${deck.id}/${card.code} must have 6 real-world specs.`);
+      if (!Array.isArray(card.specs) || card.specs.length === 0) {
+        throw new Error(`Card ${deck.id}/${card.code} must have at least one spec.`);
       }
       const code = String(card.code).padStart(2, "0");
       const sortOrder = Number.parseInt(code, 10);
@@ -75,19 +77,19 @@ const renderSeed = (manifest) => {
     if (deck.cards.length !== 32) {
       throw new Error(`Deck ${deck.id} must have exactly 32 cards (found ${deck.cards.length}).`);
     }
-    if (!DECK_DESCRIPTIONS[deck.id]) {
-      throw new Error(`Missing description for deck ${deck.id}`);
-    }
   }
 
   const deckRows = decks.map((deck) => {
     const coverImage = deck.cards[0]?.localImageUrl ?? `/decks/${deck.id}/01.jpg`;
-    return `  (${sqlString(deck.id)}, ${sqlString(deck.name)}, ${sqlString(DECK_DESCRIPTIONS[deck.id])}, ${sqlString(coverImage)}, false, true)`;
+    const description = deck.description ?? DECK_DESCRIPTIONS[deck.id] ?? "";
+    const isHidden = deck.isHidden === true;
+    const accessCode = typeof deck.accessCode === "string" && deck.accessCode.trim() ? deck.accessCode.trim() : null;
+    return `  (${sqlString(deck.id)}, ${sqlString(deck.name)}, ${sqlString(description)}, ${sqlString(coverImage)}, ${isHidden ? "true" : "false"}, ${accessCode ? sqlString(accessCode) : "null"}, true)`;
   });
 
   const deckCardsRows = toDeckCardsValues(decks);
   const managedDeckIds = decks.map((deck) => sqlString(deck.id)).join(", ");
-  const runtimeDeckId = decks[0].id;
+  const runtimeDeckId = decks.find((deck) => deck.isHidden !== true)?.id ?? decks[0].id;
   const runtimeSessionId = "11111111-1111-1111-1111-111111111111";
   const runtimeSessionCode = "QRT001";
 
@@ -98,7 +100,7 @@ const renderSeed = (manifest) => {
 
 begin;
 
-insert into public.decks (id, name, description, cover_image_url, is_hidden, is_builtin)
+insert into public.decks (id, name, description, cover_image_url, is_hidden, access_code, is_builtin)
 values
 ${deckRows.join(",\n")}
 on conflict (id) do update
@@ -106,6 +108,7 @@ set name = excluded.name,
     description = excluded.description,
     cover_image_url = excluded.cover_image_url,
     is_hidden = excluded.is_hidden,
+    access_code = excluded.access_code,
     is_builtin = excluded.is_builtin;
 
 delete from public.deck_cards

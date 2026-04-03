@@ -28,7 +28,7 @@ const makeProps = () => ({
   busy: false,
   errorMessage: null as string | null,
   onSelectDeck: vi.fn(async () => true),
-  onResolveDeckById: vi.fn(async () => null),
+  onResolveDeckByAccessCode: vi.fn(async () => null),
   onSelectionConfirmed: vi.fn()
 });
 
@@ -75,5 +75,19 @@ describe("DeckSelector interactions", () => {
     await user.click(selectButton);
 
     expect(await screen.findByText("Could not create lobby from this deck.")).toBeInTheDocument();
+  });
+
+  it("requires a strict 6-digit code on hidden deck search slide", async () => {
+    const user = userEvent.setup();
+    const props = makeProps();
+    render(<DeckSelector {...props} />);
+
+    const [searchDot] = screen.getAllByRole("button", { name: "Go to search slide" });
+    await user.click(searchDot);
+    await user.type(screen.getByPlaceholderText("Enter 6-digit code"), "abc123");
+    await user.click(screen.getByRole("button", { name: "Find Deck" }));
+
+    expect(await screen.findByText("Access code must be exactly 6 digits.")).toBeInTheDocument();
+    expect(props.onResolveDeckByAccessCode).not.toHaveBeenCalled();
   });
 });

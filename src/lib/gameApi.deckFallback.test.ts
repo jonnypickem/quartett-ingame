@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { getDeckById, getVisibleDecks } from "../data/decks";
-import { fetchDeckById, fetchDeckCatalog } from "./gameApi";
+import { getDeckByAccessCode, getDeckById, getVisibleDecks } from "../data/decks";
+import { fetchDeckByAccessCode, fetchDeckById, fetchDeckCatalog } from "./gameApi";
 
 describe("gameApi deck fallback", () => {
   beforeEach(() => {
@@ -38,5 +38,17 @@ describe("gameApi deck fallback", () => {
 
     expect(deck).toEqual(getDeckById("military-jets-v1"));
   });
-});
 
+  it("falls back to local access-code lookup when legacy backend rejects kind query", async () => {
+    vi.spyOn(globalThis, "fetch").mockResolvedValue(
+      new Response(JSON.stringify({ error: "Missing session query parameter." }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" }
+      })
+    );
+
+    const deck = await fetchDeckByAccessCode("162026");
+
+    expect(deck).toEqual(getDeckByAccessCode("162026"));
+  });
+});

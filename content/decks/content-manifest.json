@@ -11409,6 +11409,2768 @@
           }
         }
       ]
+    },
+    {
+      "id": "gemeinde-quartett-v1",
+      "name": "Gemeinde Quartett",
+      "description": "Menschen aus der Gemeinde als verstecktes Sonderdeck.",
+      "isHidden": true,
+      "accessCode": "162026",
+      "idPrefix": "gemeinde",
+      "cards": [
+        {
+          "code": "01",
+          "name": "Werner",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/01.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 5,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 61,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 1,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 1.0,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 90,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 80,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 50,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 95,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Werner",
+            "imageFile": "Werner.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "02",
+          "name": "Angelo",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/02.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 3,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 49,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 1,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 2.3,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 5,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 47,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 25,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 49,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Angelo",
+            "imageFile": "Angelo.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "03",
+          "name": "Joni",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/03.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 3,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 32,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 1,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 6.6,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 2,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 63,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 20,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 26,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Joni",
+            "imageFile": "Joni.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "04",
+          "name": "Finn",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/04.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 0,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 16,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 1,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 0.8,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 69,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 74,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 30,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 4,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Finn",
+            "imageFile": "Finn.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "05",
+          "name": "Philip",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/05.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 0,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 25,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 2,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 0.9,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 85,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 95,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 40,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 81,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Philip",
+            "imageFile": "Philip.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "06",
+          "name": "Maria",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/06.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 0,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 28,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 2,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 0.9,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 78,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 47,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 5,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 83,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Maria",
+            "imageFile": "Maria.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "07",
+          "name": "Tim",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/07.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 3,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 33,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 1,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 10.0,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 10,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 78,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 15,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 46,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Tim",
+            "imageFile": "Tim.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "08",
+          "name": "Esther",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/08.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 0,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 25,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 2,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 9.6,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 73,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 69,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 0,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 75,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Esther",
+            "imageFile": "Esther.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "09",
+          "name": "Jonny",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/09.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 0,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 27,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 0,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 548.0,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 35,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 99,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 0,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 50,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Jonny",
+            "imageFile": "Jonny.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "10",
+          "name": "Alex",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/10.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 0,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 20,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 2,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 6.8,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 79,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 64,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 40,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 78,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Alex",
+            "imageFile": "Alex.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "11",
+          "name": "Barbelies",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/11.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 0,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 74,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 0,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 4.5,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 1,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 25,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 30,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 2,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Barbelies",
+            "imageFile": "Babelise.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "12",
+          "name": "Salo",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/12.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 0,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 23,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 3,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 0.29,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 89,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 58,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 5,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 67,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Salo",
+            "imageFile": "Salome.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "13",
+          "name": "Simeon",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/13.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 0,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 20,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 1,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 12.0,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 70,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 60,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 15,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 35,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Simeon",
+            "imageFile": "Simeon.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "14",
+          "name": "Judit",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/14.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 4,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 52,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 2,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 0.3,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 100,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 26,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 5,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 96,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Judit",
+            "imageFile": "Judit.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "15",
+          "name": "Christian",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/15.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 4,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 54,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 1,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 0.3,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 100,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 93,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 5,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 100,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Christian",
+            "imageFile": "Christian.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "16",
+          "name": "Tabea",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/16.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 0,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 19,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 1,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 0.3,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 94,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 79,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 15,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 5,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Tabea",
+            "imageFile": "Tabea.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "17",
+          "name": "Wowa",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/17.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 3,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 38,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 1,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 1.4,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 23,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 72,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 20,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 46,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Wowa",
+            "imageFile": "Wowa.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "18",
+          "name": "Helene",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/18.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 3,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 43,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 2,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 7.3,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 46,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 53,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 30,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 69,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Helene",
+            "imageFile": "Helene.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "19",
+          "name": "Daniel",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/19.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 3,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 35,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 1,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 2.4,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 26,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 100,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 10,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 87,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Daniel",
+            "imageFile": "Daniel.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "20",
+          "name": "Markus",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/20.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 0,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 21,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 0,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 0.23,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 42,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 67,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 20,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 3,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Markus",
+            "imageFile": "Markus.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "21",
+          "name": "Natascha",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/21.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 2,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 50,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 1,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 0.0,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 3,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 27,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 30,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 3,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Natascha",
+            "imageFile": "Natascha.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "22",
+          "name": "Hans Müller",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/22.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 2,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 50,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 1,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 2.7,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 10,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 43,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 35,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 100,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Hans Müller",
+            "imageFile": "Hans.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "23",
+          "name": "Olga",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/23.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 3,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 59,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 1,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 4.0,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 65,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 48,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 15,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 87,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Olga",
+            "imageFile": "Olga.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "24",
+          "name": "Robi",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/24.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 2,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 29,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 2,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 0.36,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 93,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 94,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 25,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 94,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Robi",
+            "imageFile": "Robert.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "25",
+          "name": "Peter",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/25.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 5,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 66,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 1,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 0.75,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 95,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 63,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 20,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 39,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Peter",
+            "imageFile": "Peter.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "26",
+          "name": "Freddi",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/26.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 3,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 31,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 1,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 16.0,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 4,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 100,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 25,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 20,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Freddi",
+            "imageFile": "Freddy.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "27",
+          "name": "Jeffrey",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/27.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 0,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 22,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 2,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 7.34,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 28,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 76,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 20,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 4,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Jeffrey",
+            "imageFile": "Jeffrey.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "28",
+          "name": "Alexander",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/28.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 3,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 46,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 1,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 7.32,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 21,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 69,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 0,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 89,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Alexander",
+            "imageFile": "Alexander.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "29",
+          "name": "Lucien",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/29.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 0,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 22,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 1,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 7.3,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 38,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 88,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 50,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 5,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Lucien",
+            "imageFile": "Lucien.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "30",
+          "name": "Martin",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/30.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 3,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 47,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 1,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 7.34,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 12,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 78,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 15,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 43,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Martin",
+            "imageFile": "Martin.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "31",
+          "name": "Daniela",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/31.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 0,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 22,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 4,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 9.6,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 70,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 67,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 15,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 76,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Daniela",
+            "imageFile": "Daniela.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        },
+        {
+          "code": "32",
+          "name": "Hannah",
+          "localImageUrl": "/decks/gemeinde-quartett-v1/32.jpg",
+          "specs": [
+            {
+              "key": "children_count",
+              "label": "Kinder",
+              "unit": "count",
+              "caption": "Anzahl Kinder",
+              "value": 0,
+              "icon": "children",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "age_years",
+              "label": "Alter",
+              "unit": "years",
+              "caption": "Lebensjahre",
+              "value": 18,
+              "icon": "age",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "service_count",
+              "label": "Dienste",
+              "unit": "count",
+              "caption": "Anzahl Dienste",
+              "value": 2,
+              "icon": "services",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "distance_km",
+              "label": "Distanz",
+              "unit": "km",
+              "caption": "Zur Gemeinde",
+              "value": 0.81,
+              "icon": "distance",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv",
+              "displayPrecision": 2
+            },
+            {
+              "key": "prayer_attendance_pct",
+              "label": "Gebetsstunde",
+              "unit": "%",
+              "caption": "Anwesenheit",
+              "value": 50,
+              "icon": "prayer",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "technical_competence_pct",
+              "label": "Technik",
+              "unit": "%",
+              "caption": "Kompetenz",
+              "value": 65,
+              "icon": "technical",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "sq_value_cent",
+              "label": "SQ Wert",
+              "unit": "cent",
+              "caption": "Singen",
+              "value": 15,
+              "icon": "money",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            },
+            {
+              "key": "hospitality_pct",
+              "label": "Gastfreundschaft",
+              "unit": "%",
+              "caption": "Herzlichkeit",
+              "value": 13,
+              "icon": "hospitality",
+              "sourceUrl": "local:/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+            }
+          ],
+          "source": {
+            "csvName": "Hannah",
+            "imageFile": "Hannah.PNG",
+            "backgroundHex": "#CBCBCB",
+            "csvPath": "/Users/jonny/Downloads/Gemeinde_Quartett_korrigiert.csv"
+          }
+        }
+      ]
     }
   ],
   "statModel": {

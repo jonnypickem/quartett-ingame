@@ -653,11 +653,12 @@
 }
 
 .spec-grid {
+  --spec-grid-rows: 3;
   position: relative;
   z-index: 2;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(var(--spec-grid-rows), minmax(0, 1fr));
   gap: var(--space-2);
   align-content: stretch;
   height: 100%;
@@ -690,13 +691,39 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: stretch;
-  min-height: 64px;
+  min-height: 0;
   min-width: 0;
   padding: 7px 9px 6px;
   font-family: var(--font-body);
   transition: transform var(--dur-fast) var(--ease-std), border-color var(--dur-fast) var(--ease-std);
   cursor: pointer;
   text-align: left;
+}
+
+.spec-grid--dense .spec-row {
+  padding: 6px 7px 5px;
+}
+
+.spec-grid--dense .spec-row__icon {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+}
+
+.spec-grid--dense .spec-row__label {
+  font-size: 0.6rem;
+}
+
+.spec-grid--dense .spec-row__caption {
+  font-size: 0.5rem;
+}
+
+.spec-grid--dense .spec-row__value-main {
+  font-size: 0.95rem;
+}
+
+.spec-grid--dense .spec-row__value-unit {
+  font-size: 0.54rem;
 }
 
 .spec-row:hover:enabled {
@@ -1497,13 +1524,13 @@
   }
 
   .spec-grid {
-    grid-template-rows: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(var(--spec-grid-rows), minmax(0, 1fr));
     align-content: stretch;
     overflow: hidden;
   }
 
   .spec-row {
-    min-height: 66px;
+    min-height: 0;
     padding: 7px 8px 6px;
     gap: 3px;
   }
@@ -1544,7 +1571,7 @@
   }
 
   .spec-row {
-    min-height: 68px;
+    min-height: 0;
     padding: 7px 7px 6px;
   }
 

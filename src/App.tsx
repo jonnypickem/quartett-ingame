@@ -4,7 +4,7 @@ import { CardPanel } from "./components/CardPanel";
 import { DeckSelector } from "./components/DeckSelector";
 import { StatusBar } from "./components/StatusBar";
 import { getVisibleDecks, sortDeckCatalog } from "./data/decks";
-import { createSession, fetchDeckById, fetchDeckCatalog, joinSession } from "./lib/gameApi";
+import { createSession, fetchDeckByAccessCode, fetchDeckById, fetchDeckCatalog, joinSession } from "./lib/gameApi";
 import { shareOrCopyInvite } from "./lib/share";
 import { useGameSession } from "./hooks/useGameSession";
 import type { DeckCatalogItem } from "./types/game";
@@ -485,7 +485,7 @@ const SessionScreen = ({
           busy={state.busy}
           errorMessage={state.lastError}
           onSelectDeck={selectDeck}
-          onResolveDeckById={fetchDeckById}
+          onResolveDeckByAccessCode={fetchDeckByAccessCode}
           onSelectionConfirmed={() => {
             setShowDeckSelector(false);
             setForceDeckGateOpen(false);

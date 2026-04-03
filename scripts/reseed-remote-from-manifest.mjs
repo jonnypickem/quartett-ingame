@@ -15,13 +15,15 @@ const DECK_ORDER_INDEX = new Map(DECK_ORDER.map((deckId, index) => [deckId, inde
 const DECK_DESCRIPTIONS = {
   "military-jets-v1": "Air-superiority icons and strike aircraft from modern military aviation.",
   "supercars-v1": "Hypercar legends and track-focused road missiles.",
-  "military-submarines-v1": "Nuclear and diesel-electric attack boats from major naval fleets."
+  "military-submarines-v1": "Nuclear and diesel-electric attack boats from major naval fleets.",
+  "gemeinde-quartett-v1": "Menschen aus der Gemeinde als verstecktes Sonderdeck."
 };
 
 const DECK_ID_PREFIX = {
   "military-jets-v1": "miljet",
   "supercars-v1": "supercar",
-  "military-submarines-v1": "sub"
+  "military-submarines-v1": "sub",
+  "gemeinde-quartett-v1": "gemeinde"
 };
 
 const chunk = (items, size) => {
@@ -58,9 +60,6 @@ const loadManifestDecks = async () => {
     if (deck.cards.length !== 32) {
       throw new Error(`Deck ${deck.id} must have exactly 32 cards.`);
     }
-    if (!DECK_DESCRIPTIONS[deck.id]) {
-      throw new Error(`Missing description for ${deck.id}`);
-    }
   }
 
   return decks;
@@ -69,10 +68,10 @@ const loadManifestDecks = async () => {
 const toDeckCardsRows = (decks) => {
   const rows = [];
   for (const deck of decks) {
-    const prefix = DECK_ID_PREFIX[deck.id] ?? deck.id;
+    const prefix = deck.idPrefix ?? DECK_ID_PREFIX[deck.id] ?? deck.id;
     for (const card of deck.cards) {
-      if (!Array.isArray(card.specs) || card.specs.length !== 6) {
-        throw new Error(`Card ${deck.id}/${card.code} must define exactly 6 specs.`);
+      if (!Array.isArray(card.specs) || card.specs.length === 0) {
+        throw new Error(`Card ${deck.id}/${card.code} must define at least one spec.`);
       }
       const code = String(card.code).padStart(2, "0");
       rows.push({
@@ -106,9 +105,10 @@ const run = async () => {
   const deckRows = decks.map((deck) => ({
     id: deck.id,
     name: deck.name,
-    description: DECK_DESCRIPTIONS[deck.id],
+    description: deck.description ?? DECK_DESCRIPTIONS[deck.id] ?? "",
     cover_image_url: deck.cards[0]?.localImageUrl ?? `/decks/${deck.id}/01.jpg`,
-    is_hidden: false,
+    is_hidden: deck.isHidden === true,
+    access_code: typeof deck.accessCode === "string" && deck.accessCode.trim() ? deck.accessCode.trim() : null,
     is_builtin: true
   }));
 
@@ -133,7 +133,7 @@ const run = async () => {
   }
 
   const runtimeSessionId = "11111111-1111-1111-1111-111111111111";
-  const runtimeDeckId = decks[0].id;
+  const runtimeDeckId = decks.find((deck) => deck.isHidden !== true)?.id ?? decks[0].id;
   const runtimeNow = new Date().toISOString();
 
   await client.from("game_events").delete().eq("session_id", runtimeSessionId);

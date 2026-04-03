@@ -242,6 +242,7 @@ interface DeckCatalogRow {
   description: string;
   cover_image_url: string;
   is_hidden: boolean;
+  access_code: string | null;
 }
 
 interface DeckCatalogItem {
@@ -885,7 +886,7 @@ const fetchDeckCatalogById = async (
 
   const { data, error } = await client
     .from("decks")
-    .select("id, name, description, cover_image_url, is_hidden")
+    .select("id, name, description, cover_image_url, is_hidden, access_code")
     .eq("id", normalizedId)
     .maybeSingle();
 
@@ -899,12 +900,36 @@ const fetchDeckCatalogById = async (
   return await deckRowToCatalogItem(client, data as DeckCatalogRow);
 };
 
+const fetchDeckCatalogByAccessCode = async (
+  client: ReturnType<typeof createClient>,
+  accessCode: string
+): Promise<DeckCatalogItem | null> => {
+  const normalizedCode = accessCode.trim();
+  if (!/^\d{6}$/.test(normalizedCode)) {
+    throw new GameActionError("Access code must be exactly 6 digits.");
+  }
+
+  const { data, error } = await client
+    .from("decks")
+    .select("id, name, description, cover_image_url, is_hidden, access_code")
+    .eq("access_code", normalizedCode)
+    .maybeSingle();
+
+  if (error) {
+    throw new GameActionError(error.message);
+  }
+  if (!data) {
+    return null;
+  }
+  return await deckRowToCatalogItem(client, data as DeckCatalogRow);
+};
+
 const fetchVisibleDeckCatalog = async (
   client: ReturnType<typeof createClient>
 ): Promise<DeckCatalogItem[]> => {
   const { data, error } = await client
     .from("decks")
-    .select("id, name, description, cover_image_url, is_hidden")
+    .select("id, name, description, cover_image_url, is_hidden, access_code")
     .eq("is_hidden", false)
     .order("id", { ascending: true });
 
@@ -1256,6 +1281,18 @@ Deno.serve(async (request) => {
           return json(400, { error: "Missing deck id query parameter." });
         }
         const deck = await fetchDeckCatalogById(client, deckId);
+        if (!deck) {
+          return json(404, { error: "Deck not found." });
+        }
+        return json(200, deck);
+      }
+
+      if (kind === "deck-by-code") {
+        const code = url.searchParams.get("code")?.trim() ?? "";
+        if (!/^\d{6}$/.test(code)) {
+          return json(400, { error: "Access code must be exactly 6 digits." });
+        }
+        const deck = await fetchDeckCatalogByAccessCode(client, code);
         if (!deck) {
           return json(404, { error: "Deck not found." });
         }

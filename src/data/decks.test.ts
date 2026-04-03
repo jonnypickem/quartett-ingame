@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { existsSync, statSync } from "node:fs";
 import path from "node:path";
-import { getDeckById, getDeckCards, getVisibleDecks } from "./decks";
+import { getDeckByAccessCode, getDeckById, getDeckCards, getVisibleDecks } from "./decks";
 
 describe("deck catalog", () => {
   it("exposes three visible decks", () => {
@@ -18,6 +18,12 @@ describe("deck catalog", () => {
   it("does not expose legacy placeholder decks", () => {
     const hidden = getDeckById("pirate-ships-v1");
     expect(hidden).toBeNull();
+  });
+
+  it("keeps hidden Gemeinde deck out of visible catalog but resolvable by access code", () => {
+    const visibleDeckIds = getVisibleDecks().map((deck) => deck.id);
+    expect(visibleDeckIds).not.toContain("gemeinde-quartett-v1");
+    expect(getDeckByAccessCode("162026")?.id).toBe("gemeinde-quartett-v1");
   });
 
   it("handles empty or undefined deck IDs safely", () => {

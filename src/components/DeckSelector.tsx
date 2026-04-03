@@ -7,7 +7,7 @@ interface DeckSelectorProps {
   busy: boolean;
   errorMessage?: string | null;
   onSelectDeck: (deckId: string) => Promise<boolean>;
-  onResolveDeckById: (deckId: string) => Promise<DeckCatalogItem | null>;
+  onResolveDeckByAccessCode: (accessCode: string) => Promise<DeckCatalogItem | null>;
   onSelectionConfirmed: () => void;
 }
 
@@ -19,7 +19,7 @@ export const DeckSelector = ({
   busy,
   errorMessage,
   onSelectDeck,
-  onResolveDeckById,
+  onResolveDeckByAccessCode,
   onSelectionConfirmed
 }: DeckSelectorProps) => {
   const trackRef = useRef<HTMLDivElement | null>(null);
@@ -71,18 +71,6 @@ export const DeckSelector = ({
     setPendingDeckId((current) => (current === focusedDeckId ? current : focusedDeckId));
     setFooterMessage(null);
   }, [currentSlideIndex, decks]);
-
-  const visibleMatches = useMemo(() => {
-    if (!normalizedTerm) {
-      return decks;
-    }
-
-    return decks.filter((deck) => {
-      const name = deck.name.toLowerCase();
-      const id = deck.id.toLowerCase();
-      return name.includes(normalizedTerm) || id.includes(normalizedTerm);
-    });
-  }, [decks, normalizedTerm]);
 
   const selectedDeck = useMemo(() => {
     const candidateDecks = searchResult ? [...decks, searchResult] : decks;
@@ -151,7 +139,13 @@ export const DeckSelector = ({
 
   const lookupExactDeck = async () => {
     if (!normalizedTerm) {
-      setSearchMessage("Enter a deck name or deck ID.");
+      setSearchMessage("Enter the 6-digit access code.");
+      setSearchResult(null);
+      return;
+    }
+
+    if (!/^\d{6}$/.test(normalizedTerm)) {
+      setSearchMessage("Access code must be exactly 6 digits.");
       setSearchResult(null);
       return;
     }
@@ -159,7 +153,7 @@ export const DeckSelector = ({
     setSearching(true);
     setSearchMessage(null);
     try {
-      const deck = await onResolveDeckById(normalizedTerm);
+      const deck = await onResolveDeckByAccessCode(normalizedTerm);
       if (!deck) {
         setSearchResult(null);
         setSearchMessage("Deck not found.");
@@ -240,8 +234,8 @@ export const DeckSelector = ({
           }}
         >
           <article className="deck-slide-card deck-slide-card--search">
-            <h2>Find Deck By ID</h2>
-            <p>Visible decks can be searched by name or ID. Hidden decks require exact ID.</p>
+            <h2>Find Hidden Deck</h2>
+            <p>This search only accepts an exact 6-digit access code.</p>
             <input
               className="session-input"
               value={searchTerm}
@@ -250,31 +244,16 @@ export const DeckSelector = ({
                 setSearchMessage(null);
                 setSearchResult(null);
               }}
-              placeholder="Type deck name or exact deck ID"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              maxLength={6}
+              placeholder="Enter 6-digit code"
             />
             <button type="button" className="btn-secondary" disabled={searching} onClick={() => void lookupExactDeck()}>
-              {searching ? "Searching..." : "Search Deck"}
+              {searching ? "Searching..." : "Find Deck"}
             </button>
 
             <div className="deck-search-results">
-              {visibleMatches.slice(0, 3).map((deck) => (
-                <button
-                  key={deck.id}
-                  type="button"
-                  className={`deck-search-result ${pendingDeckId === deck.id ? "deck-search-result--active" : ""}`}
-                  onClick={() => {
-                    const visibleIndex = decks.findIndex((entry) => entry.id === deck.id);
-                    if (visibleIndex >= 0) {
-                      scrollToSlide(visibleIndex);
-                    } else {
-                      setPendingDeckId(deck.id);
-                    }
-                  }}
-                >
-                  <span>{deck.name}</span>
-                  <small>{deck.id}</small>
-                </button>
-              ))}
               {searchResult ? (
                 <button
                   type="button"

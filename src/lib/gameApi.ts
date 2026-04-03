@@ -1,4 +1,4 @@
-import { getDeckById, getVisibleDecks, sortDeckCatalog } from "../data/decks";
+import { getDeckByAccessCode, getDeckById, getVisibleDecks, sortDeckCatalog } from "../data/decks";
 import { createMockSessionState } from "../state/mockState";
 import type {
   ActionResponse,
@@ -180,6 +180,40 @@ export const fetchDeckById = async (deckId: string | null | undefined): Promise<
     const message = await readErrorMessage(response, "Deck request failed.");
     if (isLegacyDeckEndpointError(response.status, message)) {
       return getDeckById(normalizedDeckId);
+    }
+    throw new Error(message);
+  }
+
+  return (await response.json()) as DeckCatalogItem;
+};
+
+export const fetchDeckByAccessCode = async (accessCode: string | null | undefined): Promise<DeckCatalogItem | null> => {
+  const normalizedCode = typeof accessCode === "string" ? accessCode.trim() : "";
+  if (!normalizedCode) {
+    return null;
+  }
+
+  if (resolveRuntimeMode() !== "realtime") {
+    return getDeckByAccessCode(normalizedCode);
+  }
+
+  const endpoint = getEndpoint();
+  const url = new URL(endpoint);
+  url.searchParams.set("kind", "deck-by-code");
+  url.searchParams.set("code", normalizedCode);
+
+  const response = await fetch(url.toString(), {
+    method: "GET"
+  });
+
+  if (response.status === 404) {
+    return null;
+  }
+
+  if (!response.ok) {
+    const message = await readErrorMessage(response, "Deck request failed.");
+    if (isLegacyDeckEndpointError(response.status, message)) {
+      return getDeckByAccessCode(normalizedCode);
     }
     throw new Error(message);
   }

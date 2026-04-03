@@ -46,6 +46,14 @@ const iconPathById: Record<string, string> = {
   endurance: "M12 6v6l4 2M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18z",
   crew: "M8 11a2 2 0 1 0 0-4 2 2 0 0 0 0 4m8 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4M4 19a4 4 0 0 1 8 0m4 0a4 4 0 0 1 8 0",
   displacement: "M3 15h18l-2 4H5zm3-5h12l2 5H4z",
+  children: "M7 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4m10 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4M3 20a4 4 0 0 1 8 0m2 0a4 4 0 0 1 8 0M12 9a2 2 0 1 0 0-4 2 2 0 0 0 0 4m-2 11a4 4 0 0 1 4 0",
+  age: "M12 3v5m0 0 3-3m-3 3-3-3M5 13a7 7 0 1 0 14 0v4H5z",
+  services: "M4 7h16v4H4zm2 6h12v7H6zm3-9h6",
+  distance: "M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11m0-8a2 2 0 1 1 0-4 2 2 0 0 1 0 4",
+  prayer: "M12 3 7 9h3v6h4V9h3zM4 21h16",
+  technical: "M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8m0-5 1.2 2.4 2.6.4-.9 2.5 1.7 2-2.4 1.2-.4 2.6-2.5-.9-2 1.7-1.2-2.4-2.6-.4.9-2.5-1.7-2 2.4-1.2.4-2.6 2.5.9z",
+  money: "M4 7h16v10H4zm8 2.2c1.9 0 3.6 1 4.5 2.6-.9 1.6-2.6 2.6-4.5 2.6s-3.6-1-4.5-2.6c.9-1.6 2.6-2.6 4.5-2.6",
+  hospitality: "M12 20s-7-4.7-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.3-7 10-7 10",
   default: "M12 4a8 8 0 1 1 0 16 8 8 0 0 1 0-16z"
 };
 
@@ -74,6 +82,15 @@ const formatUnit = (unit: string): string => {
   }
   if (unit === "torpedos") {
     return "torp";
+  }
+  if (unit === "count") {
+    return "x";
+  }
+  if (unit === "years") {
+    return "yrs";
+  }
+  if (unit === "cent") {
+    return "ct";
   }
   return unit;
 };
@@ -124,6 +141,8 @@ export const CardPanel = ({
   const [inFlight, setInFlight] = useState(false);
   const [resolvedImageSrc, setResolvedImageSrc] = useState(topCard?.imageUrl ?? "");
   const specs = Array.isArray(topCard?.specs) ? topCard.specs : [];
+  const specRows = Math.max(1, Math.ceil(specs.length / 2));
+  const specGridClassName = `spec-grid ${specRows > 3 ? "spec-grid--dense" : ""}`;
 
   const canSwipeSurface = variant === "you" && swipeEnabled && Boolean(onSwipeUp);
   const rootClassName = topCard ? "card-shell card-shell--stack" : "card-shell card-shell--empty";
@@ -216,7 +235,11 @@ export const CardPanel = ({
             />
           ) : null}
 
-          <div className="spec-grid" aria-label="Card specs">
+          <div
+            className={specGridClassName}
+            aria-label="Card specs"
+            style={{ ["--spec-grid-rows" as string]: specRows }}
+          >
             {specs.length === 0 ? <p className="spec-empty">Specs are not available for this card yet.</p> : null}
             {specs.map((spec) => {
               const selected = selectedSpecKey === spec.key;

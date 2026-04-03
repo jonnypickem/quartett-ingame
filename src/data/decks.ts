@@ -23,6 +23,10 @@ type ManifestCard = {
 type ManifestDeck = {
   id: string;
   name: string;
+  description?: string;
+  isHidden?: boolean;
+  accessCode?: string;
+  idPrefix?: string;
   cards: ManifestCard[];
 };
 
@@ -38,13 +42,15 @@ const DECK_ORDER_INDEX = new Map<string, number>(DECK_ORDER.map((deckId, index) 
 const DECK_DESCRIPTIONS: Record<string, string> = {
   "military-jets-v1": "Air-superiority icons and strike aircraft from modern military aviation.",
   "supercars-v1": "Hypercar legends and track-focused road missiles.",
-  "military-submarines-v1": "Nuclear and diesel-electric attack boats from major naval fleets."
+  "military-submarines-v1": "Nuclear and diesel-electric attack boats from major naval fleets.",
+  "gemeinde-quartett-v1": "Menschen aus der Gemeinde als verstecktes Sonderdeck."
 };
 
 const DECK_ID_PREFIX: Record<string, string> = {
   "military-jets-v1": "miljet",
   "supercars-v1": "supercar",
-  "military-submarines-v1": "sub"
+  "military-submarines-v1": "sub",
+  "gemeinde-quartett-v1": "gemeinde"
 };
 
 const normalizeDeckId = (deckId: unknown): string => {
@@ -79,7 +85,8 @@ const sanitizeSpec = (spec: ManifestSpec): SpecField => {
 };
 
 const toCardId = (deckId: string, code: string): string => {
-  const prefix = DECK_ID_PREFIX[deckId] ?? deckId;
+  const manifestDeck = sortedDecks.find((deck) => deck.id === deckId);
+  const prefix = manifestDeck?.idPrefix ?? DECK_ID_PREFIX[deckId] ?? deckId;
   return `${prefix}-${code}`;
 };
 
@@ -88,13 +95,18 @@ const sortedDecks = [...manifest.decks].sort((a, b) => sortDeckIds(a.id, b.id));
 export const deckCatalog: DeckCatalogItem[] = sortedDecks.map((deck) => ({
   id: deck.id,
   name: deck.name,
-  description: DECK_DESCRIPTIONS[deck.id] ?? "",
+  description: deck.description ?? DECK_DESCRIPTIONS[deck.id] ?? "",
   coverImageUrl: deck.cards[0]?.localImageUrl ?? `/decks/${deck.id}/01.jpg`,
   cardCount: deck.cards.length,
-  isHidden: false
+  isHidden: Boolean(deck.isHidden)
 }));
 
 export const allDeckCatalog: DeckCatalogItem[] = [...deckCatalog];
+const accessCodeByDeckId: Record<string, string> = Object.fromEntries(
+  sortedDecks
+    .map((deck) => [deck.id, typeof deck.accessCode === "string" ? deck.accessCode.trim() : ""] as const)
+    .filter(([, code]) => Boolean(code))
+);
 
 export const cardsByDeckId: Record<string, CardView[]> = Object.fromEntries(
   sortedDecks.map((deck) => [
@@ -128,4 +140,16 @@ export const getDeckById = (deckId: string | null | undefined): DeckCatalogItem 
 
 export const getVisibleDecks = (): DeckCatalogItem[] => {
   return allDeckCatalog.filter((deck) => !deck.isHidden);
+};
+
+export const getDeckByAccessCode = (code: string | null | undefined): DeckCatalogItem | null => {
+  const normalized = typeof code === "string" ? code.trim() : "";
+  if (!normalized) {
+    return null;
+  }
+  const deckId = Object.entries(accessCodeByDeckId).find(([, accessCode]) => accessCode === normalized)?.[0];
+  if (!deckId) {
+    return null;
+  }
+  return allDeckCatalog.find((deck) => deck.id === deckId) ?? null;
 };
