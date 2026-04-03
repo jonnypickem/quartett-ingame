@@ -796,18 +796,27 @@
 .spec-row__value {
   margin-top: 4px;
   align-self: flex-end;
-  display: inline-flex;
-  align-items: baseline;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   gap: 4px;
   white-space: nowrap;
   flex-shrink: 0;
+  width: 100%;
+  min-width: 0;
+  text-align: right;
+  overflow: hidden;
 }
 
 .spec-row__value-main {
   font-family: var(--font-body);
   font-size: 1.14rem;
-  line-height: 0.95;
+  line-height: 1;
   font-weight: 900;
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .spec-row__value-unit {
@@ -817,6 +826,7 @@
   font-weight: 800;
   color: rgba(49, 51, 55, 0.78);
   text-transform: none;
+  flex: 0 0 auto;
 }
 
 .action-panel {
